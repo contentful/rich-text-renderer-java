@@ -1,0 +1,4 @@
+rootProject.name = 'Structured Text Renderer - Java'
+include 'core'
+include 'html'
+
