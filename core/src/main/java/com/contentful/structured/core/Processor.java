@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 public class Processor<C extends Context, R> {
 
   @Nonnull
-  private final List<CheckerRenderer<C, R>> nodeRenderer = new ArrayList<>();
+  private final List<CheckingRenderer<C, R>> nodeRenderer = new ArrayList<>();
   @Nonnull
   private C context;
   @Nonnull
@@ -52,7 +52,7 @@ public class Processor<C extends Context, R> {
    */
   @Nonnull
   public Processor addRenderer(@Nonnull Checker<C> checker, @Nonnull Renderer<C, R> renderer) {
-    nodeRenderer.add(new CheckerRenderer<>(checker, renderer));
+    nodeRenderer.add(new CheckingRenderer<>(checker, renderer));
     return this;
   }
 
@@ -64,7 +64,7 @@ public class Processor<C extends Context, R> {
    */
   @Nonnull
   public Processor addRendererUpFront(@Nonnull Checker<C> checker, @Nonnull Renderer<C, R> renderer) {
-    nodeRenderer.add(0, new CheckerRenderer<>(checker, renderer));
+    nodeRenderer.add(0, new CheckingRenderer<>(checker, renderer));
     return this;
   }
 
@@ -83,7 +83,7 @@ public class Processor<C extends Context, R> {
     }
 
     R result = null;
-    for (final CheckerRenderer<C, R> pair : nodeRenderer) {
+    for (final CheckingRenderer<C, R> pair : nodeRenderer) {
       final Checker<C> checker = pair.checker;
 
       if (checker.check(context, node)) {
@@ -114,7 +114,7 @@ public class Processor<C extends Context, R> {
    * @param <C> Custom context class
    * @param <R> Result class of the rendering
    */
-  private static class CheckerRenderer<C, R> {
+  private static class CheckingRenderer<C, R> {
     final Checker<C> checker;
     final Renderer<C, R> renderer;
 
@@ -124,7 +124,7 @@ public class Processor<C extends Context, R> {
      * @param checker  the checker to be used
      * @param renderer the renderer to be checked
      */
-    CheckerRenderer(@Nonnull Checker<C> checker, @Nonnull Renderer<C, R> renderer) {
+    CheckingRenderer(@Nonnull Checker<C> checker, @Nonnull Renderer<C, R> renderer) {
       this.checker = checker;
       this.renderer = renderer;
     }

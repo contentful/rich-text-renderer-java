@@ -67,9 +67,7 @@ public class HtmlRendererProvider implements RendererProvider<HtmlContext, Strin
     );
     processor.addRenderer(
         (context, node) -> node instanceof CDAStructuredHyperLink && ((CDAStructuredHyperLink) node).getData() == null,
-        new TagRenderer(
-            processor,
-            "a")
+        new TagRenderer(processor, "a")
     );
     processor.addRenderer(
         (context, node) -> node instanceof CDAStructuredQuote,

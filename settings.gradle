@@ -1,4 +1,5 @@
 rootProject.name = 'Structured Text Renderer - Java'
+include ':android', ':android_sample'
 include 'core'
 include 'html'
 

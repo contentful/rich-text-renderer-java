@@ -19,8 +19,6 @@ import org.junit.Test;
 
 import java.lang.reflect.Field;
 
-import sun.reflect.misc.FieldUtil;
-
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.truth.Truth.assertThat;
@@ -157,7 +155,7 @@ public class AllTheThingsTest {
   private CDAResource newCDAEntry() {
     final CDAEntry entry = new CDAEntry();
     Field attrs = null;
-    for (final Field field : FieldUtil.getDeclaredFields(CDAResource.class)) {
+    for (final Field field : CDAResource.class.getDeclaredFields()) {
       if ("attrs".equals(field.getName())) {
         attrs = field;
       }
