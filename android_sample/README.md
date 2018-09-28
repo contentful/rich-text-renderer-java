@@ -1,4 +1,4 @@
-Rendering Structured Text Sample Android APP
+Rendering Rich Text Sample Android APP
 ============================================
 
-This app demonstrates how to use a predefined Structured Text object into textviews and other native Android views.
+This app demonstrates how to use a predefined Rich Text object into textviews and other native Android views.

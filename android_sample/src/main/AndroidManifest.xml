@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.contentful.structured.android.sample"
+<manifest package="com.contentful.rich.android.sample"
           xmlns:android="http://schemas.android.com/apk/res/android"
     >
 

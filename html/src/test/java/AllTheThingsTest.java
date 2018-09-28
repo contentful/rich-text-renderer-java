@@ -1,19 +1,19 @@
 import com.contentful.java.cda.CDAEntry;
 import com.contentful.java.cda.CDAResource;
-import com.contentful.java.cda.structured.CDAStructuredDocument;
-import com.contentful.java.cda.structured.CDAStructuredEmbeddedLink;
-import com.contentful.java.cda.structured.CDAStructuredHeading;
-import com.contentful.java.cda.structured.CDAStructuredHorizontalRule;
-import com.contentful.java.cda.structured.CDAStructuredHyperLink;
-import com.contentful.java.cda.structured.CDAStructuredListItem;
-import com.contentful.java.cda.structured.CDAStructuredMark;
-import com.contentful.java.cda.structured.CDAStructuredNode;
-import com.contentful.java.cda.structured.CDAStructuredOrderedList;
-import com.contentful.java.cda.structured.CDAStructuredParagraph;
-import com.contentful.java.cda.structured.CDAStructuredQuote;
-import com.contentful.java.cda.structured.CDAStructuredText;
-import com.contentful.java.cda.structured.CDAStructuredUnorderedList;
-import com.contentful.structured.html.HtmlProcessor;
+import com.contentful.java.cda.rich.CDARichDocument;
+import com.contentful.java.cda.rich.CDARichEmbeddedLink;
+import com.contentful.java.cda.rich.CDARichHeading;
+import com.contentful.java.cda.rich.CDARichHorizontalRule;
+import com.contentful.java.cda.rich.CDARichHyperLink;
+import com.contentful.java.cda.rich.CDARichListItem;
+import com.contentful.java.cda.rich.CDARichMark;
+import com.contentful.java.cda.rich.CDARichNode;
+import com.contentful.java.cda.rich.CDARichOrderedList;
+import com.contentful.java.cda.rich.CDARichParagraph;
+import com.contentful.java.cda.rich.CDARichQuote;
+import com.contentful.java.cda.rich.CDARichText;
+import com.contentful.java.cda.rich.CDARichUnorderedList;
+import com.contentful.rich.html.HtmlProcessor;
 
 import org.junit.Test;
 
@@ -87,66 +87,67 @@ public class AllTheThingsTest {
         "  <blockquote>\n" +
         "    Famous quote\n" +
         "  </blockquote>\n" +
-        "  <!-- no render accepts <tt>CDAStructuredNode</tt> with a path of " +
-        "CDAStructuredDocument. Please add a corresponding renderer using " +
+        "  <!-- no render accepts <tt>CDARichNode</tt> with a path of " +
+        "CDARichDocument. Please add a corresponding renderer using " +
         "<tt>HtmlRenderer.addRenderer(…)</tt>. -->\n" +
         "</main>\n");
   }
 
-  private CDAStructuredNode createAllNode() {
-    final CDAStructuredDocument result = new CDAStructuredDocument();
+  private CDARichNode createAllNode() {
+    final CDARichDocument result = new CDARichDocument();
 
     for (int i = 1; i < 7; ++i) {
-      final CDAStructuredHeading heading = new CDAStructuredHeading(i);
-      heading.getContent().add(new CDAStructuredText(newArrayList(), "heading - " + i));
+      final CDARichHeading heading = new CDARichHeading(i);
+      heading.getContent().add(new CDARichText("heading - " + i));
       result.getContent().add(heading);
     }
 
-    final CDAStructuredHorizontalRule horizontalRule = new CDAStructuredHorizontalRule();
+    final CDARichHorizontalRule horizontalRule = new CDARichHorizontalRule();
     result.getContent().add(horizontalRule);
 
-    final CDAStructuredEmbeddedLink embeddedLink = new CDAStructuredEmbeddedLink(newCDAEntry());
+    final CDARichEmbeddedLink embeddedLink = new CDARichEmbeddedLink(newCDAEntry());
     result.getContent().add(embeddedLink);
 
-    final CDAStructuredHyperLink hyperLink = new CDAStructuredHyperLink("https://contentful.com/");
-    hyperLink.getContent().add(new CDAStructuredText(newArrayList(), "Hyper hyper"));
+    final CDARichHyperLink hyperLink = new CDARichHyperLink("https://contentful.com/");
+    hyperLink.getContent().add(new CDARichText("Hyper hyper"));
     result.getContent().add(hyperLink);
 
-    final CDAStructuredText allTheMarks = new CDAStructuredText(
+    final CDARichText allTheMarks = new CDARichText(
+        "ALL THE TEXT MARKS!",
         newArrayList(
-            new CDAStructuredMark.CDAStructuredMarkUnderline(),
-            new CDAStructuredMark.CDAStructuredMarkBold(),
-            new CDAStructuredMark.CDAStructuredMarkItalic(),
-            new CDAStructuredMark.CDAStructuredMarkCode(),
-            new CDAStructuredMark.CDAStructuredMarkCustom("top")
-        ), "ALL THE TEXT MARKS!"
+            new CDARichMark.CDARichMarkUnderline(),
+            new CDARichMark.CDARichMarkBold(),
+            new CDARichMark.CDARichMarkItalic(),
+            new CDARichMark.CDARichMarkCode(),
+            new CDARichMark.CDARichMarkCustom("top")
+        )
     );
     result.getContent().add(allTheMarks);
 
-    final CDAStructuredOrderedList orderedList = new CDAStructuredOrderedList();
-    final CDAStructuredListItem listItem = new CDAStructuredListItem();
-    listItem.getContent().add(new CDAStructuredText(newArrayList(), "some list item content"));
+    final CDARichOrderedList orderedList = new CDARichOrderedList();
+    final CDARichListItem listItem = new CDARichListItem();
+    listItem.getContent().add(new CDARichText("some list item content"));
     orderedList.getContent().add(listItem);
     orderedList.getContent().add(listItem);
     orderedList.getContent().add(listItem);
     result.getContent().add(orderedList);
 
-    final CDAStructuredUnorderedList unorderedList = new CDAStructuredUnorderedList();
+    final CDARichUnorderedList unorderedList = new CDARichUnorderedList();
     unorderedList.getContent().add(listItem);
     unorderedList.getContent().add(listItem);
     unorderedList.getContent().add(listItem);
     unorderedList.getContent().add(listItem);
     result.getContent().add(unorderedList);
 
-    final CDAStructuredParagraph paragraph = new CDAStructuredParagraph();
-    paragraph.getContent().add(new CDAStructuredText(newArrayList(), "Paragraph"));
+    final CDARichParagraph paragraph = new CDARichParagraph();
+    paragraph.getContent().add(new CDARichText("Paragraph"));
     result.getContent().add(paragraph);
 
-    final CDAStructuredQuote quote = new CDAStructuredQuote();
-    quote.getContent().add(new CDAStructuredText(newArrayList(), "Famous quote"));
+    final CDARichQuote quote = new CDARichQuote();
+    quote.getContent().add(new CDARichText("Famous quote"));
     result.getContent().add(quote);
 
-    final CDAStructuredNode node = new CDAStructuredNode();
+    final CDARichNode node = new CDARichNode();
     result.getContent().add(node);
 
     return result;

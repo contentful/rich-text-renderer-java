@@ -1,10 +1,10 @@
-import com.contentful.java.cda.structured.CDAStructuredListItem;
-import com.contentful.java.cda.structured.CDAStructuredMark;
-import com.contentful.java.cda.structured.CDAStructuredOrderedList;
-import com.contentful.java.cda.structured.CDAStructuredParagraph;
-import com.contentful.java.cda.structured.CDAStructuredText;
-import com.contentful.java.cda.structured.CDAStructuredUnorderedList;
-import com.contentful.structured.html.HtmlProcessor;
+import com.contentful.java.cda.rich.CDARichListItem;
+import com.contentful.java.cda.rich.CDARichMark;
+import com.contentful.java.cda.rich.CDARichOrderedList;
+import com.contentful.java.cda.rich.CDARichParagraph;
+import com.contentful.java.cda.rich.CDARichText;
+import com.contentful.java.cda.rich.CDARichUnorderedList;
+import com.contentful.rich.html.HtmlProcessor;
 
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ public class ListsTest {
   public void threeUnorderedElementsListTest() {
     final HtmlProcessor processor = new HtmlProcessor();
 
-    final CDAStructuredUnorderedList list = new CDAStructuredUnorderedList();
+    final CDARichUnorderedList list = new CDARichUnorderedList();
     list.getContent().add(textListItem("one"));
     list.getContent().add(textListItem("two"));
     list.getContent().add(textListItem("three"));
@@ -49,15 +49,15 @@ public class ListsTest {
   public void threeUnorderedElementsListAndOneNestedOrdered() {
     final HtmlProcessor processor = new HtmlProcessor();
 
-    final CDAStructuredOrderedList orderedList = new CDAStructuredOrderedList();
+    final CDARichOrderedList orderedList = new CDARichOrderedList();
     orderedList.getContent().add(textListItem("a"));
     orderedList.getContent().add(textListItem("b"));
     orderedList.getContent().add(textListItem("c"));
 
-    final CDAStructuredListItem orderedListListItem = new CDAStructuredListItem();
+    final CDARichListItem orderedListListItem = new CDARichListItem();
     orderedListListItem.getContent().add(orderedList);
 
-    final CDAStructuredUnorderedList unorderedList = new CDAStructuredUnorderedList();
+    final CDARichUnorderedList unorderedList = new CDARichUnorderedList();
     unorderedList.getContent().add(textListItem("one"));
     unorderedList.getContent().add(textListItem("two"));
     unorderedList.getContent().add(textListItem("three"));
@@ -109,24 +109,24 @@ public class ListsTest {
         "</ul>\n");
   }
 
-  private CDAStructuredListItem textListItem(String text) {
-    final CDAStructuredParagraph paragraph = new CDAStructuredParagraph();
-    paragraph.getContent().add(new CDAStructuredText(new ArrayList<>(), text));
-    final CDAStructuredListItem item = new CDAStructuredListItem();
+  private CDARichListItem textListItem(String text) {
+    final CDARichParagraph paragraph = new CDARichParagraph();
+    paragraph.getContent().add(new CDARichText(text));
+    final CDARichListItem item = new CDARichListItem();
     item.getContent().add(paragraph);
     return item;
   }
 
-  private CDAStructuredListItem beautifylTextItem(String text) {
-    final CDAStructuredParagraph paragraph = new CDAStructuredParagraph();
-    final List<CDAStructuredMark> allTheMarks = new ArrayList<>();
-    allTheMarks.add(new CDAStructuredMark.CDAStructuredMarkUnderline());
-    allTheMarks.add(new CDAStructuredMark.CDAStructuredMarkBold());
-    allTheMarks.add(new CDAStructuredMark.CDAStructuredMarkItalic());
-    allTheMarks.add(new CDAStructuredMark.CDAStructuredMarkCode());
-    allTheMarks.add(new CDAStructuredMark.CDAStructuredMarkCustom("\uD83D\uDC51"));
-    paragraph.getContent().add(new CDAStructuredText(allTheMarks, text));
-    final CDAStructuredListItem item = new CDAStructuredListItem();
+  private CDARichListItem beautifylTextItem(String text) {
+    final CDARichParagraph paragraph = new CDARichParagraph();
+    final List<CDARichMark> allTheMarks = new ArrayList<>();
+    allTheMarks.add(new CDARichMark.CDARichMarkUnderline());
+    allTheMarks.add(new CDARichMark.CDARichMarkBold());
+    allTheMarks.add(new CDARichMark.CDARichMarkItalic());
+    allTheMarks.add(new CDARichMark.CDARichMarkCode());
+    allTheMarks.add(new CDARichMark.CDARichMarkCustom("\uD83D\uDC51"));
+    paragraph.getContent().add(new CDARichText(text, allTheMarks));
+    final CDARichListItem item = new CDARichListItem();
     item.getContent().add(paragraph);
     return item;
   }

@@ -1,7 +1,7 @@
-import com.contentful.java.cda.structured.CDAStructuredNode;
-import com.contentful.java.cda.structured.CDAStructuredParagraph;
-import com.contentful.structured.html.HtmlProcessor;
-import com.contentful.structured.html.renderer.TagRenderer;
+import com.contentful.java.cda.rich.CDARichNode;
+import com.contentful.java.cda.rich.CDARichParagraph;
+import com.contentful.rich.html.HtmlProcessor;
+import com.contentful.rich.html.renderer.TagRenderer;
 
 import org.junit.Test;
 
@@ -12,11 +12,11 @@ public class CustomRendererTest {
   public void overrideExistingRenderer() {
     final HtmlProcessor processor = new HtmlProcessor();
     processor.addRendererUpFront(
-        (context, node) -> node instanceof CDAStructuredParagraph,
+        (context, node) -> node instanceof CDARichParagraph,
         new TagRenderer(processor, "pete")
     );
 
-    final CDAStructuredParagraph paragraph = new CDAStructuredParagraph();
+    final CDARichParagraph paragraph = new CDARichParagraph();
 
     final String result = processor.render(paragraph);
 
@@ -31,7 +31,7 @@ public class CustomRendererTest {
         new TagRenderer(processor, "\uD83E\uDD37")
     );
 
-    final CDAStructuredNode node = new CDAStructuredNode();
+    final CDARichNode node = new CDARichNode();
 
     final String result = processor.render(node);
 

@@ -1,6 +1,6 @@
-import com.contentful.java.cda.structured.CDAStructuredMark;
-import com.contentful.java.cda.structured.CDAStructuredText;
-import com.contentful.structured.html.HtmlProcessor;
+import com.contentful.java.cda.rich.CDARichMark;
+import com.contentful.java.cda.rich.CDARichText;
+import com.contentful.rich.html.HtmlProcessor;
 
 import org.junit.Test;
 
@@ -15,9 +15,7 @@ public class MarksTextTest {
   public void noMarksTest() {
     final HtmlProcessor processor = new HtmlProcessor();
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-
-    final String result = processor.render(new CDAStructuredText(markers, "text"));
+    final String result = processor.render(new CDARichText("text"));
 
     assertThat(result).isEqualTo("text\n");
   }
@@ -26,10 +24,10 @@ public class MarksTextTest {
   public void boldTextTest() {
     final HtmlProcessor processor = new HtmlProcessor();
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-    markers.add(new CDAStructuredMark.CDAStructuredMarkBold());
+    final List<CDARichMark> markers = new ArrayList<>();
+    markers.add(new CDARichMark.CDARichMarkBold());
 
-    final String result = processor.render(new CDAStructuredText(markers, "BoldText"));
+    final String result = processor.render(new CDARichText("BoldText", markers));
 
     assertThat(result).isEqualTo("<b>BoldText</b>\n");
   }
@@ -38,10 +36,10 @@ public class MarksTextTest {
   public void underlineTextTest() {
     final HtmlProcessor processor = new HtmlProcessor();
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-    markers.add(new CDAStructuredMark.CDAStructuredMarkUnderline());
+    final List<CDARichMark> markers = new ArrayList<>();
+    markers.add(new CDARichMark.CDARichMarkUnderline());
 
-    final String result = processor.render(new CDAStructuredText(markers, "Underlined"));
+    final String result = processor.render(new CDARichText("Underlined", markers));
 
     assertThat(result).isEqualTo("<u>Underlined</u>\n");
   }
@@ -50,10 +48,10 @@ public class MarksTextTest {
   public void testItalicHtml() {
     final HtmlProcessor processor = new HtmlProcessor();
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-    markers.add(new CDAStructuredMark.CDAStructuredMarkItalic());
+    final List<CDARichMark> markers = new ArrayList<>();
+    markers.add(new CDARichMark.CDARichMarkItalic());
 
-    final String result = processor.render(new CDAStructuredText(markers, "Italic"));
+    final String result = processor.render(new CDARichText("Italic", markers));
 
     assertThat(result).isEqualTo("<i>Italic</i>\n");
   }
@@ -62,22 +60,22 @@ public class MarksTextTest {
   public void codeTextTest() {
     final HtmlProcessor processor = new HtmlProcessor();
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-    markers.add(new CDAStructuredMark.CDAStructuredMarkCode());
+    final List<CDARichMark> markers = new ArrayList<>();
+    markers.add(new CDARichMark.CDARichMarkCode());
 
-    final String result = processor.render(new CDAStructuredText(markers, "final String code;"));
+    final String result = processor.render(new CDARichText("final String code;", markers));
 
-    assertThat(result).isEqualTo("<tt>final String code;</tt>\n");
+    assertThat(result).isEqualTo("<code>final String code;</code>\n");
   }
 
   @Test
   public void customTextTest() {
     final HtmlProcessor processor = new HtmlProcessor();
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-    markers.add(new CDAStructuredMark.CDAStructuredMarkCustom("🧀"));
+    final List<CDARichMark> markers = new ArrayList<>();
+    markers.add(new CDARichMark.CDARichMarkCustom("🧀"));
 
-    final String result = processor.render(new CDAStructuredText(markers, "🐭"));
+    final String result = processor.render(new CDARichText("🐭", markers));
 
     assertThat(result).isEqualTo("<🧀>🐭</🧀>\n");
   }
@@ -86,16 +84,16 @@ public class MarksTextTest {
   public void allTextTest() {
     final HtmlProcessor processor = new HtmlProcessor();
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-    markers.add(new CDAStructuredMark.CDAStructuredMarkCustom("custom"));
-    markers.add(new CDAStructuredMark.CDAStructuredMarkItalic());
-    markers.add(new CDAStructuredMark.CDAStructuredMarkBold());
-    markers.add(new CDAStructuredMark.CDAStructuredMarkCode());
-    markers.add(new CDAStructuredMark.CDAStructuredMarkUnderline());
-    markers.add(new CDAStructuredMark.CDAStructuredMarkCustom("span"));
+    final List<CDARichMark> markers = new ArrayList<>();
+    markers.add(new CDARichMark.CDARichMarkCustom("custom"));
+    markers.add(new CDARichMark.CDARichMarkItalic());
+    markers.add(new CDARichMark.CDARichMarkBold());
+    markers.add(new CDARichMark.CDARichMarkCode());
+    markers.add(new CDARichMark.CDARichMarkUnderline());
+    markers.add(new CDARichMark.CDARichMarkCustom("span"));
 
-    final String result = processor.render(new CDAStructuredText(markers, "All in all"));
+    final String result = processor.render(new CDARichText("All in all", markers));
 
-    assertThat(result).isEqualTo("<span><u><tt><b><i><custom>All in all</custom></i></b></tt></u></span>\n");
+    assertThat(result).isEqualTo("<span><u><code><b><i><custom>All in all</custom></i></b></code></u></span>\n");
   }
 }

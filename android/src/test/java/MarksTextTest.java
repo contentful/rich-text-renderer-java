@@ -6,9 +6,9 @@ import android.text.style.StyleSpan;
 import android.text.style.TextAppearanceSpan;
 import android.text.style.UnderlineSpan;
 
-import com.contentful.java.cda.structured.CDAStructuredMark;
-import com.contentful.java.cda.structured.CDAStructuredText;
-import com.contentful.structured.android.CharSequenceProcessor;
+import com.contentful.java.cda.rich.CDARichMark;
+import com.contentful.java.cda.rich.CDARichText;
+import com.contentful.rich.android.CharSequenceProcessor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,9 +36,7 @@ public class MarksTextTest {
   public void noMarksTest() {
     final CharSequenceProcessor processor = new CharSequenceProcessor(activity);
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-
-    final CharSequence result = processor.render(new CDAStructuredText(markers, "text"));
+    final CharSequence result = processor.render(new CDARichText("text"));
 
     assertThat(result).isInstanceOf(Spannable.class);
     final Spannable spannable = (Spannable) result;
@@ -51,10 +49,10 @@ public class MarksTextTest {
   public void boldTextTest() {
     final CharSequenceProcessor processor = new CharSequenceProcessor(activity);
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-    markers.add(new CDAStructuredMark.CDAStructuredMarkBold());
+    final List<CDARichMark> markers = new ArrayList<>();
+    markers.add(new CDARichMark.CDARichMarkBold());
 
-    final CharSequence result = processor.render(new CDAStructuredText(markers, "BoldText"));
+    final CharSequence result = processor.render(new CDARichText("BoldText", markers));
 
     assertThat(result).isInstanceOf(Spannable.class);
 
@@ -76,10 +74,10 @@ public class MarksTextTest {
   public void underlineTextTest() {
     final CharSequenceProcessor processor = new CharSequenceProcessor(activity);
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-    markers.add(new CDAStructuredMark.CDAStructuredMarkUnderline());
+    final List<CDARichMark> markers = new ArrayList<>();
+    markers.add(new CDARichMark.CDARichMarkUnderline());
 
-    final CharSequence result = processor.render(new CDAStructuredText(markers, "Underlined"));
+    final CharSequence result = processor.render(new CDARichText("Underlined", markers));
 
     assertThat(result).isInstanceOf(Spannable.class);
 
@@ -98,10 +96,10 @@ public class MarksTextTest {
   public void testItalicHtml() {
     final CharSequenceProcessor processor = new CharSequenceProcessor(activity);
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-    markers.add(new CDAStructuredMark.CDAStructuredMarkItalic());
+    final List<CDARichMark> markers = new ArrayList<>();
+    markers.add(new CDARichMark.CDARichMarkItalic());
 
-    final CharSequence result = processor.render(new CDAStructuredText(markers, "Italic"));
+    final CharSequence result = processor.render(new CDARichText("Italic", markers));
 
     assertThat(result).isInstanceOf(Spannable.class);
 
@@ -123,10 +121,10 @@ public class MarksTextTest {
   public void codeTextTest() {
     final CharSequenceProcessor processor = new CharSequenceProcessor(activity);
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-    markers.add(new CDAStructuredMark.CDAStructuredMarkCode());
+    final List<CDARichMark> markers = new ArrayList<>();
+    markers.add(new CDARichMark.CDARichMarkCode());
 
-    final CharSequence result = processor.render(new CDAStructuredText(markers, "final String code;"));
+    final CharSequence result = processor.render(new CDARichText("final String code;", markers));
 
     assertThat(result).isInstanceOf(Spannable.class);
 
@@ -148,10 +146,10 @@ public class MarksTextTest {
   public void customTextTest() {
     final CharSequenceProcessor processor = new CharSequenceProcessor(activity);
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-    markers.add(new CDAStructuredMark.CDAStructuredMarkCustom("🧀"));
+    final List<CDARichMark> markers = new ArrayList<>();
+    markers.add(new CDARichMark.CDARichMarkCustom("🧀"));
 
-    final CharSequence result = processor.render(new CDAStructuredText(markers, "🐭"));
+    final CharSequence result = processor.render(new CDARichText("🐭", markers));
 
     assertThat(result).isInstanceOf(Spannable.class);
 
@@ -170,15 +168,15 @@ public class MarksTextTest {
   public void allTextTest() {
     final CharSequenceProcessor processor = new CharSequenceProcessor(activity);
 
-    final List<CDAStructuredMark> markers = new ArrayList<>();
-    markers.add(new CDAStructuredMark.CDAStructuredMarkCustom("custom"));
-    markers.add(new CDAStructuredMark.CDAStructuredMarkItalic());
-    markers.add(new CDAStructuredMark.CDAStructuredMarkBold());
-    markers.add(new CDAStructuredMark.CDAStructuredMarkCode());
-    markers.add(new CDAStructuredMark.CDAStructuredMarkUnderline());
-    markers.add(new CDAStructuredMark.CDAStructuredMarkCustom("span"));
+    final List<CDARichMark> markers = new ArrayList<>();
+    markers.add(new CDARichMark.CDARichMarkCustom("custom"));
+    markers.add(new CDARichMark.CDARichMarkItalic());
+    markers.add(new CDARichMark.CDARichMarkBold());
+    markers.add(new CDARichMark.CDARichMarkCode());
+    markers.add(new CDARichMark.CDARichMarkUnderline());
+    markers.add(new CDARichMark.CDARichMarkCustom("span"));
 
-    final CharSequence result = processor.render(new CDAStructuredText(markers, "All in all"));
+    final CharSequence result = processor.render(new CDARichText("All in all", markers));
 
     assertThat(result).isInstanceOf(Spannable.class);
 

@@ -1,10 +1,8 @@
-import com.contentful.java.cda.structured.CDAStructuredHyperLink;
-import com.contentful.java.cda.structured.CDAStructuredText;
-import com.contentful.structured.html.HtmlProcessor;
+import com.contentful.java.cda.rich.CDARichHyperLink;
+import com.contentful.java.cda.rich.CDARichText;
+import com.contentful.rich.html.HtmlProcessor;
 
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -13,8 +11,8 @@ public class LinksTest {
   public void threeUnorderedElementsListTest() {
     final HtmlProcessor processor = new HtmlProcessor();
 
-    final CDAStructuredHyperLink link = new CDAStructuredHyperLink("https://contentful.com");
-    link.getContent().add(new CDAStructuredText(new ArrayList<>(), "Some link text<br/>"));
+    final CDARichHyperLink link = new CDARichHyperLink("https://contentful.com");
+    link.getContent().add(new CDARichText("Some link text<br/>"));
 
     final String result = processor.render(link);
 
@@ -25,8 +23,8 @@ public class LinksTest {
   public void createUnsanitzedStrings() {
     final HtmlProcessor processor = new HtmlProcessor();
 
-    final CDAStructuredHyperLink link = new CDAStructuredHyperLink("https://contentful.com");
-    link.getContent().add(new CDAStructuredText(new ArrayList<>(), "Some link text</a>"));
+    final CDARichHyperLink link = new CDARichHyperLink("https://contentful.com");
+    link.getContent().add(new CDARichText("Some link text</a>"));
 
     final String result = processor.render(link);
 

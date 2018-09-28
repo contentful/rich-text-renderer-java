@@ -1,8 +1,9 @@
-import com.contentful.java.cda.structured.CDAStructuredNode;
-import com.contentful.java.cda.structured.CDAStructuredParagraph;
-import com.contentful.java.cda.structured.CDAStructuredText;
-import com.contentful.structured.core.Context;
-import com.contentful.structured.core.Processor;
+import com.contentful.java.cda.rich.CDARichBlock;
+import com.contentful.java.cda.rich.CDARichNode;
+import com.contentful.java.cda.rich.CDARichParagraph;
+import com.contentful.java.cda.rich.CDARichText;
+import com.contentful.rich.core.Context;
+import com.contentful.rich.core.Processor;
 
 import org.junit.Test;
 
@@ -21,26 +22,26 @@ public class ProcessorTest {
 
   @Test
   public void renderTextTest() {
-    final Processor<Context<String>, String> processor = new Processor<>(new Context<>());
+    final Processor<Context<String>, CharSequence> processor = new Processor<>(new Context<>());
     new DescendingTextRendererProvider().provide(processor);
 
-    final String result = processor.render(new CDAStructuredText(new ArrayList<>(), "Foo"));
+    final CharSequence result = processor.render(new CDARichText("Foo"));
 
     assertThat(result).isEqualTo("Foo");
   }
 
   @Test
   public void contextFactoryGetsNotInvolvedInTexts() {
-    final Processor<Context<String>, String> processor = new Processor<>(new Context<String>() {
-      @Override public void onParagraphEntered(@Nonnull CDAStructuredParagraph paragraph) {
+    final Processor<Context<String>, CharSequence> processor = new Processor<>(new Context<String>() {
+      @Override public void onBlockEntered(@Nonnull CDARichBlock paragraph) {
         fail("No block to be entered");
       }
 
-      @Override public void onParagraphExited(@Nonnull CDAStructuredParagraph paragraph) {
+      @Override public void onBlockExited(@Nonnull CDARichBlock block) {
         fail("No block to be exited");
       }
 
-      @Override public void onSiblingEncountered(@Nonnull CDAStructuredNode node, int index) {
+      @Override public void onSiblingEncountered(@Nonnull CDARichNode node, int index) {
         // ignore siblings
       }
 
@@ -50,19 +51,19 @@ public class ProcessorTest {
     });
     new DescendingTextRendererProvider().provide(processor);
 
-    final String result = processor.render(new CDAStructuredText(new ArrayList<>(), "Foo"));
+    final CharSequence result = processor.render(new CDARichText("Foo"));
     assertThat(result).isEqualTo("Foo");
   }
 
   @Test
   public void nestingTest() {
-    final Processor<Context<String>, String> processor = new Processor<>(new Context<>());
+    final Processor<Context<String>, CharSequence> processor = new Processor<>(new Context<>());
     new DescendingTextRendererProvider().provide(processor);
 
-    final CDAStructuredParagraph paragraph = new CDAStructuredParagraph();
-    paragraph.getContent().add(new CDAStructuredText(new ArrayList<>(), "Foo"));
+    final CDARichParagraph paragraph = new CDARichParagraph();
+    paragraph.getContent().add(new CDARichText("Foo"));
 
-    final String result = processor.render(paragraph);
+    final CharSequence result = processor.render(paragraph);
     assertThat(result).isEqualTo("--Foo");
   }
 
@@ -70,16 +71,16 @@ public class ProcessorTest {
   public void contextFactoryMethodsAreCalledTest() {
     final List<String> events = new ArrayList<>();
 
-    final Processor<Context<String>, String> processor = new Processor<>(new Context<String>() {
-      @Override public void onParagraphEntered(@Nonnull CDAStructuredParagraph paragraph) {
+    final Processor<Context<String>, CharSequence> processor = new Processor<>(new Context<String>() {
+      @Override public void onBlockEntered(@Nonnull CDARichBlock block) {
         events.add("entered");
       }
 
-      @Override public void onParagraphExited(@Nonnull CDAStructuredParagraph paragraph) {
+      @Override public void onBlockExited(@Nonnull CDARichBlock block) {
         events.add("exited");
       }
 
-      @Override public void onSiblingEncountered(@Nonnull CDAStructuredNode node, int index) {
+      @Override public void onSiblingEncountered(@Nonnull CDARichNode node, int index) {
         events.add("sibling " + index);
       }
 
@@ -89,10 +90,10 @@ public class ProcessorTest {
     });
     new DescendingTextRendererProvider().provide(processor);
 
-    final CDAStructuredParagraph paragraph = new CDAStructuredParagraph();
-    paragraph.getContent().add(new CDAStructuredText(new ArrayList<>(), "constant text"));
-    paragraph.getContent().add(new CDAStructuredText(new ArrayList<>(), "constant text"));
-    paragraph.getContent().add(new CDAStructuredParagraph());
+    final CDARichParagraph paragraph = new CDARichParagraph();
+    paragraph.getContent().add(new CDARichText("constant text"));
+    paragraph.getContent().add(new CDARichText("constant text"));
+    paragraph.getContent().add(new CDARichParagraph());
 
     processor.render(paragraph);
 

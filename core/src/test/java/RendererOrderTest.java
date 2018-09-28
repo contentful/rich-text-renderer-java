@@ -1,6 +1,6 @@
-import com.contentful.java.cda.structured.CDAStructuredNode;
-import com.contentful.structured.core.Context;
-import com.contentful.structured.core.Processor;
+import com.contentful.java.cda.rich.CDARichNode;
+import com.contentful.rich.core.Context;
+import com.contentful.rich.core.Processor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class RendererOrderTest {
         (context, node) -> "overridden"
     );
 
-    final String result = processor.render(new CDAStructuredNode());
+    final String result = processor.render(new CDARichNode());
     assertThat(result).isEqualTo("overridden");
   }
 
@@ -37,7 +37,7 @@ public class RendererOrderTest {
         (context, node) -> "not overridden"
     );
 
-    final String result = processor.render(new CDAStructuredNode());
+    final String result = processor.render(new CDARichNode());
     assertThat(result).isEqualTo("catch all");
   }
 

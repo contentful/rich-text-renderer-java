@@ -1,10 +1,11 @@
-import com.contentful.java.cda.structured.CDAStructuredNode;
-import com.contentful.java.cda.structured.CDAStructuredOrderedList;
-import com.contentful.java.cda.structured.CDAStructuredParagraph;
-import com.contentful.java.cda.structured.CDAStructuredText;
-import com.contentful.java.cda.structured.CDAStructuredUnorderedList;
-import com.contentful.structured.core.Context;
-import com.contentful.structured.core.Processor;
+import com.contentful.java.cda.rich.CDARichBlock;
+import com.contentful.java.cda.rich.CDARichNode;
+import com.contentful.java.cda.rich.CDARichOrderedList;
+import com.contentful.java.cda.rich.CDARichParagraph;
+import com.contentful.java.cda.rich.CDARichText;
+import com.contentful.java.cda.rich.CDARichUnorderedList;
+import com.contentful.rich.core.Context;
+import com.contentful.rich.core.Processor;
 
 import org.junit.Test;
 
@@ -21,14 +22,14 @@ public class ComplexProcessorTest {
   public void complexListRenderingTest() {
     final Processor<SiblingCountingContext, String> processor = new Processor<>(new SiblingCountingContext());
     processor.addRenderer(
-        (context, node) -> node instanceof CDAStructuredParagraph,
-        (context, node) -> ((CDAStructuredParagraph) node).getContent().stream().map(processor::render).collect(joining("\n"))
+        (context, node) -> node instanceof CDARichParagraph,
+        (context, node) -> ((CDARichParagraph) node).getContent().stream().map(processor::render).collect(joining("\n"))
     );
     processor.addRenderer(
-        (context, node) -> node instanceof CDAStructuredText,
+        (context, node) -> node instanceof CDARichText,
         (context, node) -> {
           final List<String> path = context.getPath();
-          final String text = ((CDAStructuredText) node).getText();
+          final CharSequence text = ((CDARichText) node).getText();
           String symbol = path.get(path.size() - 1);
           if ("1".equals(symbol)) {
             symbol = context.getSiblingIndex() + ". ";
@@ -41,27 +42,27 @@ public class ComplexProcessorTest {
         }
     );
 
-    final CDAStructuredUnorderedList unorderedList = new CDAStructuredUnorderedList();
-    unorderedList.getContent().add(new CDAStructuredText(new ArrayList<>(), "unordered_a"));
-    unorderedList.getContent().add(new CDAStructuredText(new ArrayList<>(), "unordered_b"));
-    unorderedList.getContent().add(new CDAStructuredText(new ArrayList<>(), "unordered_c"));
+    final CDARichUnorderedList unorderedList = new CDARichUnorderedList();
+    unorderedList.getContent().add(new CDARichText("unordered_a"));
+    unorderedList.getContent().add(new CDARichText("unordered_b"));
+    unorderedList.getContent().add(new CDARichText("unordered_c"));
 
-    final CDAStructuredOrderedList innerList = new CDAStructuredOrderedList();
-    innerList.getContent().add(new CDAStructuredText(new ArrayList<>(), "inner_first"));
-    innerList.getContent().add(new CDAStructuredText(new ArrayList<>(), "inner_second"));
+    final CDARichOrderedList innerList = new CDARichOrderedList();
+    innerList.getContent().add(new CDARichText("inner_first"));
+    innerList.getContent().add(new CDARichText("inner_second"));
     innerList.getContent().add(unorderedList);
-    innerList.getContent().add(new CDAStructuredText(new ArrayList<>(), "inner_third"));
+    innerList.getContent().add(new CDARichText("inner_third"));
 
-    final CDAStructuredOrderedList outerList = new CDAStructuredOrderedList();
-    outerList.getContent().add(new CDAStructuredText(new ArrayList<>(), "outer_top"));
+    final CDARichOrderedList outerList = new CDARichOrderedList();
+    outerList.getContent().add(new CDARichText("outer_top"));
     outerList.getContent().add(innerList);
-    outerList.getContent().add(new CDAStructuredText(new ArrayList<>(), "outer_bottom"));
+    outerList.getContent().add(new CDARichText("outer_bottom"));
 
-    final CDAStructuredParagraph paragraph = new CDAStructuredParagraph();
-    paragraph.getContent().add(new CDAStructuredText(new ArrayList<>(), "first"));
-    paragraph.getContent().add(new CDAStructuredText(new ArrayList<>(), "second"));
+    final CDARichParagraph paragraph = new CDARichParagraph();
+    paragraph.getContent().add(new CDARichText("first"));
+    paragraph.getContent().add(new CDARichText("second"));
     paragraph.getContent().add(outerList);
-    paragraph.getContent().add(new CDAStructuredText(new ArrayList<>(), "last"));
+    paragraph.getContent().add(new CDARichText("last"));
 
     final String result = processor.render(paragraph);
 
@@ -83,21 +84,21 @@ public class ComplexProcessorTest {
     private List<String> path = new ArrayList<>();
     private int siblingIndex = 0;
 
-    @Override public void onParagraphEntered(@Nonnull CDAStructuredParagraph paragraph) {
-      if (paragraph instanceof CDAStructuredOrderedList) {
+    @Override public void onBlockEntered(@Nonnull CDARichBlock block) {
+      if (block instanceof CDARichOrderedList) {
         path.add("1");
-      } else if (paragraph instanceof CDAStructuredUnorderedList) {
+      } else if (block instanceof CDARichUnorderedList) {
         path.add("*");
       } else {
         path.add("");
       }
     }
 
-    @Override public void onParagraphExited(@Nonnull CDAStructuredParagraph paragraph) {
+    @Override public void onBlockExited(@Nonnull CDARichBlock block) {
       path.remove(path.size() - 1);
     }
 
-    @Override public void onSiblingEncountered(@Nonnull CDAStructuredNode node, int index) {
+    @Override public void onSiblingEncountered(@Nonnull CDARichNode node, int index) {
       siblingIndex = index;
     }
 

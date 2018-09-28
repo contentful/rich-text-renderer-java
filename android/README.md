@@ -1,7 +1,7 @@
-Rendering Structured Text Into Text in Android
+Rendering Rich Text Into Text in Android
 ==============================================
 
-Rendering structured text in Android can be achieved in two ways: Either by rendering to a CharSequence of Spannables, 
+Rendering rich text in Android can be achieved in two ways: Either by rendering to a CharSequence of Spannables, 
 or by rendering the native views. This document will describe both ways, and the dependencies for it.
 
 Adding dependencies
@@ -22,8 +22,8 @@ allprojects {
 ```groovy
 dependencies {
   // …
-  implementation 'com.github.contentful:structured-text-renderer.java:master-SNAPSHOT'
-  implementation 'com.github.contentful:contentful.java:add~structured-text-SNAPSHOT'
+  implementation 'com.github.contentful:rich-text-renderer.java:master-SNAPSHOT'
+  implementation 'com.github.contentful:contentful.java:add~rich-text-SNAPSHOT'
 }
 ```
 
@@ -42,11 +42,11 @@ same can be achieved by adding Maven dependencies like so:
 	<dependency>
 	    <groupId>com.github.contentful</groupId>
 	    <artifactId>contentful.java</artifactId>
-	    <version>add~structured-text-SNAPSHOT</version>
+	    <version>add~rich-text-SNAPSHOT</version>
 	</dependency>
 	<dependency>
 	    <groupId>com.github.contentful</groupId>
-	    <artifactId>structured-text-renderer.java</artifactId>
+	    <artifactId>rich-text-renderer.java</artifactId>
 	    <version>master-SNAPSHOT</version>
 	</dependency>
 ```
@@ -55,7 +55,7 @@ Calling Contentful Main SDK
 ---------------------------
 
 Now that the base SDK is in place, the next step is to retrieve (_fetch_) an entry from Contentful,
-containing Structured Text Data. Following code snippet does this by using `SPACE_ID`, `TOKEN` and
+containing Rich Text Data. Following code snippet does this by using `SPACE_ID`, `TOKEN` and
 `ENTRY_ID` as placeholders for the actual content that needs fetching.
 
 ```java
@@ -68,14 +68,14 @@ final CDAEntry entry = client
   .one(ENTRY_ID);
 ```
 
-With the `entry` at hand, getting the `CDAStructuredTextNode`, the base of all Structured Text 
+With the `entry` at hand, getting the `CDARichTextNode`, the base of all Rich Text 
 nodes in the main SDK, is is easy, if the field id is known:
 
 ```java
-final CDAStructuredTextNode node = entry.getField(FIELD_ID);
+final CDARichTextNode node = entry.getField(FIELD_ID);
 ```
 
-The last step includes the conversion of the structured text node into wither spannables or custom views:
+The last step includes the conversion of the rich text node into wither spannables or custom views:
 
 
 > SPANNABLES
@@ -94,13 +94,13 @@ a `Renderer` to the `Processor`.
 ```java
 processor.addRenderer(
   new AndroidRenderer() {
-      boolean check(@Nullable C context, @Nonnull CDAStructuredNode node) {
+      boolean check(@Nullable C context, @Nonnull CDARichNode node) {
         return true;        
       }
 
       @Nullable R render(
           @Nonnull C context,
-          @Nonnull CDAStructuredNode node) {
+          @Nonnull CDARichNode node) {
         return "";
           }
     }
@@ -125,5 +125,5 @@ default renderer will be used. Upon returning the checker returning true, the cu
 renderer will be aborted and the found renderer be used.
 
 For inspiration on how custom renderer might look like, 
-[a look at the source of the default renderer](src/main/java/com/contentful/structured/android/renderer)
+[a look at the source of the default renderer](src/main/java/com/contentful/rich/android/renderer)
  is recommended.

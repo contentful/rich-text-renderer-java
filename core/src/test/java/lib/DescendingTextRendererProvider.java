@@ -1,24 +1,26 @@
 package lib;
 
-import com.contentful.java.cda.structured.CDAStructuredParagraph;
-import com.contentful.java.cda.structured.CDAStructuredText;
-import com.contentful.structured.core.Context;
-import com.contentful.structured.core.Processor;
-import com.contentful.structured.core.RendererProvider;
+import com.contentful.java.cda.rich.CDARichParagraph;
+import com.contentful.java.cda.rich.CDARichText;
+import com.contentful.rich.core.Context;
+import com.contentful.rich.core.Processor;
+import com.contentful.rich.core.RendererProvider;
 
 import java.util.stream.Collectors;
 
-public class DescendingTextRendererProvider implements RendererProvider<Context<String>, String> {
-  @Override public void provide(Processor<Context<String>, String> processor) {
+import javax.annotation.Nonnull;
+
+public class DescendingTextRendererProvider implements RendererProvider<Context<String>, CharSequence> {
+  @Override public void provide(@Nonnull Processor<Context<String>, CharSequence> processor) {
     processor.addRenderer(
-        (context, node) -> node instanceof CDAStructuredText,
-        (context, node) -> ((CDAStructuredText) node).getText()
+        (context, node) -> node instanceof CDARichText,
+        (context, node) -> ((CDARichText) node).getText()
     );
 
     processor.addRenderer(
-        (context, node) -> node instanceof CDAStructuredParagraph,
+        (context, node) -> node instanceof CDARichParagraph,
         (context, node) -> {
-          final CDAStructuredParagraph block = (CDAStructuredParagraph) node;
+          final CDARichParagraph block = (CDARichParagraph) node;
           return "--" + block.getContent().stream().map(processor::render).collect(Collectors.joining());
         }
     );

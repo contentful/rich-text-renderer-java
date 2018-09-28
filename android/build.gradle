@@ -49,7 +49,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':core')
 
-    implementation 'com.github.contentful:contentful.java:eeca2cc618'
+    implementation 'com.github.contentful:contentful.java:add~rich-text-SNAPSHOT'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'androidx.appcompat:appcompat:1.0.0'
 

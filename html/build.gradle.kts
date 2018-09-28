@@ -11,7 +11,7 @@ repositories {
 dependencies {
     implementation(project(":core"))
 
-    implementation("com.github.contentful", "contentful.java", "eeca2cc618")
+    implementation("com.github.contentful", "contentful.java", "add~rich-text-SNAPSHOT")
     implementation("com.google.code.findbugs", "jsr305", "3.0.2")
 
     testImplementation("junit", "junit", "4.12")
