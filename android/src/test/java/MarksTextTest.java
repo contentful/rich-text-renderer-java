@@ -93,7 +93,7 @@ public class MarksTextTest {
   }
 
   @Test
-  public void testItalicHtml() {
+  public void testItalic() {
     final CharSequenceProcessor processor = new CharSequenceProcessor(activity);
 
     final List<CDARichMark> markers = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.contentful.rich.core;
 
+import com.contentful.java.cda.rich.CDARichBlock;
 import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.java.cda.rich.CDARichParagraph;
 
@@ -77,8 +78,8 @@ public class Processor<C extends Context, R> {
    * @return the result in the form given by the renderer.
    */
   @Nullable public R render(@Nonnull CDARichNode node) {
-    if (node instanceof CDARichParagraph) {
-      context.onBlockEntered((CDARichParagraph) node);
+    if (node instanceof CDARichBlock) {
+      context.onBlockEntered((CDARichBlock) node);
       childrenPerDepth.add(0);
     }
 
@@ -100,8 +101,8 @@ public class Processor<C extends Context, R> {
       }
     }
 
-    if (node instanceof CDARichParagraph) {
-      context.onBlockExited((CDARichParagraph) node);
+    if (node instanceof CDARichBlock) {
+      context.onBlockExited((CDARichBlock) node);
       childrenPerDepth.remove(childrenPerDepth.size() - 1);
     }
 

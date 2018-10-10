@@ -1,3 +1,5 @@
+import android.app.Activity;
+
 import com.contentful.java.cda.rich.CDARichDocument;
 import com.contentful.java.cda.rich.CDARichEmbeddedLink;
 import com.contentful.java.cda.rich.CDARichHeading;
@@ -11,20 +13,32 @@ import com.contentful.java.cda.rich.CDARichParagraph;
 import com.contentful.java.cda.rich.CDARichQuote;
 import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.java.cda.rich.CDARichUnorderedList;
-import com.contentful.rich.html.HtmlProcessor;
+import com.contentful.rich.android.CharSequenceProcessor;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.truth.Truth.assertThat;
 import static lib.ContentfulCreator.mockCDAEntry;
 
+@RunWith(RobolectricTestRunner.class)
 public class AllTheThingsTest {
+  private Activity activity;
+
+  @Before
+  public void setup() {
+    activity = Robolectric.setupActivity(Activity.class);
+  }
+
   @Test
   public void allTheNodes() {
-    final HtmlProcessor processor = new HtmlProcessor();
+    final CharSequenceProcessor processor = new CharSequenceProcessor(activity);
 
-    final String result = processor.render(createAllNode());
+    final CharSequence result = processor.render(createAllNode());
 
     assertThat(result).isEqualTo("<div>\n" +
         "  <h1>\n" +

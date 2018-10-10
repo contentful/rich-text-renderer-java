@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="5dp"
     app:cardElevation="2dp"
     >
 
@@ -15,8 +14,8 @@
         android:id="@+id/sample_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:gravity="center_vertical"
+        android:textSize="18sp"
         tools:text="Sample Text"
         />
 </androidx.cardview.widget.CardView>

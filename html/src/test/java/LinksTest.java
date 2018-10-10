@@ -1,3 +1,5 @@
+import com.contentful.java.cda.rich.CDARichBlock;
+import com.contentful.java.cda.rich.CDARichEmbeddedLink;
 import com.contentful.java.cda.rich.CDARichHyperLink;
 import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.html.HtmlProcessor;
@@ -5,10 +7,12 @@ import com.contentful.rich.html.HtmlProcessor;
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;
+import static lib.ContentfulCreator.mockCDAEntry;
 
 public class LinksTest {
+
   @Test
-  public void threeUnorderedElementsListTest() {
+  public void renderLinkTest() {
     final HtmlProcessor processor = new HtmlProcessor();
 
     final CDARichHyperLink link = new CDARichHyperLink("https://contentful.com");
@@ -16,7 +20,25 @@ public class LinksTest {
 
     final String result = processor.render(link);
 
-    assertThat(result).isEqualTo("<a href=\"https://contentful.com\">\n  Some link text<br/>\n</a>\n");
+    assertThat(result).isEqualTo("" +
+        "<a href=\"https://contentful.com\">\n" +
+        "  Some link text<br/>\n" +
+        "</a>\n");
+  }
+
+  @Test
+  public void createEmbeddedLink() {
+    final HtmlProcessor processor = new HtmlProcessor();
+
+    final CDARichBlock link = new CDARichEmbeddedLink(mockCDAEntry());
+    link.getContent().add(new CDARichText("Some embedded text"));
+
+    final String result = processor.render(link);
+
+    assertThat(result).isEqualTo("" +
+        "<div entry=\"CDAEntry{id='fake_id'}\">\n" +
+        "  Some embedded text\n" +
+        "</div>\n");
   }
 
   @Test
@@ -28,6 +50,9 @@ public class LinksTest {
 
     final String result = processor.render(link);
 
-    assertThat(result).isEqualTo("<a href=\"https://contentful.com\">\n  Some link text</a>\n</a>\n");
+    assertThat(result).isEqualTo("" +
+        "<a href=\"https://contentful.com\">\n" +
+        "  Some link text</a>\n" +
+        "</a>\n");
   }
 }

@@ -22,8 +22,8 @@ public class ComplexProcessorTest {
   public void complexListRenderingTest() {
     final Processor<SiblingCountingContext, String> processor = new Processor<>(new SiblingCountingContext());
     processor.addRenderer(
-        (context, node) -> node instanceof CDARichParagraph,
-        (context, node) -> ((CDARichParagraph) node).getContent().stream().map(processor::render).collect(joining("\n"))
+        (context, node) -> node instanceof CDARichBlock,
+        (context, node) -> ((CDARichBlock) node).getContent().stream().map(processor::render).collect(joining("\n"))
     );
     processor.addRenderer(
         (context, node) -> node instanceof CDARichText,

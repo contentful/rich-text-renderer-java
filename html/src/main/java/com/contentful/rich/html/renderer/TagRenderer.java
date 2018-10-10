@@ -1,7 +1,7 @@
 package com.contentful.rich.html.renderer;
 
+import com.contentful.java.cda.rich.CDARichBlock;
 import com.contentful.java.cda.rich.CDARichNode;
-import com.contentful.java.cda.rich.CDARichParagraph;
 import com.contentful.rich.core.Processor;
 import com.contentful.rich.core.Renderer;
 import com.contentful.rich.html.HtmlContext;
@@ -41,8 +41,8 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
   public String render(@Nonnull HtmlContext context, @Nonnull CDARichNode node) {
     final StringBuilder result = new StringBuilder(startTag(node));
 
-    if (node instanceof CDARichParagraph) {
-      for (final CDARichNode item : ((CDARichParagraph) node).getContent()) {
+    if (node instanceof CDARichBlock) {
+      for (final CDARichNode item : ((CDARichBlock) node).getContent()) {
         final String itemResult = processor.render(item);
         if (itemResult != null) {
           if (itemResult.contains("\n")) {
@@ -53,14 +53,14 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
             result.append(context.getIndentation()).append(itemResult).append("\n");
           }
         } else { // null found
-          result.append(context.getIndentation()).append("<!-- ").append("no render accepts <tt>")
+          result.append(context.getIndentation()).append("<!-- ").append("no render accepts '")
               .append(item.getClass().getSimpleName())
-              .append("</tt> with a path of ")
+              .append("' with a path of '")
               .append(context.getPath().stream()
                   .map((x) -> x.getClass().getSimpleName())
                   .collect(Collectors.joining(" > ")))
-              .append(". Please add a corresponding renderer using ")
-              .append("<tt>HtmlRenderer.addRenderer(…)</tt>. -->\n");
+              .append("'. Please add a corresponding renderer using ")
+              .append("'HtmlRenderer.addRenderer(…)'. -->\n");
         }
       }
     }

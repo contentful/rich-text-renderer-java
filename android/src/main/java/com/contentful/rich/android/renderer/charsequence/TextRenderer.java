@@ -15,6 +15,7 @@ import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.android.RichTextContext;
 import com.contentful.rich.android.renderer.AndroidRenderer;
+import com.contentful.rich.core.Processor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,7 +25,11 @@ import static com.contentful.java.cda.rich.CDARichMark.CDARichMarkCode;
 import static com.contentful.java.cda.rich.CDARichMark.CDARichMarkCustom;
 import static com.contentful.java.cda.rich.CDARichMark.CDARichMarkUnderline;
 
-public class TextRenderer implements AndroidRenderer<RichTextContext, CharSequence> {
+public class TextRenderer extends AndroidRenderer<RichTextContext, CharSequence> {
+  public TextRenderer(@Nonnull Processor<RichTextContext, CharSequence> processor) {
+    super(processor);
+  }
+
   @Override public boolean check(@Nullable RichTextContext context, @Nonnull CDARichNode node) {
     return node instanceof CDARichText;
   }

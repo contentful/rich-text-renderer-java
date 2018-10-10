@@ -18,3 +18,7 @@ dependencies {
         archives(it)
     }
 }
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}

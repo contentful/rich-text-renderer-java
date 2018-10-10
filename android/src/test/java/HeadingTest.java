@@ -32,7 +32,7 @@ public class HeadingTest {
 
     final CharSequence result = processor.render(heading);
 
-    assertThat(result.toString()).isEqualTo("heading 1");
+    assertThat(result.toString()).isEqualTo("heading 1\n");
 
     assertThat(result).isInstanceOf(Spannable.class);
     final Spannable spannable = (Spannable) result;
@@ -41,5 +41,17 @@ public class HeadingTest {
     assertThat(spans.length).isEqualTo(1);
     assertThat(spans[0]).isInstanceOf(AbsoluteSizeSpan.class);
     assertThat(((AbsoluteSizeSpan) spans[0]).getSize()).isEqualTo(24);
+  }
+
+  @Test
+  public void notSupportedHeadingWillRenderDefaultText() {
+    final CharSequenceProcessor processor = new CharSequenceProcessor(activity);
+
+    final CDARichHeading heading = new CDARichHeading(-1);
+    heading.getContent().add(new CDARichText("illegal"));
+
+    final CharSequence result = processor.render(heading);
+
+    assertThat(((Spannable) result).getSpans(0, result.length(), Object.class)).hasLength(0);
   }
 }

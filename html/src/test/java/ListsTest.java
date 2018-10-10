@@ -103,7 +103,7 @@ public class ListsTest {
         "  </li>\n" +
         "  <li>\n" +
         "    <p>\n" +
-        "      <\uD83D\uDC51><tt><i><b><u>four</u></b></i></tt></\uD83D\uDC51>\n" +
+        "      <\uD83D\uDC51><code><i><b><u>four</u></b></i></code></\uD83D\uDC51>\n" +
         "    </p>\n" +
         "  </li>\n" +
         "</ul>\n");

@@ -7,7 +7,6 @@ import android.text.style.AbsoluteSizeSpan;
 import com.contentful.java.cda.rich.CDARichHeading;
 import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.android.RichTextContext;
-import com.contentful.rich.android.renderer.AndroidRenderer;
 import com.contentful.rich.core.Processor;
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class HeadingRenderer implements AndroidRenderer<RichTextContext, CharSequence> {
+public class HeadingRenderer extends BlockRenderer {
 
   static private final List<Integer> SIZE_MAP = new ArrayList<>();
 
@@ -29,29 +28,28 @@ public class HeadingRenderer implements AndroidRenderer<RichTextContext, CharSeq
     SIZE_MAP.add(14); // Level 6
   }
 
-  private final Processor<RichTextContext, CharSequence> processor;
-
-  public HeadingRenderer(Processor<RichTextContext, CharSequence> processor) {
-    this.processor = processor;
+  public HeadingRenderer(@Nonnull Processor<RichTextContext, CharSequence> processor) {
+    super(processor);
   }
 
   @Override public boolean check(@Nullable RichTextContext context, @Nonnull CDARichNode node) {
-    return node instanceof CDARichHeading;
+    if (node instanceof CDARichHeading) {
+      final CDARichHeading heading = (CDARichHeading) node;
+      if (heading.getLevel() > 0 && ((CDARichHeading) node).getLevel() < 7) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   @Nullable @Override
-  public CharSequence render(@Nonnull RichTextContext context, @Nonnull CDARichNode node) {
+  public SpannableStringBuilder wrap(@Nonnull CDARichNode node, @Nonnull SpannableStringBuilder builder) {
     final CDARichHeading heading = (CDARichHeading) node;
 
-    final SpannableStringBuilder result = new SpannableStringBuilder();
-
-    for (final CDARichNode childNode : heading.getContent()) {
-      result.append(processor.render(childNode));
-    }
-
     final AbsoluteSizeSpan sizeSpan = new AbsoluteSizeSpan(SIZE_MAP.get(heading.getLevel() - 1), true);
-    result.setSpan(sizeSpan, 0, result.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    builder.setSpan(sizeSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-    return result;
+    return builder;
   }
 }
