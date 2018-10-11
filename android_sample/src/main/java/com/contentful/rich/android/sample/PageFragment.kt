@@ -1,6 +1,7 @@
 package com.contentful.rich.android.sample
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +33,7 @@ class PageFragment : Fragment() {
                 val text = processor.render(item) ?: "???"
 
                 holder.itemView.sample_item_text.text = text
+                holder.itemView.sample_item_text.movementMethod = LinkMovementMethod.getInstance()
             }
 
             override fun getItemCount(): Int = page.document.content.size

@@ -50,7 +50,7 @@ public class ListTest {
     assertThat(result.toString()).isEqualTo(""
         + "• item1\n"
         + "• item2\n"
-        + "• item3\n"
+        + "• item3"
     );
   }
 
@@ -77,7 +77,7 @@ public class ListTest {
     assertThat(result.toString()).isEqualTo(""
         + "1. item1\n"
         + "2. item2\n"
-        + "3. item3\n"
+        + "3. item3"
     );
   }
 
@@ -119,14 +119,13 @@ public class ListTest {
     assertThat(((Spannable) result).getSpans(0, result.length(), Object.class)).hasLength(6);
 
     assertThat(result.toString()).isEqualTo(""
-        + "unordered:\n"
-        + "1. item1\n"
+        + "unordered:1. item1\n"
         + "2. item2\n"
         + "3. ordered:\n"
         + "• item1\n"
         + "• item2\n"
         + "• item3\n"
-        + "4. item3\n"
+        + "4. item3"
     );
   }
 
@@ -168,14 +167,13 @@ public class ListTest {
     assertThat(((Spannable) result).getSpans(0, result.length(), Object.class)).hasLength(6);
 
     assertThat(result.toString()).isEqualTo(""
-        + "unordered:\n"
-        + "• item1\n"
+        + "unordered:• item1\n"
         + "• item2\n"
         + "• ordered:\n"
         + "1. item1\n"
         + "2. item2\n"
         + "3. item3\n"
-        + "• item3\n"
+        + "• item3"
     );
   }
 
@@ -365,7 +363,7 @@ public class ListTest {
         "28. item 26\n" +
         "29. item 27\n" +
         "30. item 28\n" +
-        "31. item 29\n"
+        "31. item 29"
     );
   }
 
@@ -547,7 +545,7 @@ public class ListTest {
         "• item 26\n" +
         "• item 27\n" +
         "• item 28\n" +
-        "• item 29\n"
+        "• item 29"
     );
   }
 

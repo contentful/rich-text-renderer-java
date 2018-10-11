@@ -41,7 +41,9 @@ public class BlockRenderer extends AndroidRenderer<RichTextContext, CharSequence
 
     for (final CDARichNode childNode : block.getContent()) {
       final CharSequence childResult = processor.render(childNode);
-      result.append(childResult);
+      if (childResult != null) {
+        result.append(childResult);
+      }
     }
     childWithNewline(result);
 
@@ -50,16 +52,14 @@ public class BlockRenderer extends AndroidRenderer<RichTextContext, CharSequence
 
   @Nonnull
   protected void childWithNewline(@Nonnull SpannableStringBuilder builder) {
-    if (builder.toString().endsWith("\n\n")) {
-      builder.replace(builder.length() - 2, builder.length(), "\n");
-    } else if (!builder.toString().endsWith("\n")) {
-      builder.append("\n");
+    while (builder.toString().endsWith("\n")) {
+      builder.replace(builder.length() - 1, builder.length(), "");
     }
   }
 
   @Nonnull
-  protected SpannableStringBuilder decorate(@Nonnull RichTextContext context, @Nonnull CDARichNode node, @Nonnull SpannableStringBuilder renderedChildren) {
-    return renderedChildren;
+  protected SpannableStringBuilder decorate(@Nonnull RichTextContext context, @Nonnull CDARichNode node, @Nonnull SpannableStringBuilder builder) {
+    return builder;
   }
 
   @NonNull
@@ -70,9 +70,7 @@ public class BlockRenderer extends AndroidRenderer<RichTextContext, CharSequence
   @Nonnull SpannableStringBuilder indent(
       @Nonnull RichTextContext context,
       @Nonnull CDARichNode node,
-      @Nonnull CharSequence renderedChildren) {
-    final SpannableStringBuilder result = new SpannableStringBuilder(renderedChildren);
-
+      @Nonnull SpannableStringBuilder builder) {
     int lists = 0;
     final List<CDARichNode> path = context.getPath();
     if (path != null) {
@@ -87,12 +85,12 @@ public class BlockRenderer extends AndroidRenderer<RichTextContext, CharSequence
       final CDARichBlock block = (CDARichBlock) node;
       if (block.getContent().size() > 0) {
         if (block.getContent().get(0) instanceof CDARichBlock) {
-          result.append("\n");
+          builder.append("\n");
         }
       }
-      result.setSpan(new LeadingMarginSpan.Standard(lists * 10 /*px*/), 0, renderedChildren.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+      builder.setSpan(new LeadingMarginSpan.Standard(lists * 10 /*px*/), 0, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
-    return result;
+    return builder;
   }
 }

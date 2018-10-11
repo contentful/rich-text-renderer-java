@@ -32,7 +32,7 @@ public class HeadingTest {
 
     final CharSequence result = processor.render(heading);
 
-    assertThat(result.toString()).isEqualTo("heading 1\n");
+    assertThat(result.toString()).isEqualTo("heading 1");
 
     assertThat(result).isInstanceOf(Spannable.class);
     final Spannable spannable = (Spannable) result;

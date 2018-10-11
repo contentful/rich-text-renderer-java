@@ -92,6 +92,14 @@ public class ListRenderer extends BlockRenderer {
     return renderedChildren.insert(0, currentDecorator.decorate(childIndex)).append("\n");
   }
 
+  @Nonnull @Override protected void childWithNewline(@Nonnull SpannableStringBuilder builder) {
+    if (builder.toString().endsWith("\n\n")) {
+      builder.replace(builder.length() - 2, builder.length(), "\n");
+    } else if (!builder.toString().endsWith("\n")) {
+      builder.append("\n");
+    }
+  }
+
   private long getListOfTypeCount(@Nonnull RichTextContext context, CDARichList list) {
     return (context.getPath().stream().filter(new Predicate<CDARichNode>() {
       @Override public boolean test(CDARichNode x) {

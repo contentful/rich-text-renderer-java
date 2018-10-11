@@ -33,7 +33,7 @@ public class QuoteTest {
     final CharSequence result = processor.render(quote);
 
     assertThat(result.toString()).isEqualTo("Edel sei der Mensch,\n" +
-        "Hilfreich und gut! — Johann Wolfgang von Goethe\n");
+        "Hilfreich und gut! — Johann Wolfgang von Goethe");
     assertThat(((Spannable) result).getSpans(0, result.length(), Object.class)).hasLength(1);
   }
 }

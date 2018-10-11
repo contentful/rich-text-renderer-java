@@ -17,5 +17,6 @@
         android:gravity="center_vertical"
         android:textSize="18sp"
         tools:text="Sample Text"
+        android:linksClickable="true"
         />
 </androidx.cardview.widget.CardView>

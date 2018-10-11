@@ -2,6 +2,7 @@ package com.contentful.rich.android;
 
 import com.contentful.rich.android.renderer.charsequence.BlockRenderer;
 import com.contentful.rich.android.renderer.charsequence.HeadingRenderer;
+import com.contentful.rich.android.renderer.charsequence.HyperLinkRenderer;
 import com.contentful.rich.android.renderer.charsequence.ListRenderer;
 import com.contentful.rich.android.renderer.charsequence.QuoteRenderer;
 import com.contentful.rich.android.renderer.charsequence.TextRenderer;
@@ -30,6 +31,7 @@ public class CharSequenceRendererProvider {
         new LowerCaseCharacterDecorator(),
         new UpperCaseRomanNumeralsDecorator()
     ));
+    processor.addRenderer(new HyperLinkRenderer(processor));
     processor.addRenderer(new QuoteRenderer(processor));
     processor.addRenderer(new BlockRenderer(processor));
   }

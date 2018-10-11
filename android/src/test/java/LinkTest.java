@@ -38,7 +38,7 @@ public class LinkTest {
     final CharSequence result = processor.render(link);
 
     assertThat(result).isInstanceOf(Spannable.class);
-    assertThat(result.toString()).isEqualTo("Some link text\n");
+    assertThat(result.toString()).isEqualTo("Some link text");
 
     assertThat(((Spannable) result).getSpans(0, result.length(), Object.class)).hasLength(1);
     assertThat(((Spannable) result).getSpans(0, result.length(), Object.class)[0]).isInstanceOf(URLSpan.class);
@@ -57,7 +57,7 @@ public class LinkTest {
     final CharSequence result = processor.render(link);
 
     assertThat(result).isInstanceOf(Spannable.class);
-    assertThat(result.toString()).isEqualTo("Some link text</a>\n");
+    assertThat(result.toString()).isEqualTo("Some link text</a>");
 
     final Object[] spans = ((Spannable) result).getSpans(0, result.length(), Object.class);
     assertThat(spans).hasLength(1);
@@ -77,7 +77,7 @@ public class LinkTest {
     final CharSequence result = processor.render(link);
 
     assertThat(result).isInstanceOf(Spannable.class);
-    assertThat(result.toString()).isEqualTo("My embedded entry\n");
+    assertThat(result.toString()).isEqualTo("My embedded entry");
 
     final Object[] spans = ((Spannable) result).getSpans(0, result.length(), Object.class);
     assertThat(spans).hasLength(1);
