@@ -19,6 +19,7 @@ val PAGES: Array<Page> = arrayOf(
                         CDARichText("Underline", listOf(CDARichMarkUnderline())),
                         CDARichText("final String code;", listOf(CDARichMarkCode())),
                         CDARichText("CustomText", listOf(CDARichMarkCustom("custom"))),
+                        CDARichHorizontalRule(),
                         CDARichText("All in all",
                                 listOf(
                                         CDARichMarkCustom("custom"),

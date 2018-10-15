@@ -3,6 +3,7 @@ package com.contentful.rich.android;
 import com.contentful.rich.android.renderer.charsequence.BlockRenderer;
 import com.contentful.rich.android.renderer.charsequence.EmbeddedLinkRenderer;
 import com.contentful.rich.android.renderer.charsequence.HeadingRenderer;
+import com.contentful.rich.android.renderer.charsequence.HorizontalRuleRenderer;
 import com.contentful.rich.android.renderer.charsequence.HyperLinkRenderer;
 import com.contentful.rich.android.renderer.charsequence.ListRenderer;
 import com.contentful.rich.android.renderer.charsequence.QuoteRenderer;
@@ -21,6 +22,7 @@ import javax.annotation.Nonnull;
  */
 public class CharSequenceRendererProvider {
   public void provide(@Nonnull CharSequenceProcessor processor) {
+    processor.addRenderer(new HorizontalRuleRenderer(processor));
     processor.addRenderer(new TextRenderer(processor));
     processor.addRenderer(new HeadingRenderer(processor));
     processor.addRenderer(new ListRenderer(processor, new BulletDecorator()));
