@@ -1,7 +1,6 @@
 import android.app.Activity;
-import android.graphics.BlurMaskFilter;
 import android.text.Spannable;
-import android.text.style.MaskFilterSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
 
 import com.contentful.java.cda.rich.CDARichEmbeddedLink;
@@ -77,13 +76,10 @@ public class LinkTest {
     final CharSequence result = processor.render(link);
 
     assertThat(result).isInstanceOf(Spannable.class);
-    assertThat(result.toString()).isEqualTo("My embedded entry");
+    assertThat(result.toString()).isEqualTo("TitleMy embedded entry");
 
     final Object[] spans = ((Spannable) result).getSpans(0, result.length(), Object.class);
     assertThat(spans).hasLength(1);
-    assertThat(spans[0]).isInstanceOf(MaskFilterSpan.class);
-
-    final MaskFilterSpan span = (MaskFilterSpan) spans[0];
-    assertThat(span.getMaskFilter()).isInstanceOf(BlurMaskFilter.class);
+    assertThat(spans[0]).isInstanceOf(ForegroundColorSpan.class);
   }
 }

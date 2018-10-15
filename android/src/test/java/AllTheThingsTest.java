@@ -40,67 +40,13 @@ public class AllTheThingsTest {
 
     final CharSequence result = processor.render(createAllNode());
 
-    assertThat(result).isEqualTo("<div>\n" +
-        "  <h1>\n" +
-        "    heading - 1\n" +
-        "  </h1>\n" +
-        "  <h2>\n" +
-        "    heading - 2\n" +
-        "  </h2>\n" +
-        "  <h3>\n" +
-        "    heading - 3\n" +
-        "  </h3>\n" +
-        "  <h4>\n" +
-        "    heading - 4\n" +
-        "  </h4>\n" +
-        "  <h5>\n" +
-        "    heading - 5\n" +
-        "  </h5>\n" +
-        "  <h6>\n" +
-        "    heading - 6\n" +
-        "  </h6>\n" +
-        "  <hr/>\n" +
-        "  <div entry=\"CDAEntry{id='fake_id'}\">\n" +
-        "  </div>\n" +
-        "  <a href=\"https://contentful.com/\">\n" +
-        "    Hyper hyper\n" +
-        "  </a>\n" +
-        "  <top><code><i><b><u>ALL THE TEXT MARKS!</u></b></i></code></top>\n" +
-        "  <ol>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "  </ol>\n" +
-        "  <ul>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "  </ul>\n" +
-        "  <p>\n" +
-        "    Paragraph\n" +
-        "  </p>\n" +
-        "  <blockquote>\n" +
-        "    Famous quote\n" +
-        "  </blockquote>\n" +
-        "  <!-- no render accepts 'CDARichNode' with a path of " +
-        "'CDARichDocument'. Please add a corresponding renderer using " +
-        "'HtmlRenderer.addRenderer(…)'. -->\n" +
-        "</div>\n");
+    assertThat(result.toString()).isEqualTo("" +
+        "heading - 1heading - 2heading - 3heading - 4heading - 5heading - 6TitleHyper hyperALL THE TEXT MARKS!1. some list item content\n" +
+        "1. some list item content\n" +
+        "1. some list item content• some list item content\n" +
+        "• some list item content\n" +
+        "• some list item content\n" +
+        "• some list item contentParagraphFamous quote");
   }
 
   private CDARichNode createAllNode() {

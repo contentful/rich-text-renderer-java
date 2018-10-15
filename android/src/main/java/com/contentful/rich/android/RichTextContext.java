@@ -15,6 +15,15 @@ public class RichTextContext extends Context<List<CDARichNode>> {
 
   private final List<CDARichNode> path = new ArrayList<>();
   private int siblingIndex = -1;
+  private final android.content.Context androidContext;
+
+  public RichTextContext(android.content.Context androidContext) {
+    this.androidContext = androidContext;
+  }
+
+  public android.content.Context getAndroidContext() {
+    return this.androidContext;
+  }
 
   @Override public void onBlockEntered(@Nonnull CDARichBlock block) {
     super.onBlockEntered(block);

@@ -19,7 +19,7 @@ public class CharSequenceProcessor extends Processor<RichTextContext, CharSequen
    * @param context the android Context used for further processing of the nodes.
    */
   public CharSequenceProcessor(Context context) {
-    super(new RichTextContext());
+    super(new RichTextContext(context));
     this.androidContext = context;
 
     new CharSequenceRendererProvider().provide(this);
