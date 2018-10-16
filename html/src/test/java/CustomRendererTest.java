@@ -1,5 +1,6 @@
 import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.java.cda.rich.CDARichParagraph;
+import com.contentful.rich.html.HtmlContext;
 import com.contentful.rich.html.HtmlProcessor;
 import com.contentful.rich.html.renderer.TagRenderer;
 
@@ -18,7 +19,7 @@ public class CustomRendererTest {
 
     final CDARichParagraph paragraph = new CDARichParagraph();
 
-    final String result = processor.render(paragraph);
+    final String result = processor.process(new HtmlContext(), paragraph);
 
     assertThat(result).isEqualTo("<pete>\n</pete>\n");
   }
@@ -33,7 +34,7 @@ public class CustomRendererTest {
 
     final CDARichNode node = new CDARichNode();
 
-    final String result = processor.render(node);
+    final String result = processor.process(new HtmlContext(), node);
 
     assertThat(result).isEqualTo("<\uD83E\uDD37>\n</\uD83E\uDD37>\n");
   }

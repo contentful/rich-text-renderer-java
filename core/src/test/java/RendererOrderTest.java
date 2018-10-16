@@ -12,7 +12,7 @@ public class RendererOrderTest {
 
   @Before
   public void setup() {
-    processor = new Processor<>(new Context<>());
+    processor = new Processor<>();
     processor.addRenderer(
         (context, node) -> true,
         (context, node) -> "catch all"
@@ -26,7 +26,7 @@ public class RendererOrderTest {
         (context, node) -> "overridden"
     );
 
-    final String result = processor.render(new CDARichNode());
+    final String result = processor.process(new Context<>(), new CDARichNode());
     assertThat(result).isEqualTo("overridden");
   }
 
@@ -37,7 +37,7 @@ public class RendererOrderTest {
         (context, node) -> "not overridden"
     );
 
-    final String result = processor.render(new CDARichNode());
+    final String result = processor.process(new Context<>(), new CDARichNode());
     assertThat(result).isEqualTo("catch all");
   }
 

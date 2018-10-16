@@ -103,30 +103,21 @@ val PAGES: Array<Page> = arrayOf(
         Page(name = "Quotes",
                 document = CDARichDocument().addAll(
                         CDARichBlock().addAll(
-                                CDARichText("Quotes From "),
-                                CDARichText("Johann Wolfgang von Goethe", listOf(CDARichMark.CDARichMarkBold())),
-                                CDARichText(": Faust", listOf(CDARichMark.CDARichMarkItalic()))
+                                CDARichText("Quotes from "),
+                                CDARichText("Famous", listOf(CDARichMark.CDARichMarkBold())),
+                                CDARichText(" People", listOf(CDARichMark.CDARichMarkItalic()))
                         ),
                         CDARichQuote().addAll(
-                                CDARichText("Ihr naht euch wieder, schwankende Gestalten,\n" +
-                                        "Die früh sich einst dem trüben Blick gezeigt.\n" +
-                                        "Versuch ich wohl, euch diesmal festzuhalten?\n" +
-                                        "Fühl ich mein Herz noch jenem Wahn geneigt?\n" +
-                                        "Ihr drängt euch zu! nun gut, so mögt ihr walten,\n" +
-                                        "Wie ihr aus Dunst und Nebel um mich steigt;\n" +
-                                        "Mein Busen fühlt sich jugendlich erschüttert\n" +
-                                        "Vom Zauberhauch, der euren Zug umwittert.", listOf(CDARichMark.CDARichMarkCode())
-                                ),
-                                CDARichText("Ihr bringt mit euch die Bilder froher Tage,\n" +
-                                        "Und manche liebe Schatten steigen auf;\n" +
-                                        "Gleich einer alten, halbverklungnen Sage\n" +
-                                        "Kommt erste Lieb und Freundschaft mit herauf;\n" +
-                                        "Der Schmerz wird neu, es wiederholt die Klage\n" +
-                                        "Des Lebens labyrinthisch irren Lauf,\n" +
-                                        "Und nennt die Guten, die, um schöne Stunden\n" +
-                                        "Vom Glück getäuscht, vor mir hinweggeschwunden."
-                                        , listOf(CDARichMark.CDARichMarkCode())
-                                )
+                                CDARichText("You know you’re in love when you can’t fall asleep because reality is finally better than your dreams."),
+                                CDARichText("- Dr. Suess", listOf(CDARichMark.CDARichMarkItalic()))
+                        ),
+                        CDARichQuote().addAll(
+                                CDARichText("I’m selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can’t handle me at my worst, then you sure as hell don’t deserve me at my best."),
+                                CDARichText("- Marilyn Monroe", listOf(CDARichMark.CDARichMarkItalic()))
+                        ),
+                        CDARichQuote().addAll(
+                                CDARichText("Twenty years from now you will be more disappointed by the things that you didn’t do than by the ones you did do."),
+                                CDARichText("- Mark Twain", listOf(CDARichMark.CDARichMarkItalic()))
                         )
                 )
 
@@ -134,7 +125,7 @@ val PAGES: Array<Page> = arrayOf(
         Page(name = "Links", document = CDARichDocument().addAll(
                 CDARichHyperLink("https://www.google.com/search?hl=en&site=imghp&tbm=isch&source=hp&q=cats")
                         .addAll(
-                                CDARichText("Hyperlink to cats.")
+                                CDARichText("Hyperlink to cats")
                         ),
                 CDARichEmbeddedLink(mockCDAEntry())
                         .addAll(

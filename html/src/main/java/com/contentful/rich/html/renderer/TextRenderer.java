@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * This class will take a {@see CDARichText} node and render a html representation of it.
+ * This class will take a {@see CDARichText} node and process a html representation of it.
  */
 public class TextRenderer implements Renderer<HtmlContext, String> {
   /**

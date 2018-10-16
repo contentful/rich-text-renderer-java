@@ -69,18 +69,30 @@ final CDAEntry entry = client
 ```
 
 With the `entry` at hand, getting the `CDARichTextNode`, the base of all Rich Text 
-nodes in the main SDK, is is easy, if the field id is known:
+nodes in the main SDK, is easy if the field id is known:
 
 ```java
 final CDARichTextNode node = entry.getField(FIELD_ID);
 ```
 
-The last step includes the conversion of the rich text node into wither spannables or custom views:
+The last step includes the conversion of the rich text node into wither spannables or custom views. Following code shows
+how to create renderers to create charsequences or native android views:
 
+```java
+final AndroidProcessor<CharSequence> sequenceProcessor = AndroidProcessor.creatingCharSequences();
+// or
+final AndroidProcessor<View> viewProcessor = AndroidProcessor.creatingNativeViews();
+```
 
-> SPANNABLES
+With those two instances at hand, you can create a context and render the desired output:
 
-> CUSTOM VIEWS
+```java
+final AndroidContext context = new AndroidContext(activity.getContext());
+
+final CharSequence result = sequenceProcessor.process(context, node);
+// or
+final View result = viewProcessor.process(context, node);
+```
 
 Adding Custom Renderers
 -----------------------

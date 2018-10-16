@@ -7,10 +7,10 @@ import com.contentful.rich.core.Processor;
  */
 public class HtmlProcessor extends Processor<HtmlContext, String> {
   /**
-   * Construct the processor.
+   * Construct the processor, including all html renderer.
    */
   public HtmlProcessor() {
-    super(new HtmlContext());
+    super();
 
     new HtmlRendererProvider().provide(this);
   }

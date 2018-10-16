@@ -1,7 +1,6 @@
 package com.contentful.rich.core;
 
 import com.contentful.java.cda.rich.CDARichBlock;
-import com.contentful.java.cda.rich.CDARichNode;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,14 +26,6 @@ public class Context<T> {
    * @param block the block node exited
    */
   public void onBlockExited(@Nonnull CDARichBlock block) {
-  }
-
-  /**
-   * This method gets called by the {@see Processor} when a new sibling was entered.
-   *
-   * @param node the block node exited
-   */
-  public void onSiblingEncountered(@Nonnull CDARichNode node, int index) {
   }
 
   /**

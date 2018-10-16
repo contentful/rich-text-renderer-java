@@ -1,5 +1,4 @@
 import com.contentful.java.cda.rich.CDARichBlock;
-import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.java.cda.rich.CDARichParagraph;
 import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.core.Context;
@@ -22,17 +21,18 @@ public class ProcessorTest {
 
   @Test
   public void renderTextTest() {
-    final Processor<Context<String>, CharSequence> processor = new Processor<>(new Context<>());
+    final Processor<Context<String>, CharSequence> processor = new Processor<>();
     new DescendingTextRendererProvider().provide(processor);
 
-    final CharSequence result = processor.render(new CDARichText("Foo"));
+    final CharSequence result = processor.process(new Context<>(), new CDARichText("Foo"));
 
     assertThat(result).isEqualTo("Foo");
   }
 
   @Test
   public void contextFactoryGetsNotInvolvedInTexts() {
-    final Processor<Context<String>, CharSequence> processor = new Processor<>(new Context<String>() {
+    final Processor<Context<String>, CharSequence> processor = new Processor<>();
+    final Context<String> context = new Context<String>() {
       @Override public void onBlockEntered(@Nonnull CDARichBlock paragraph) {
         fail("No block to be entered");
       }
@@ -41,29 +41,26 @@ public class ProcessorTest {
         fail("No block to be exited");
       }
 
-      @Override public void onSiblingEncountered(@Nonnull CDARichNode node, int index) {
-        // ignore siblings
-      }
-
       @Override @Nonnull public String getPath() {
         return "Context!";
       }
-    });
+    };
+
     new DescendingTextRendererProvider().provide(processor);
 
-    final CharSequence result = processor.render(new CDARichText("Foo"));
+    final CharSequence result = processor.process(context, new CDARichText("Foo"));
     assertThat(result).isEqualTo("Foo");
   }
 
   @Test
   public void nestingTest() {
-    final Processor<Context<String>, CharSequence> processor = new Processor<>(new Context<>());
+    final Processor<Context<String>, CharSequence> processor = new Processor<>();
     new DescendingTextRendererProvider().provide(processor);
 
     final CDARichParagraph paragraph = new CDARichParagraph();
     paragraph.getContent().add(new CDARichText("Foo"));
 
-    final CharSequence result = processor.render(paragraph);
+    final CharSequence result = processor.process(new Context<>(), paragraph);
     assertThat(result).isEqualTo("--Foo");
   }
 
@@ -71,7 +68,8 @@ public class ProcessorTest {
   public void contextFactoryMethodsAreCalledTest() {
     final List<String> events = new ArrayList<>();
 
-    final Processor<Context<String>, CharSequence> processor = new Processor<>(new Context<String>() {
+    final Processor<Context<String>, CharSequence> processor = new Processor<>();
+    final Context<String> context = new Context<String>() {
       @Override public void onBlockEntered(@Nonnull CDARichBlock block) {
         events.add("entered");
       }
@@ -80,14 +78,11 @@ public class ProcessorTest {
         events.add("exited");
       }
 
-      @Override public void onSiblingEncountered(@Nonnull CDARichNode node, int index) {
-        events.add("sibling " + index);
-      }
-
       @Nullable @Override public String getPath() {
         return null;
       }
-    });
+    };
+
     new DescendingTextRendererProvider().provide(processor);
 
     final CDARichParagraph paragraph = new CDARichParagraph();
@@ -95,9 +90,9 @@ public class ProcessorTest {
     paragraph.getContent().add(new CDARichText("constant text"));
     paragraph.getContent().add(new CDARichParagraph());
 
-    processor.render(paragraph);
+    processor.process(context, paragraph);
 
-    assertThat(events).containsAllIn(new String[]{"entered", "sibling 0", "sibling 1", "sibling 2", "entered", "sibling 0", "exited", "exited"});
+    assertThat(events).containsAllIn(new String[]{"entered", "entered", "exited", "exited"});
   }
 
 }

@@ -1,5 +1,6 @@
 import com.contentful.java.cda.rich.CDARichMark;
 import com.contentful.java.cda.rich.CDARichText;
+import com.contentful.rich.html.HtmlContext;
 import com.contentful.rich.html.HtmlProcessor;
 
 import org.junit.Test;
@@ -14,8 +15,9 @@ public class MarksTextTest {
   @Test
   public void noMarksTest() {
     final HtmlProcessor processor = new HtmlProcessor();
+    final HtmlContext context = new HtmlContext();
 
-    final String result = processor.render(new CDARichText("text"));
+    final String result = processor.process(context, new CDARichText("text"));
 
     assertThat(result).isEqualTo("text\n");
   }
@@ -23,11 +25,12 @@ public class MarksTextTest {
   @Test
   public void boldTextTest() {
     final HtmlProcessor processor = new HtmlProcessor();
+    final HtmlContext context = new HtmlContext();
 
     final List<CDARichMark> markers = new ArrayList<>();
     markers.add(new CDARichMark.CDARichMarkBold());
 
-    final String result = processor.render(new CDARichText("BoldText", markers));
+    final String result = processor.process(context, new CDARichText("BoldText", markers));
 
     assertThat(result).isEqualTo("<b>BoldText</b>\n");
   }
@@ -35,11 +38,12 @@ public class MarksTextTest {
   @Test
   public void underlineTextTest() {
     final HtmlProcessor processor = new HtmlProcessor();
+    final HtmlContext context = new HtmlContext();
 
     final List<CDARichMark> markers = new ArrayList<>();
     markers.add(new CDARichMark.CDARichMarkUnderline());
 
-    final String result = processor.render(new CDARichText("Underlined", markers));
+    final String result = processor.process(context, new CDARichText("Underlined", markers));
 
     assertThat(result).isEqualTo("<u>Underlined</u>\n");
   }
@@ -47,11 +51,12 @@ public class MarksTextTest {
   @Test
   public void testItalicHtml() {
     final HtmlProcessor processor = new HtmlProcessor();
+    final HtmlContext context = new HtmlContext();
 
     final List<CDARichMark> markers = new ArrayList<>();
     markers.add(new CDARichMark.CDARichMarkItalic());
 
-    final String result = processor.render(new CDARichText("Italic", markers));
+    final String result = processor.process(context, new CDARichText("Italic", markers));
 
     assertThat(result).isEqualTo("<i>Italic</i>\n");
   }
@@ -59,11 +64,12 @@ public class MarksTextTest {
   @Test
   public void codeTextTest() {
     final HtmlProcessor processor = new HtmlProcessor();
+    final HtmlContext context = new HtmlContext();
 
     final List<CDARichMark> markers = new ArrayList<>();
     markers.add(new CDARichMark.CDARichMarkCode());
 
-    final String result = processor.render(new CDARichText("final String code;", markers));
+    final String result = processor.process(context, new CDARichText("final String code;", markers));
 
     assertThat(result).isEqualTo("<code>final String code;</code>\n");
   }
@@ -71,11 +77,12 @@ public class MarksTextTest {
   @Test
   public void customTextTest() {
     final HtmlProcessor processor = new HtmlProcessor();
+    final HtmlContext context = new HtmlContext();
 
     final List<CDARichMark> markers = new ArrayList<>();
     markers.add(new CDARichMark.CDARichMarkCustom("🧀"));
 
-    final String result = processor.render(new CDARichText("🐭", markers));
+    final String result = processor.process(context, new CDARichText("🐭", markers));
 
     assertThat(result).isEqualTo("<🧀>🐭</🧀>\n");
   }
@@ -83,6 +90,7 @@ public class MarksTextTest {
   @Test
   public void allTextTest() {
     final HtmlProcessor processor = new HtmlProcessor();
+    final HtmlContext context = new HtmlContext();
 
     final List<CDARichMark> markers = new ArrayList<>();
     markers.add(new CDARichMark.CDARichMarkCustom("custom"));
@@ -92,7 +100,7 @@ public class MarksTextTest {
     markers.add(new CDARichMark.CDARichMarkUnderline());
     markers.add(new CDARichMark.CDARichMarkCustom("span"));
 
-    final String result = processor.render(new CDARichText("All in all", markers));
+    final String result = processor.process(context, new CDARichText("All in all", markers));
 
     assertThat(result).isEqualTo("<span><u><code><b><i><custom>All in all</custom></i></b></code></u></span>\n");
   }

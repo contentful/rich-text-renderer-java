@@ -79,7 +79,8 @@ The last step includes the conversion of the rich text node to an html string:
 
 ```java
 final HtmlProcessor processor = new HtmlProcessor();
-final String html = processor.render(node);
+final HtmlContext context = new HtmlContext();
+final String html = processor.render(context, node);
 ```
 
 The `html` variable now contains the html representation of the node.

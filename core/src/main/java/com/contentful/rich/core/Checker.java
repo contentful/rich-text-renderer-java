@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 public interface Checker<C> {
 
   /**
-   * Return true if the associated renderer can render the node.
+   * Return true if the associated renderer can process the node.
    *
    * @param context context this check should be performed in
    * @param node    node to be checked

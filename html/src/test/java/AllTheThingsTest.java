@@ -11,6 +11,7 @@ import com.contentful.java.cda.rich.CDARichParagraph;
 import com.contentful.java.cda.rich.CDARichQuote;
 import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.java.cda.rich.CDARichUnorderedList;
+import com.contentful.rich.html.HtmlContext;
 import com.contentful.rich.html.HtmlProcessor;
 
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class AllTheThingsTest {
   public void allTheNodes() {
     final HtmlProcessor processor = new HtmlProcessor();
 
-    final String result = processor.render(createAllNode());
+    final String result = processor.process(new HtmlContext(), createAllNode());
 
     assertThat(result).isEqualTo("<div>\n" +
         "  <h1>\n" +
@@ -83,7 +84,7 @@ public class AllTheThingsTest {
         "  <blockquote>\n" +
         "    Famous quote\n" +
         "  </blockquote>\n" +
-        "  <!-- no render accepts 'CDARichNode' with a path of " +
+        "  <!-- no process accepts 'CDARichNode' with a path of " +
         "'CDARichDocument'. Please add a corresponding renderer using " +
         "'HtmlRenderer.addRenderer(…)'. -->\n" +
         "</div>\n");

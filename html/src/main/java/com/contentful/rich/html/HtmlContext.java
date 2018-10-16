@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * The HTML Context: saving all html nodes up to the root.
  */
 public class HtmlContext extends Context<List<CDARichNode>> {
-  final List<CDARichNode> path = new ArrayList<>();
+  private final List<CDARichNode> path = new ArrayList<>();
   final String indentation;
 
   /**
@@ -55,16 +55,6 @@ public class HtmlContext extends Context<List<CDARichNode>> {
    */
   @Override public void onBlockExited(@Nonnull CDARichBlock block) {
     path.remove(path.size() - 1);
-  }
-
-  /**
-   * Once a sibling is found, this method will get called.
-   *
-   * @param node  the block node exited
-   * @param index the index of the child currently visited.
-   */
-  @Override
-  public void onSiblingEncountered(@Nonnull CDARichNode node, int index) {
   }
 
   /**

@@ -2,7 +2,6 @@ package com.contentful.rich.core;
 
 import com.contentful.java.cda.rich.CDARichBlock;
 import com.contentful.java.cda.rich.CDARichNode;
-import com.contentful.java.cda.rich.CDARichParagraph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +26,11 @@ public class Processor<C extends Context, R> {
 
   @Nonnull
   private final List<CheckingRenderer<C, R>> nodeRenderer = new ArrayList<>();
-  @Nonnull
-  private C context;
-  @Nonnull
-  private List<Integer> childrenPerDepth = new ArrayList<>();
 
   /**
    * Create a new empty processor.
    */
-  public Processor(@Nonnull C context) {
-    childrenPerDepth.add(0);
-    this.context = context;
+  public Processor() {
   }
 
   /**
@@ -72,15 +65,14 @@ public class Processor<C extends Context, R> {
   /**
    * Start the node rendering process.
    * <p>
-   * This process will render the node and all of it's child nodes by using the added renderer.
+   * This process will process the node and all of it's child nodes by using the added renderer.
    *
    * @param node a not null node to be rendered.
    * @return the result in the form given by the renderer.
    */
-  @Nullable public R render(@Nonnull CDARichNode node) {
+  @Nullable public R process(@Nonnull C context, @Nonnull CDARichNode node) {
     if (node instanceof CDARichBlock) {
       context.onBlockEntered((CDARichBlock) node);
-      childrenPerDepth.add(0);
     }
 
     R result = null;
@@ -88,11 +80,6 @@ public class Processor<C extends Context, R> {
       final Checker<C> checker = pair.checker;
 
       if (checker.check(context, node)) {
-        final int lastChildIndex = childrenPerDepth.size() - 1;
-        final Integer lastChildrenCount = childrenPerDepth.get(lastChildIndex);
-        context.onSiblingEncountered(node, lastChildrenCount);
-        childrenPerDepth.set(lastChildIndex, lastChildrenCount + 1);
-
         final Renderer<C, R> renderer = pair.renderer;
         result = renderer.render(context, node);
         if (result != null) {
@@ -103,7 +90,6 @@ public class Processor<C extends Context, R> {
 
     if (node instanceof CDARichBlock) {
       context.onBlockExited((CDARichBlock) node);
-      childrenPerDepth.remove(childrenPerDepth.size() - 1);
     }
 
     return result;

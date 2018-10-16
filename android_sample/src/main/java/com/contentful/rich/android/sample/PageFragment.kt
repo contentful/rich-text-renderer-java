@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.contentful.rich.android.CharSequenceProcessor
+import com.contentful.rich.android.AndroidContext
+import com.contentful.rich.android.AndroidProcessor
 import kotlinx.android.synthetic.main.fragment_page.view.*
 import kotlinx.android.synthetic.main.sample_item.view.*
 
@@ -29,8 +30,9 @@ class PageFragment : Fragment() {
             override fun onBindViewHolder(holder: Holder, position: Int) {
                 val item = page.document.content[position]
 
-                val processor = CharSequenceProcessor(context)
-                val text = processor.render(item) ?: "???"
+                val processor = AndroidProcessor.creatingCharSequences()
+                val context = AndroidContext(context)
+                val text = processor.process(context, item) ?: "???"
 
                 holder.itemView.sample_item_text.text = text
                 holder.itemView.sample_item_text.movementMethod = LinkMovementMethod.getInstance()

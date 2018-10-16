@@ -4,6 +4,7 @@ import com.contentful.java.cda.rich.CDARichOrderedList;
 import com.contentful.java.cda.rich.CDARichParagraph;
 import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.java.cda.rich.CDARichUnorderedList;
+import com.contentful.rich.html.HtmlContext;
 import com.contentful.rich.html.HtmlProcessor;
 
 import org.junit.Test;
@@ -17,13 +18,14 @@ public class ListsTest {
   @Test
   public void threeUnorderedElementsListTest() {
     final HtmlProcessor processor = new HtmlProcessor();
+    final HtmlContext context = new HtmlContext();
 
     final CDARichUnorderedList list = new CDARichUnorderedList();
     list.getContent().add(textListItem("one"));
     list.getContent().add(textListItem("two"));
     list.getContent().add(textListItem("three"));
 
-    final String result = processor.render(list);
+    final String result = processor.process(context, list);
 
     assertThat(result).isEqualTo(
         "<ul>\n" +
@@ -48,6 +50,7 @@ public class ListsTest {
   @Test
   public void threeUnorderedElementsListAndOneNestedOrdered() {
     final HtmlProcessor processor = new HtmlProcessor();
+    final HtmlContext context = new HtmlContext();
 
     final CDARichOrderedList orderedList = new CDARichOrderedList();
     orderedList.getContent().add(textListItem("a"));
@@ -62,9 +65,9 @@ public class ListsTest {
     unorderedList.getContent().add(textListItem("two"));
     unorderedList.getContent().add(textListItem("three"));
     unorderedList.getContent().add(orderedListListItem);
-    unorderedList.getContent().add(beautifylTextItem("four"));
+    unorderedList.getContent().add(beautifyTextItem("four"));
 
-    final String result = processor.render(unorderedList);
+    final String result = processor.process(context, unorderedList);
 
     assertThat(result).isEqualTo("<ul>\n" +
         "  <li>\n" +
@@ -117,7 +120,7 @@ public class ListsTest {
     return item;
   }
 
-  private CDARichListItem beautifylTextItem(String text) {
+  private CDARichListItem beautifyTextItem(String text) {
     final CDARichParagraph paragraph = new CDARichParagraph();
     final List<CDARichMark> allTheMarks = new ArrayList<>();
     allTheMarks.add(new CDARichMark.CDARichMarkUnderline());

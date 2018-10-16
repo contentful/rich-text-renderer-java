@@ -15,7 +15,6 @@ import com.contentful.java.cda.rich.CDARichUnorderedList;
 import com.contentful.rich.core.Checker;
 import com.contentful.rich.core.Processor;
 import com.contentful.rich.core.Renderer;
-import com.contentful.rich.core.RendererProvider;
 import com.contentful.rich.html.renderer.DynamicTagRenderer;
 import com.contentful.rich.html.renderer.TagRenderer;
 import com.contentful.rich.html.renderer.TagWithArgumentsRenderer;
@@ -31,16 +30,16 @@ import javax.annotation.Nonnull;
  * from rich text.
  *
  * @see Processor#addRenderer(Checker, Renderer)
- * @see Processor#render(CDARichNode)
+ * @see Processor#process(com.contentful.rich.core.Context, CDARichNode)
  */
-public class HtmlRendererProvider implements RendererProvider<HtmlContext, String> {
+class HtmlRendererProvider {
 
   /**
    * Call this method with a processor to add all default html renderer.
    *
    * @param processor the processor to be filled up with renderer.
    */
-  @Override public void provide(@Nonnull Processor<HtmlContext, String> processor) {
+  void provide(@Nonnull Processor<HtmlContext, String> processor) {
     processor.addRenderer(
         (context, node) -> node instanceof CDARichText,
         new TextRenderer()

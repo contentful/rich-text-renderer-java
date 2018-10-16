@@ -43,7 +43,7 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
 
     if (node instanceof CDARichBlock) {
       for (final CDARichNode item : ((CDARichBlock) node).getContent()) {
-        final String itemResult = processor.render(item);
+        final String itemResult = processor.process(context, item);
         if (itemResult != null) {
           if (itemResult.contains("\n")) {
             for (final String line : itemResult.split("\n")) {
@@ -53,7 +53,7 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
             result.append(context.getIndentation()).append(itemResult).append("\n");
           }
         } else { // null found
-          result.append(context.getIndentation()).append("<!-- ").append("no render accepts '")
+          result.append(context.getIndentation()).append("<!-- ").append("no process accepts '")
               .append(item.getClass().getSimpleName())
               .append("' with a path of '")
               .append(context.getPath().stream()

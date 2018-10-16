@@ -9,6 +9,7 @@
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:padding="?android:attr/listPreferredItemPaddingEnd"
     android:textColor="@android:color/white"
+    style="?android:attr/textAppearanceSearchResultTitle"
     tools:background="@android:color/darker_gray"
     tools:text="Sample Text"
     />
