@@ -2,7 +2,6 @@ package views;
 
 import android.app.Activity;
 import android.graphics.Typeface;
-import android.text.Spannable;
 import android.text.SpannedString;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.StyleSpan;
@@ -79,17 +78,17 @@ public class MarksTextTest {
     assertThat(content).isNotNull();
 
     final ArrayList<View> views = new ArrayList<>();
-    content.findViewsWithText(views, "text", View.FIND_VIEWS_WITH_TEXT);
+    content.findViewsWithText(views, "BoldText", View.FIND_VIEWS_WITH_TEXT);
     assertThat(views).hasSize(1);
     assertThat(views.get(0)).isInstanceOf(TextView.class);
 
     final CharSequence sequence = ((TextView) views.get(0)).getText();
     assertThat(sequence).isNotNull();
     assertThat(sequence).isInstanceOf(SpannedString.class);
-    assertThat(sequence.toString()).isEqualTo("text");
+    assertThat(sequence.toString()).isEqualTo("BoldText");
 
-    final Spannable spannable = (Spannable) sequence;
-    final Object[] spans = spannable.getSpans(0, spannable.length(), Object.class);
+    final SpannedString spannedString = (SpannedString) sequence;
+    final Object[] spans = spannedString.getSpans(0, spannedString.length(), Object.class);
     assertThat(spans.length).isEqualTo(1);
 
     final Object span = spans[0];
@@ -114,19 +113,19 @@ public class MarksTextTest {
     assertThat(content).isNotNull();
 
     final ArrayList<View> views = new ArrayList<>();
-    content.findViewsWithText(views, "text", View.FIND_VIEWS_WITH_TEXT);
+    content.findViewsWithText(views, "Underlined", View.FIND_VIEWS_WITH_TEXT);
     assertThat(views).hasSize(1);
     assertThat(views.get(0)).isInstanceOf(TextView.class);
 
     final CharSequence sequence = ((TextView) views.get(0)).getText();
     assertThat(sequence).isNotNull();
     assertThat(sequence).isInstanceOf(SpannedString.class);
-    assertThat(sequence.toString()).isEqualTo("text");
+    assertThat(sequence.toString()).isEqualTo("Underlined");
 
-    final Spannable spannable = (Spannable) sequence;
-    assertThat(spannable.getSpans(0, spannable.length(), Object.class).length).isEqualTo(0);
+    final SpannedString spannedString = (SpannedString) sequence;
+    assertThat(spannedString.getSpans(0, spannedString.length(), Object.class).length).isEqualTo(1);
 
-    final Object[] spans = spannable.getSpans(0, spannable.length(), Object.class);
+    final Object[] spans = spannedString.getSpans(0, spannedString.length(), Object.class);
     assertThat(spans.length).isEqualTo(1);
 
     final Object span = spans[0];
@@ -158,7 +157,7 @@ public class MarksTextTest {
     assertThat(sequence.toString()).isEqualTo("Italic");
 
     final SpannedString spannable = (SpannedString) sequence;
-    assertThat(spannable.getSpans(0, spannable.length(), Object.class).length).isEqualTo(0);
+    assertThat(spannable.getSpans(0, spannable.length(), Object.class).length).isEqualTo(1);
 
     final Object[] spans = spannable.getSpans(0, spannable.length(), Object.class);
     assertThat(spans.length).isEqualTo(1);
@@ -195,7 +194,7 @@ public class MarksTextTest {
     assertThat(sequence.toString()).isEqualTo("final String code;");
 
     final SpannedString spannable = (SpannedString) sequence;
-    assertThat(spannable.getSpans(0, spannable.length(), Object.class).length).isEqualTo(0);
+    assertThat(spannable.getSpans(0, spannable.length(), Object.class).length).isEqualTo(1);
 
     final Object[] spans = spannable.getSpans(0, spannable.length(), Object.class);
     assertThat(spans.length).isEqualTo(1);
@@ -222,17 +221,17 @@ public class MarksTextTest {
     assertThat(content).isNotNull();
 
     final ArrayList<View> views = new ArrayList<>();
-    content.findViewsWithText(views, "text", View.FIND_VIEWS_WITH_TEXT);
+    content.findViewsWithText(views, "🐭", View.FIND_VIEWS_WITH_TEXT);
     assertThat(views).hasSize(1);
     assertThat(views.get(0)).isInstanceOf(TextView.class);
 
     final CharSequence sequence = ((TextView) views.get(0)).getText();
     assertThat(sequence).isNotNull();
     assertThat(sequence).isInstanceOf(SpannedString.class);
-    assertThat(sequence.toString()).isEqualTo("text");
+    assertThat(sequence.toString()).isEqualTo("🐭");
 
     final SpannedString spannable = (SpannedString) sequence;
-    assertThat(spannable.getSpans(0, spannable.length(), Object.class).length).isEqualTo(0);
+    assertThat(spannable.getSpans(0, spannable.length(), Object.class).length).isEqualTo(1);
 
     final Object[] spans = spannable.getSpans(0, spannable.length(), Object.class);
     assertThat(spans.length).isEqualTo(1);
@@ -261,17 +260,17 @@ public class MarksTextTest {
     assertThat(content).isNotNull();
 
     final ArrayList<View> views = new ArrayList<>();
-    content.findViewsWithText(views, "text", View.FIND_VIEWS_WITH_TEXT);
+    content.findViewsWithText(views, "All in all", View.FIND_VIEWS_WITH_TEXT);
     assertThat(views).hasSize(1);
     assertThat(views.get(0)).isInstanceOf(TextView.class);
 
     final CharSequence sequence = ((TextView) views.get(0)).getText();
     assertThat(sequence).isNotNull();
     assertThat(sequence).isInstanceOf(SpannedString.class);
-    assertThat(sequence.toString()).isEqualTo("text");
+    assertThat(sequence.toString()).isEqualTo("All in all");
 
     final SpannedString spannable = (SpannedString) sequence;
-    assertThat(spannable.getSpans(0, spannable.length(), Object.class).length).isEqualTo(0);
+    assertThat(spannable.getSpans(0, spannable.length(), Object.class).length).isEqualTo(6);
 
     final Object[] spans = spannable.getSpans(0, spannable.length(), Object.class);
     assertThat(spans.length).isEqualTo(6);

@@ -58,12 +58,12 @@ public class TextRenderer extends AndroidRenderer<AndroidContext, View> {
    *
    * @param context the generic context this node should be rendered in.
    * @param node    the node to be rendered.
-   * @return a spannable containing the text content of the rich text and decorations based on its markers.
+   * @return a view containing the text content of the rich text and decorations based on its markers.
    */
   @Nullable @Override public View render(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
     final CDARichText richText = (CDARichText) node;
 
-    final View result = context.getInflater().inflate(R.layout.richt_text_layout, null);
+    final View result = context.getInflater().inflate(R.layout.ritch_text_layout, null);
     final TextView content = result.findViewById(R.id.rich_text_content);
     final SpannableStringBuilder textContent = new SpannableStringBuilder(richText.getText());
 
