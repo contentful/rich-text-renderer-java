@@ -1,14 +1,13 @@
 Rendering Rich Text Into HTML
 ===================================
 
-For retrieving an html output from a given rich text field from contentful, currently a 
-snapshot release from Contentful is needed, and a version of the rendering SDK.
+For retrieving html output from a given rich text field this rendering libaray includes a snapshot release of the 
+Contentful Delivery SDK for Java.
 
 Adding dependencies
 -------------------
 
-For gradle, adding this to `build.gradle` is needed, to allow base SDK snapshots and rendering SDK 
-dependencies to be found:
+For gradle, add this to `build.gradle`:
 
 ```groovy
 allprojects {
@@ -54,7 +53,7 @@ same can be achieved by adding Maven dependencies like so:
 Calling Contentful Main SDK
 ---------------------------
 
-Now that the base SDK is in place, the next step is to retrieve (_fetch_) an entry from Contentful,
+Now that the base SDK is in place, the next step is to retrieve (_fetch_) an entry from Contentful
 containing Rich Text Data. Following code snippet does this by using `SPACE_ID`, `TOKEN` and
 `ENTRY_ID` as placeholders for the actual content that needs fetching.
 
@@ -88,11 +87,10 @@ The `html` variable now contains the html representation of the node.
 Adding Custom Renderers
 -----------------------
 
-If a change of the output is wanted, adding of a new renderer or overriding a default one is needed.
-To do so, using the `.addRenderer(…,…)` or `.addRendererUpFront(…,…)` method are needed. The 
+To change the output, adding of a new renderer or overriding one is needed.
+The `.addRenderer(…,…)` method exists to add a new renderer, and `.addRendererUpFront(…,…)` to override an existing renderer. The 
 Processor contains a list of renderers, which is iterated upon to find one matching the current 
-Node encountered. For matching a renderer to a node, a `Checker` needs to be provided while adding
-a `Renderer` to the `Processor`. 
+Node. For matching a renderer to a node, a `Checker` needs to be provided when a `Renderer` gets added to the `Processor`. 
 
 ```java
 processor.addRenderer(
@@ -100,7 +98,8 @@ processor.addRenderer(
     (context, node) -> node.toString() // Renderer, rendering specific node.
 )
 ```
-The now added renderer will be working as a fallback: Since it got added last (by not using 
+
+The now added renderer will be working as a fallback. Since it got added last (by using `.addRenderer(…,…)` instead of
 `.addRendererUpFront(…,…)`) it will get called last in the search of a renderer. It's checker is 
 setup to always return true, so this being the last, the renderer will always get called. The 
 renderer in the above example is simply returning the `.toString()` output of the given node.
@@ -112,12 +111,10 @@ checking or more elaborated transformation of nodes.
 Overriding Default Renderers
 ----------------------------
 
-If overriding one of the default renderer is desired, the just presented way will not be sufficient:
-Adding a new renderer to override an existing one will not get triggered, since the to be overriden
-renderer will be checked before the just added one. For those kind of challenges, the 
-`.addRendererUpFront(…,…)` method got added: It will move the renderer and checker to the front of
-the list of renderer and will therefore be checked first. If the checker does not return true, the 
-default renderer will be used. Upon returning the checker returning true, the current search for a
+The example above will not work to override a default renderer, the to-be-overridden renderer will be checked before 
+the new one. For those kind of challenges, use the `.addRendererUpFront(…,…)` method: It will move the renderer 
+and checker to the front of the list of renderer and will therefore be checked first. If the checker does not return 
+true, the default renderer will be used. Upon returning the checker returning true, the current search for a
 renderer will be aborted and the found renderer be used.
 
 For inspiration on how custom renderer might look like, 
