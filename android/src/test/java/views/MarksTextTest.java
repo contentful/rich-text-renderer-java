@@ -46,7 +46,7 @@ public class MarksTextTest {
     final View result = processor.process(context, new CDARichText("text"));
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     final ArrayList<View> views = new ArrayList<>();
@@ -74,7 +74,7 @@ public class MarksTextTest {
     final View result = processor.process(context, new CDARichText("BoldText", markers));
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     final ArrayList<View> views = new ArrayList<>();
@@ -109,7 +109,7 @@ public class MarksTextTest {
     final View result = processor.process(context, new CDARichText("Underlined", markers));
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     final ArrayList<View> views = new ArrayList<>();
@@ -143,7 +143,7 @@ public class MarksTextTest {
     final View result = processor.process(context, new CDARichText("Italic", markers));
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     final ArrayList<View> views = new ArrayList<>();
@@ -180,7 +180,7 @@ public class MarksTextTest {
     final View result = processor.process(context, new CDARichText("final String code;", markers));
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     final ArrayList<View> views = new ArrayList<>();
@@ -217,7 +217,7 @@ public class MarksTextTest {
     final View result = processor.process(context, new CDARichText("🐭", markers));
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     final ArrayList<View> views = new ArrayList<>();
@@ -256,7 +256,7 @@ public class MarksTextTest {
     final View result = processor.process(context, new CDARichText("All in all", markers));
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     final ArrayList<View> views = new ArrayList<>();

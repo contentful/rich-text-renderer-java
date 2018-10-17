@@ -1,9 +1,6 @@
 package views;
 
 import android.app.Activity;
-import android.text.Spannable;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -46,7 +43,7 @@ public class LinkTest {
     final View result = processor.process(context, link);
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     ArrayList<View> views = new ArrayList<>();
@@ -66,7 +63,7 @@ public class LinkTest {
     final View result = processor.process(context, link);
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     ArrayList<View> views = new ArrayList<>();
@@ -86,7 +83,7 @@ public class LinkTest {
     final View result = processor.process(context, link);
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     ArrayList<View> views = new ArrayList<>();

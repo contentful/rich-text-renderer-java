@@ -46,6 +46,6 @@ public class HorizontalRuleRenderer extends AndroidRenderer<AndroidContext, View
    * @return a view representing a horizontal line.
    */
   @Nullable @Override public View render(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
-    return context.getInflater().inflate(R.layout.ritch_horizontal_rule_layout, null);
+    return context.getInflater().inflate(R.layout.rich_horizontal_rule_layout, null);
   }
 }

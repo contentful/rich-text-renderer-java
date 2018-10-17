@@ -63,8 +63,8 @@ public class TextRenderer extends AndroidRenderer<AndroidContext, View> {
   @Nullable @Override public View render(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
     final CDARichText richText = (CDARichText) node;
 
-    final View result = context.getInflater().inflate(R.layout.ritch_text_layout, null);
-    final TextView content = result.findViewById(R.id.rich_text_content);
+    final View result = context.getInflater().inflate(R.layout.rich_text_layout, null);
+    final TextView content = result.findViewById(R.id.rich_content);
     final SpannableStringBuilder textContent = new SpannableStringBuilder(richText.getText());
 
     for (final CDARichMark mark : richText.getMarks()) {

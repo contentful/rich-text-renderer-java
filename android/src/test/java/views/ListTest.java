@@ -53,7 +53,7 @@ public class ListTest {
 
     final View result = processor.process(context, list);
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     ArrayList<View> views = new ArrayList<>();
@@ -92,7 +92,7 @@ public class ListTest {
     final View result = processor.process(context, list);
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     ArrayList<View> views = new ArrayList<>();
@@ -145,7 +145,7 @@ public class ListTest {
     final View result = processor.process(context, document);
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     ArrayList<View> views = new ArrayList<>();
@@ -202,7 +202,7 @@ public class ListTest {
     final View result = processor.process(context, document);
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     ArrayList<View> views = new ArrayList<>();

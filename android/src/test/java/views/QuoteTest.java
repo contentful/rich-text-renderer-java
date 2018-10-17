@@ -40,7 +40,7 @@ public class QuoteTest {
     final View result = processor.process(context, quote);
 
     assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_text_content);
+    final View content = result.findViewById(R.id.rich_content);
     assertThat(content).isNotNull();
 
     final ArrayList<View> views = new ArrayList<>();
