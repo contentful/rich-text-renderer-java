@@ -1,5 +1,7 @@
 package com.contentful.rich.android;
 
+import android.view.LayoutInflater;
+
 import com.contentful.java.cda.rich.CDARichBlock;
 import com.contentful.java.cda.rich.CDARichList;
 import com.contentful.java.cda.rich.CDARichNode;
@@ -17,6 +19,7 @@ import javax.annotation.Nullable;
 public class AndroidContext extends Context<List<CDARichNode>> {
 
   private final android.content.Context androidContext;
+  private final LayoutInflater inflater;
   private final List<CDARichNode> path = new ArrayList<>();
 
   /**
@@ -26,13 +29,21 @@ public class AndroidContext extends Context<List<CDARichNode>> {
    */
   public AndroidContext(android.content.Context androidContext) {
     this.androidContext = androidContext;
+    this.inflater = LayoutInflater.from(androidContext);
   }
 
   /**
    * @return the Android context provided.
    */
   public android.content.Context getAndroidContext() {
-    return this.androidContext;
+    return androidContext;
+  }
+
+  /**
+   * @return layout inflater for inflating layouts.
+   */
+  public LayoutInflater getInflater() {
+    return inflater;
   }
 
   /**

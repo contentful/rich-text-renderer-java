@@ -1,6 +1,9 @@
 package com.contentful.rich.android;
 
+import android.view.View;
+
 import com.contentful.rich.android.renderer.chars.CharSequenceRendererProvider;
+import com.contentful.rich.android.renderer.views.NativeViewsRendererProvider;
 import com.contentful.rich.core.Processor;
 
 import javax.annotation.Nonnull;
@@ -34,12 +37,16 @@ public class AndroidProcessor<T> extends Processor<AndroidContext, T> {
     return processor;
   }
 
+  public static AndroidProcessor<View> creatingNativeViews() {
+    final AndroidProcessor<View> processor = new AndroidProcessor<View>();
+    new NativeViewsRendererProvider().provide(processor);
 
     return processor;
   }
 
   /**
    * Add a renderer to the processor using only one class.
+   *
    * @param renderer the combined Android renderer
    * @return this instance for chaining
    * @see com.contentful.rich.core.Checker

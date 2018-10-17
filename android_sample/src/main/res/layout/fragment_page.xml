@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/page_recycler"
+<LinearLayout
+    android:id="@+id/fragment_page"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingEnd="4dp"
-    android:paddingStart="4dp"
-    tools:context=".PageFragment"
-    tools:listitem="@layout/sample_item"
+    android:orientation="vertical"
     >
 
-</androidx.recyclerview.widget.RecyclerView>
+    <CheckBox
+        android:id="@+id/main_native_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="16dp"
+        android:text="@string/main_native_view_label"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/page_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingEnd="4dp"
+        android:paddingStart="4dp"
+        tools:context=".PageFragment"
+        tools:listitem="@layout/sample_item"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>
