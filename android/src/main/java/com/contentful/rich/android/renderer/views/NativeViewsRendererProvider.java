@@ -18,5 +18,7 @@ public class NativeViewsRendererProvider {
   public void provide(@Nonnull AndroidProcessor<View> processor) {
     processor.addRenderer(new TextRenderer(processor));
     processor.addRenderer(new HorizontalRuleRenderer(processor));
+    processor.addRenderer(new QuoteRenderer(processor));
+    processor.addRenderer(new BlockRenderer(processor));
   }
 }
