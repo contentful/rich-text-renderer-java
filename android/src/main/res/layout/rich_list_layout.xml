@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     >
 
-    <View
-        android:layout_width="5dp"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="6dp"
-        android:layout_marginStart="0dp"
-        android:background="#80808080"
+    <TextView
+        android:id="@+id/rich_list_decoration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="4dp"
+        tools:text="1)"
         />
 
     <LinearLayout
         android:id="@id/rich_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/rich_list_decoration"
         android:orientation="vertical"
         />
-</LinearLayout>
+</RelativeLayout>

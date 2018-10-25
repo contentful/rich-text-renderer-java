@@ -74,6 +74,30 @@ val PAGES: Array<Page> = arrayOf(
                                 ),
                                 CDARichListItem().addAll(CDARichText("third item"))
                         ),
+                        CDARichOrderedList().addAll(
+                                CDARichListItem().addAll(CDARichText("first item")),
+                                CDARichListItem().addAll(
+                                        CDARichText("second item"),
+                                        CDARichOrderedList().addAll(
+                                                CDARichListItem().addAll(CDARichText("first nested item")),
+                                                CDARichListItem().addAll(CDARichText("second nested item")),
+                                                CDARichListItem().addAll(CDARichText("third nested item"))
+                                        )
+                                ),
+                                CDARichListItem().addAll(CDARichText("third item"))
+                        ),
+                        CDARichUnorderedList().addAll(
+                                CDARichListItem().addAll(CDARichText("first item")),
+                                CDARichListItem().addAll(
+                                        CDARichText("second item"),
+                                        CDARichOrderedList().addAll(
+                                                CDARichListItem().addAll(CDARichText("first nested item")),
+                                                CDARichListItem().addAll(CDARichText("second nested item")),
+                                                CDARichListItem().addAll(CDARichText("third nested item"))
+                                        )
+                                ),
+                                CDARichListItem().addAll(CDARichText("third item"))
+                        ),
                         CDARichList("1").addAll(
                                 CDARichListItem().addAll(CDARichText("one")),
                                 CDARichList("A").addAll(

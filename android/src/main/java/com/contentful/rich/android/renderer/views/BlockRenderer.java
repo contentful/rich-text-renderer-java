@@ -45,7 +45,13 @@ public class BlockRenderer extends AndroidRenderer<AndroidContext, View> {
             content.addView(childView);
           }
         } else {
-          content.addView(childView);
+          if (context.getPath() != null && context.getPath().size() > 1) {
+            final View indented = context.getInflater().inflate(R.layout.rich_indention_layout, null, false);
+            ((ViewGroup)indented.findViewById(R.id.rich_content)).addView(childView);
+            content.addView(indented);
+          } else {
+            content.addView(childView);
+          }
         }
       }
     }

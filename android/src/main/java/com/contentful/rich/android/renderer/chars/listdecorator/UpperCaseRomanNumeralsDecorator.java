@@ -26,21 +26,6 @@ public class UpperCaseRomanNumeralsDecorator extends Decorator {
     map.put(3, "III");
     map.put(2, "II");
     map.put(1, "I");
-//    map.put(1000, "Ⅿ");
-//    map.put(900, "ⅭⅯ");
-//    map.put(500, "Ⅾ");
-//    map.put(400, "ⅭⅮ");
-//    map.put(100, "Ⅽ");
-//    map.put(90, "ⅩⅭ");
-//    map.put(50, "Ⅼ");
-//    map.put(40, "ⅩⅬ");
-//    map.put(10, "Ⅹ");
-//    map.put(9, "Ⅸ");
-//    map.put(5, "Ⅴ");
-//    map.put(4, "Ⅳ");
-//    map.put(3, "Ⅲ");
-//    map.put(2, "Ⅱ");
-//    map.put(1, "Ⅰ");
   }
 
   @Nonnull @Override public CharSequence getSymbol() {
@@ -49,7 +34,7 @@ public class UpperCaseRomanNumeralsDecorator extends Decorator {
 
   @Nonnull @Override
   public CharSequence decorate(int index) {
-    final SpannableString spannable = new SpannableString(getRomanDecoration(index) + ". ");
+    final SpannableString spannable = new SpannableString(getRomanDecoration(index + 1) + ". ");
     spannable.setSpan(this, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     return spannable;
   }
