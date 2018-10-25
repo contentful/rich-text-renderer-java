@@ -1,9 +1,9 @@
 package chars;
 
-import com.contentful.rich.android.renderer.chars.listdecorator.LowerCaseCharacterDecorator;
-import com.contentful.rich.android.renderer.chars.listdecorator.LowerCaseRomanNumeralsDecorator;
-import com.contentful.rich.android.renderer.chars.listdecorator.UpperCaseCharacterDecorator;
-import com.contentful.rich.android.renderer.chars.listdecorator.UpperCaseRomanNumeralsDecorator;
+import com.contentful.rich.android.renderer.listdecorator.LowerCaseCharacterDecorator;
+import com.contentful.rich.android.renderer.listdecorator.LowerCaseRomanNumeralsDecorator;
+import com.contentful.rich.android.renderer.listdecorator.UpperCaseCharacterDecorator;
+import com.contentful.rich.android.renderer.listdecorator.UpperCaseRomanNumeralsDecorator;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

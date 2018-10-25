@@ -1,12 +1,12 @@
 package com.contentful.rich.android.renderer.chars;
 
 import com.contentful.rich.android.AndroidProcessor;
-import com.contentful.rich.android.renderer.chars.listdecorator.BulletDecorator;
-import com.contentful.rich.android.renderer.chars.listdecorator.LowerCaseCharacterDecorator;
-import com.contentful.rich.android.renderer.chars.listdecorator.LowerCaseRomanNumeralsDecorator;
-import com.contentful.rich.android.renderer.chars.listdecorator.NumbersDecorator;
-import com.contentful.rich.android.renderer.chars.listdecorator.UpperCaseCharacterDecorator;
-import com.contentful.rich.android.renderer.chars.listdecorator.UpperCaseRomanNumeralsDecorator;
+import com.contentful.rich.android.renderer.listdecorator.BulletDecorator;
+import com.contentful.rich.android.renderer.listdecorator.LowerCaseCharacterDecorator;
+import com.contentful.rich.android.renderer.listdecorator.LowerCaseRomanNumeralsDecorator;
+import com.contentful.rich.android.renderer.listdecorator.NumbersDecorator;
+import com.contentful.rich.android.renderer.listdecorator.UpperCaseCharacterDecorator;
+import com.contentful.rich.android.renderer.listdecorator.UpperCaseRomanNumeralsDecorator;
 
 import javax.annotation.Nonnull;
 

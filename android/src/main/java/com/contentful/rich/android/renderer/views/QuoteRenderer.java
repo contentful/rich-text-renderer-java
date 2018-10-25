@@ -11,7 +11,7 @@ import com.contentful.rich.android.R;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-class QuoteRenderer extends BlockRenderer {
+public class QuoteRenderer extends BlockRenderer {
   public QuoteRenderer(@Nonnull AndroidProcessor<View> processor) {
     super(processor);
   }
@@ -20,7 +20,7 @@ class QuoteRenderer extends BlockRenderer {
     return node instanceof CDARichQuote;
   }
 
-  @Override protected View inflateRichLayout(@Nonnull AndroidContext context) {
+  @Override protected View inflateRichLayout(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
     return context.getInflater().inflate(R.layout.rich_quote_layout, null, false);
   }
 }

@@ -7,7 +7,7 @@ import com.contentful.java.cda.rich.CDARichList;
 import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
-import com.contentful.rich.android.renderer.chars.listdecorator.Decorator;
+import com.contentful.rich.android.renderer.listdecorator.Decorator;
 
 import java.util.Arrays;
 import java.util.HashMap;

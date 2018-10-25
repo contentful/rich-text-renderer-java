@@ -46,7 +46,7 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
   /**
    * An interface to control how to generate the bitmap to be used.
    */
-  interface BitmapProvider {
+  public interface BitmapProvider {
     /**
      * This method is called to retrieve an image from the given asset.
      *
@@ -62,7 +62,7 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
    * <p>
    * This provider will be used by default, please overwrite it if possible clientside.
    */
-  private static final BitmapProvider defaultBitmapProvider = new BitmapProvider() {
+  public static final BitmapProvider defaultBitmapProvider = new BitmapProvider() {
     @Override public Bitmap provide(Context context, CDAAsset asset) {
       final String url = asset.urlForImageWith(https(), widthOf(80), heightOf(80), formatOf(jpg));
       final CountDownLatch latch = new CountDownLatch(1);

@@ -26,7 +26,7 @@ public class BlockRenderer extends AndroidRenderer<AndroidContext, View> {
 
   @Nullable @Override public View render(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
     final CDARichBlock block = (CDARichBlock) node;
-    final View result = inflateRichLayout(context);
+    final View result = inflateRichLayout(context, node);
     final ViewGroup content = result.findViewById(R.id.rich_content);
 
     TextView lastTextView = null;
@@ -47,7 +47,7 @@ public class BlockRenderer extends AndroidRenderer<AndroidContext, View> {
         } else {
           if (context.getPath() != null && context.getPath().size() > 1) {
             final View indented = context.getInflater().inflate(R.layout.rich_indention_layout, null, false);
-            ((ViewGroup)indented.findViewById(R.id.rich_content)).addView(childView);
+            ((ViewGroup) indented.findViewById(R.id.rich_content)).addView(childView);
             content.addView(indented);
           } else {
             content.addView(childView);
@@ -59,7 +59,7 @@ public class BlockRenderer extends AndroidRenderer<AndroidContext, View> {
     return result;
   }
 
-  protected View inflateRichLayout(@Nonnull AndroidContext context) {
+  protected View inflateRichLayout(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
     return context.getInflater().inflate(R.layout.rich_block_layout, null, false);
   }
 }

@@ -1,4 +1,4 @@
-package com.contentful.rich.android.renderer.chars.listdecorator;
+package com.contentful.rich.android.renderer.listdecorator;
 
 import android.text.SpannableString;
 import android.text.Spanned;
