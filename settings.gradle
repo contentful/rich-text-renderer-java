@@ -1,5 +1,6 @@
-rootProject.name = "rich-text-renderer"
+rootProject.name = "all"
 
-include ':android', ':android_sample'
-include ':core'
-include ':html'
+include 'android'
+include 'android_sample'
+include 'core'
+include 'html'
