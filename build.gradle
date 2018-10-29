@@ -8,11 +8,16 @@ plugins {
     id("base")
 }
 
-apply plugin: 'maven'
+apply plugin: "java"
+apply plugin: "maven"
 
 allprojects {
-    group = "org.gradle.kotlin.dsl.samples.multiproject"
-    version = "1.0"
+    group = "com.github.contentful.rich"
+
+    version = 1.0
+
+    sourceCompatibility = 1.8 // java 8
+    targetCompatibility = 1.8
 
     repositories {
         jcenter()
