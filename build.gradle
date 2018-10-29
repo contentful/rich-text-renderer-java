@@ -2,6 +2,8 @@ plugins {
     id("base")
 }
 
+apply plugin: 'maven'
+
 allprojects {
     group = "org.gradle.kotlin.dsl.samples.multiproject"
     version = "1.0"
