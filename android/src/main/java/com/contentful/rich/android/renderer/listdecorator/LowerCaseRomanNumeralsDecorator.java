@@ -8,7 +8,7 @@ public class LowerCaseRomanNumeralsDecorator extends UpperCaseRomanNumeralsDecor
   }
 
   @Nonnull @Override
-  public CharSequence decorate(int index) {
-    return super.decorate(index).toString().toLowerCase();
+  public CharSequence decorate(int position) {
+    return super.decorate(position).toString().toLowerCase();
   }
 }

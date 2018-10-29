@@ -10,7 +10,7 @@ public class BulletDecorator extends Decorator{
     return "*";
   }
 
-  public @Nonnull CharSequence decorate(int index) {
+  public @Nonnull CharSequence decorate(int position) {
     final SpannableString spannable = new SpannableString("• ");
     spannable.setSpan(this, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     return spannable;

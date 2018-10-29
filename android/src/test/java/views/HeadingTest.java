@@ -48,23 +48,4 @@ public class HeadingTest {
     assertThat(views).hasSize(1);
     assertThat(views.get(0)).isInstanceOf(TextView.class);
   }
-
-  @Test
-  public void notSupportedHeadingWillRenderDefaultText() {
-    final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
-    final AndroidContext context = new AndroidContext(activity);
-
-    final CDARichHeading heading = new CDARichHeading(-1);
-    heading.getContent().add(new CDARichText("illegal"));
-
-    final View result = processor.process(context, heading);
-
-    assertThat(result).isNotNull();
-    final View content = result.findViewById(R.id.rich_content);
-    assertThat(content).isNotNull();
-
-    ArrayList<View> views = new ArrayList<>();
-    content.findViewsWithText(views, "illegal", View.FIND_VIEWS_WITH_TEXT);
-    assertThat(views).hasSize(0);
-  }
 }

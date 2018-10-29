@@ -7,8 +7,8 @@ public class LowerCaseCharacterDecorator extends UpperCaseCharacterDecorator {
     return "a";
   }
 
-  public @Nonnull CharSequence decorate(int index) {
-    return super.decorate(index).toString().toLowerCase();
+  public @Nonnull CharSequence decorate(int position) {
+    return super.decorate(position).toString().toLowerCase();
   }
 
 }

@@ -105,7 +105,7 @@ public class ListRenderer extends BlockRenderer {
     }
 
 
-    decoration.setText(currentDecorator.decorate(childIndex));
+    decoration.setText(currentDecorator.decorate(childIndex + 1));
   }
 
   private long getListOfTypeCount(@Nonnull AndroidContext context, CDARichList list) {

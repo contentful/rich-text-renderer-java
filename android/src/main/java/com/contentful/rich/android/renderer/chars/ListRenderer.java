@@ -119,7 +119,7 @@ public class ListRenderer extends BlockRenderer {
     final int currentPosition = (initialDecoratorIndex + nestedListCount) % decoratorList.size();
     final Decorator currentDecorator = decoratorList.get(currentPosition);
 
-    return renderedChildren.insert(0, currentDecorator.decorate(childIndex)).append("\n");
+    return renderedChildren.insert(0, currentDecorator.decorate(childIndex + 1)).append("\n");
   }
 
   /**

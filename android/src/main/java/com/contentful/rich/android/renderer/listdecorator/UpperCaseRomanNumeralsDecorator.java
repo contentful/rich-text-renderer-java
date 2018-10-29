@@ -33,8 +33,8 @@ public class UpperCaseRomanNumeralsDecorator extends Decorator {
   }
 
   @Nonnull @Override
-  public CharSequence decorate(int index) {
-    final SpannableString spannable = new SpannableString(getRomanDecoration(index + 1) + ". ");
+  public CharSequence decorate(int position) {
+    final SpannableString spannable = new SpannableString(getRomanDecoration(position) + ". ");
     spannable.setSpan(this, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     return spannable;
   }

@@ -51,52 +51,52 @@ public class ListDecoratorTest {
   @Test
   public void testCaptialAlphaNumbers() {
     final UpperCaseCharacterDecorator alpha = new UpperCaseCharacterDecorator();
-    assertThat(alpha.decorate(0).toString()).isEqualTo("A. ");
-    assertThat(alpha.decorate(1).toString()).isEqualTo("B. ");
-    assertThat(alpha.decorate(2).toString()).isEqualTo("C. ");
-    assertThat(alpha.decorate(3).toString()).isEqualTo("D. ");
-    assertThat(alpha.decorate(23).toString()).isEqualTo("X. ");
-    assertThat(alpha.decorate(24).toString()).isEqualTo("Y. ");
-    assertThat(alpha.decorate(25).toString()).isEqualTo("Z. ");
-    assertThat(alpha.decorate(26).toString()).isEqualTo("AA. ");
-    assertThat(alpha.decorate(27).toString()).isEqualTo("AB. ");
-    assertThat(alpha.decorate(28).toString()).isEqualTo("AC. ");
-    assertThat(alpha.decorate(49).toString()).isEqualTo("AX. ");
-    assertThat(alpha.decorate(50).toString()).isEqualTo("AY. ");
-    assertThat(alpha.decorate(51).toString()).isEqualTo("AZ. ");
-    assertThat(alpha.decorate(52).toString()).isEqualTo("BA. ");
-    assertThat(alpha.decorate(53).toString()).isEqualTo("BB. ");
-    assertThat(alpha.decorate(400).toString()).isEqualTo("OK. ");
-    assertThat(alpha.decorate(700).toString()).isEqualTo("ZY. ");
-    assertThat(alpha.decorate(701).toString()).isEqualTo("ZZ. ");
-    assertThat(alpha.decorate(702).toString()).isEqualTo("AAA. ");
-    assertThat(alpha.decorate(703).toString()).isEqualTo("AAB. ");
-    assertThat(alpha.decorate(5970680).toString()).isEqualTo("MARIO. ");
+    assertThat(alpha.decorate(1).toString()).isEqualTo("A. ");
+    assertThat(alpha.decorate(2).toString()).isEqualTo("B. ");
+    assertThat(alpha.decorate(3).toString()).isEqualTo("C. ");
+    assertThat(alpha.decorate(4).toString()).isEqualTo("D. ");
+    assertThat(alpha.decorate(24).toString()).isEqualTo("X. ");
+    assertThat(alpha.decorate(25).toString()).isEqualTo("Y. ");
+    assertThat(alpha.decorate(26).toString()).isEqualTo("Z. ");
+    assertThat(alpha.decorate(27).toString()).isEqualTo("AA. ");
+    assertThat(alpha.decorate(28).toString()).isEqualTo("AB. ");
+    assertThat(alpha.decorate(29).toString()).isEqualTo("AC. ");
+    assertThat(alpha.decorate(50).toString()).isEqualTo("AX. ");
+    assertThat(alpha.decorate(51).toString()).isEqualTo("AY. ");
+    assertThat(alpha.decorate(52).toString()).isEqualTo("AZ. ");
+    assertThat(alpha.decorate(53).toString()).isEqualTo("BA. ");
+    assertThat(alpha.decorate(54).toString()).isEqualTo("BB. ");
+    assertThat(alpha.decorate(401).toString()).isEqualTo("OK. ");
+    assertThat(alpha.decorate(701).toString()).isEqualTo("ZY. ");
+    assertThat(alpha.decorate(702).toString()).isEqualTo("ZZ. ");
+    assertThat(alpha.decorate(703).toString()).isEqualTo("AAA. ");
+    assertThat(alpha.decorate(704).toString()).isEqualTo("AAB. ");
+    assertThat(alpha.decorate(5970681).toString()).isEqualTo("MARIO. ");
   }
 
   @Test
   public void testLowercaseAlphaNumbers() {
     final UpperCaseCharacterDecorator alpha = new LowerCaseCharacterDecorator();
-    assertThat(alpha.decorate(0).toString()).isEqualTo("a. ");
-    assertThat(alpha.decorate(1).toString()).isEqualTo("b. ");
-    assertThat(alpha.decorate(2).toString()).isEqualTo("c. ");
-    assertThat(alpha.decorate(3).toString()).isEqualTo("d. ");
-    assertThat(alpha.decorate(23).toString()).isEqualTo("x. ");
-    assertThat(alpha.decorate(24).toString()).isEqualTo("y. ");
-    assertThat(alpha.decorate(25).toString()).isEqualTo("z. ");
-    assertThat(alpha.decorate(26).toString()).isEqualTo("aa. ");
-    assertThat(alpha.decorate(27).toString()).isEqualTo("ab. ");
-    assertThat(alpha.decorate(28).toString()).isEqualTo("ac. ");
-    assertThat(alpha.decorate(49).toString()).isEqualTo("ax. ");
-    assertThat(alpha.decorate(50).toString()).isEqualTo("ay. ");
-    assertThat(alpha.decorate(51).toString()).isEqualTo("az. ");
-    assertThat(alpha.decorate(52).toString()).isEqualTo("ba. ");
-    assertThat(alpha.decorate(53).toString()).isEqualTo("bb. ");
-    assertThat(alpha.decorate(400).toString()).isEqualTo("ok. ");
-    assertThat(alpha.decorate(700).toString()).isEqualTo("zy. ");
-    assertThat(alpha.decorate(701).toString()).isEqualTo("zz. ");
-    assertThat(alpha.decorate(702).toString()).isEqualTo("aaa. ");
-    assertThat(alpha.decorate(703).toString()).isEqualTo("aab. ");
-    assertThat(alpha.decorate(5970680).toString()).isEqualTo("mario. ");
+    assertThat(alpha.decorate(1).toString()).isEqualTo("a. ");
+    assertThat(alpha.decorate(2).toString()).isEqualTo("b. ");
+    assertThat(alpha.decorate(3).toString()).isEqualTo("c. ");
+    assertThat(alpha.decorate(4).toString()).isEqualTo("d. ");
+    assertThat(alpha.decorate(24).toString()).isEqualTo("x. ");
+    assertThat(alpha.decorate(25).toString()).isEqualTo("y. ");
+    assertThat(alpha.decorate(26).toString()).isEqualTo("z. ");
+    assertThat(alpha.decorate(27).toString()).isEqualTo("aa. ");
+    assertThat(alpha.decorate(28).toString()).isEqualTo("ab. ");
+    assertThat(alpha.decorate(29).toString()).isEqualTo("ac. ");
+    assertThat(alpha.decorate(50).toString()).isEqualTo("ax. ");
+    assertThat(alpha.decorate(51).toString()).isEqualTo("ay. ");
+    assertThat(alpha.decorate(52).toString()).isEqualTo("az. ");
+    assertThat(alpha.decorate(53).toString()).isEqualTo("ba. ");
+    assertThat(alpha.decorate(54).toString()).isEqualTo("bb. ");
+    assertThat(alpha.decorate(401).toString()).isEqualTo("ok. ");
+    assertThat(alpha.decorate(701).toString()).isEqualTo("zy. ");
+    assertThat(alpha.decorate(702).toString()).isEqualTo("zz. ");
+    assertThat(alpha.decorate(703).toString()).isEqualTo("aaa. ");
+    assertThat(alpha.decorate(704).toString()).isEqualTo("aab. ");
+    assertThat(alpha.decorate(5970681).toString()).isEqualTo("mario. ");
   }
 }

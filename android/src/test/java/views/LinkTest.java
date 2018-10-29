@@ -87,7 +87,7 @@ public class LinkTest {
     assertThat(content).isNotNull();
 
     ArrayList<View> views = new ArrayList<>();
-    content.findViewsWithText(views, "Some link text", View.FIND_VIEWS_WITH_TEXT);
+    content.findViewsWithText(views, "My embedded entry", View.FIND_VIEWS_WITH_TEXT);
     assertThat(views).hasSize(1);
     assertThat(views.get(0)).isInstanceOf(TextView.class);
   }

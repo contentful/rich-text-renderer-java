@@ -10,8 +10,8 @@ public class UpperCaseCharacterDecorator extends Decorator {
     return "A";
   }
 
-  public @Nonnull CharSequence decorate(int index) {
-    final SpannableString spannable = new SpannableString(getColumnDecoration(index) + ". ");
+  public @Nonnull CharSequence decorate(int position) {
+    final SpannableString spannable = new SpannableString(getColumnDecoration(position - 1) + ". ");
     spannable.setSpan(this, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     return spannable;
   }

@@ -57,10 +57,10 @@ public class AllTheThingsTest {
     assertThat(views).hasSize(1);
 
     content.findViewsWithText(views, "heading - 6", View.FIND_VIEWS_WITH_TEXT);
-    assertThat(views).hasSize(1);
+    assertThat(views).hasSize(2);
 
     content.findViewsWithText(views, "some list item content", View.FIND_VIEWS_WITH_TEXT);
-    assertThat(views).hasSize(1);
+    assertThat(views).hasSize(9);
   }
 
   private CDARichNode createAllNode() {

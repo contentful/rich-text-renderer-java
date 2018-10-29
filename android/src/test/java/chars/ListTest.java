@@ -221,7 +221,7 @@ public class ListTest {
     assertThat(((Spannable) result).getSpans(0, result.length(), Object.class)).hasLength(133);
 
     assertThat(result.toString()).isEqualTo("" +
-        " . NESTING!!1!\n" +
+        "I. NESTING!!1!\n" +
         "b. item 0\n" +
         "c. item 1\n" +
         "d. item 2\n" +
@@ -282,36 +282,36 @@ public class ListTest {
         "ac. item 27\n" +
         "ad. item 28\n" +
         "ae. item 29\n" +
-        "i. item 0\n" +
-        "ii. item 1\n" +
-        "iii. item 2\n" +
-        "iv. item 3\n" +
-        "v. item 4\n" +
-        "vi. item 5\n" +
-        "vii. item 6\n" +
-        "viii. item 7\n" +
-        "ix. item 8\n" +
-        "x. item 9\n" +
-        "xi. item 10\n" +
-        "xii. item 11\n" +
-        "xiii. item 12\n" +
-        "xiv. item 13\n" +
-        "xv. item 14\n" +
-        "xvi. item 15\n" +
-        "xvii. item 16\n" +
-        "xviii. item 17\n" +
-        "xix. item 18\n" +
-        "xx. item 19\n" +
-        "xxi. item 20\n" +
-        "xxii. item 21\n" +
-        "xxiii. item 22\n" +
-        "xxiv. item 23\n" +
-        "xxv. item 24\n" +
-        "xxvi. item 25\n" +
-        "xxvii. item 26\n" +
-        "xxviii. item 27\n" +
-        "xxix. item 28\n" +
-        "xxx. item 29\n" +
+        "ii. item 0\n" +
+        "iii. item 1\n" +
+        "iv. item 2\n" +
+        "v. item 3\n" +
+        "vi. item 4\n" +
+        "vii. item 5\n" +
+        "viii. item 6\n" +
+        "ix. item 7\n" +
+        "x. item 8\n" +
+        "xi. item 9\n" +
+        "xii. item 10\n" +
+        "xiii. item 11\n" +
+        "xiv. item 12\n" +
+        "xv. item 13\n" +
+        "xvi. item 14\n" +
+        "xvii. item 15\n" +
+        "xviii. item 16\n" +
+        "xix. item 17\n" +
+        "xx. item 18\n" +
+        "xxi. item 19\n" +
+        "xxii. item 20\n" +
+        "xxiii. item 21\n" +
+        "xxiv. item 22\n" +
+        "xxv. item 23\n" +
+        "xxvi. item 24\n" +
+        "xxvii. item 25\n" +
+        "xxviii. item 26\n" +
+        "xxix. item 27\n" +
+        "xxx. item 28\n" +
+        "xxxi. item 29\n" +
         "B. item 0\n" +
         "C. item 1\n" +
         "D. item 2\n" +

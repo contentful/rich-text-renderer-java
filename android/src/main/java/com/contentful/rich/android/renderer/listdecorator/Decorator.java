@@ -7,7 +7,7 @@ public class Decorator {
     return "";
   }
 
-  @Nonnull public CharSequence decorate(int index) {
+  @Nonnull public CharSequence decorate(int position) {
     return "";
   }
 }
