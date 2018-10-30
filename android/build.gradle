@@ -4,7 +4,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0-alpha01'
+        classpath 'com.android.tools.build:gradle:3.4.0-alpha02'
     }
 }
 
@@ -47,12 +47,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':core')
-
-    api 'com.github.contentful:contentful.java:add~rich-text-SNAPSHOT'
-    api 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
+    api project(':core')
+    api 'com.github.contentful:contentful.java:add~rich-text-SNAPSHOT'
 
     testImplementation 'org.robolectric:robolectric:4.0-alpha-3'
     testImplementation 'com.google.truth:truth:0.42'
