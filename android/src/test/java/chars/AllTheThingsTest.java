@@ -24,6 +24,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.ArrayList;
+
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.truth.Truth.assertThat;
 import static lib.ContentfulCreator.mockCDAEntry;
@@ -65,7 +67,7 @@ public class AllTheThingsTest {
 
     for (int i = 1; i < 7; ++i) {
       final CDARichHeading heading = new CDARichHeading(i);
-      heading.getContent().add(new CDARichText("heading - " + i));
+      heading.getContent().add(new CDARichText("heading - " + i, new ArrayList<>()));
       result.getContent().add(heading);
     }
 
@@ -76,7 +78,7 @@ public class AllTheThingsTest {
     result.getContent().add(embeddedLink);
 
     final CDARichHyperLink hyperLink = new CDARichHyperLink("https://contentful.com/");
-    hyperLink.getContent().add(new CDARichText("Hyper hyper"));
+    hyperLink.getContent().add(new CDARichText("Hyper hyper", new ArrayList<>()));
     result.getContent().add(hyperLink);
 
     final CDARichText allTheMarks = new CDARichText(
@@ -93,7 +95,7 @@ public class AllTheThingsTest {
 
     final CDARichOrderedList orderedList = new CDARichOrderedList();
     final CDARichListItem listItem = new CDARichListItem();
-    listItem.getContent().add(new CDARichText("some list item content"));
+    listItem.getContent().add(new CDARichText("some list item content", new ArrayList<>()));
     orderedList.getContent().add(listItem);
     orderedList.getContent().add(listItem);
     orderedList.getContent().add(listItem);
@@ -107,11 +109,11 @@ public class AllTheThingsTest {
     result.getContent().add(unorderedList);
 
     final CDARichParagraph paragraph = new CDARichParagraph();
-    paragraph.getContent().add(new CDARichText("Paragraph"));
+    paragraph.getContent().add(new CDARichText("Paragraph", new ArrayList<>()));
     result.getContent().add(paragraph);
 
     final CDARichQuote quote = new CDARichQuote();
-    quote.getContent().add(new CDARichText("Famous quote"));
+    quote.getContent().add(new CDARichText("Famous quote", new ArrayList<>()));
     result.getContent().add(quote);
 
     final CDARichNode node = new CDARichNode();

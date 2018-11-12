@@ -24,7 +24,7 @@ public class ProcessorTest {
     final Processor<Context<String>, CharSequence> processor = new Processor<>();
     new DescendingTextRendererProvider().provide(processor);
 
-    final CharSequence result = processor.process(new Context<>(), new CDARichText("Foo"));
+    final CharSequence result = processor.process(new Context<>(), new CDARichText("Foo", new ArrayList<>()));
 
     assertThat(result).isEqualTo("Foo");
   }
@@ -48,7 +48,7 @@ public class ProcessorTest {
 
     new DescendingTextRendererProvider().provide(processor);
 
-    final CharSequence result = processor.process(context, new CDARichText("Foo"));
+    final CharSequence result = processor.process(context, new CDARichText("Foo", new ArrayList<>()));
     assertThat(result).isEqualTo("Foo");
   }
 
@@ -58,7 +58,7 @@ public class ProcessorTest {
     new DescendingTextRendererProvider().provide(processor);
 
     final CDARichParagraph paragraph = new CDARichParagraph();
-    paragraph.getContent().add(new CDARichText("Foo"));
+    paragraph.getContent().add(new CDARichText("Foo", new ArrayList<>()));
 
     final CharSequence result = processor.process(new Context<>(), paragraph);
     assertThat(result).isEqualTo("--Foo");
@@ -86,8 +86,8 @@ public class ProcessorTest {
     new DescendingTextRendererProvider().provide(processor);
 
     final CDARichParagraph paragraph = new CDARichParagraph();
-    paragraph.getContent().add(new CDARichText("constant text"));
-    paragraph.getContent().add(new CDARichText("constant text"));
+    paragraph.getContent().add(new CDARichText("constant text", new ArrayList<>()));
+    paragraph.getContent().add(new CDARichText("constant text", new ArrayList<>()));
     paragraph.getContent().add(new CDARichParagraph());
 
     processor.process(context, paragraph);

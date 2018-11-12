@@ -35,7 +35,7 @@ public class HeadingTest {
     final AndroidContext context = new AndroidContext(activity);
 
     final CDARichHeading heading = new CDARichHeading(1);
-    heading.getContent().add(new CDARichText("heading 1"));
+    heading.getContent().add(new CDARichText("heading 1", new ArrayList<>()));
 
     final View result = processor.process(context, heading);
 

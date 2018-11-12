@@ -7,6 +7,8 @@ import com.contentful.rich.html.HtmlProcessor;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static com.google.common.truth.Truth.assertThat;
 import static lib.ContentfulCreator.mockCDAEntry;
 
@@ -19,7 +21,7 @@ public class LinksTest {
 
 
     final CDARichHyperLink link = new CDARichHyperLink("https://contentful.com");
-    link.getContent().add(new CDARichText("Some link text<br/>"));
+    link.getContent().add(new CDARichText("Some link text<br/>", new ArrayList<>()));
 
     final String result = processor.process(context, link);
 
@@ -35,7 +37,7 @@ public class LinksTest {
     final HtmlContext context = new HtmlContext();
 
     final CDARichBlock link = new CDARichEmbeddedLink(mockCDAEntry());
-    link.getContent().add(new CDARichText("Some embedded text"));
+    link.getContent().add(new CDARichText("Some embedded text", new ArrayList<>()));
 
     final String result = processor.process(context, link);
 
@@ -51,7 +53,7 @@ public class LinksTest {
     final HtmlContext context = new HtmlContext();
 
     final CDARichHyperLink link = new CDARichHyperLink("https://contentful.com");
-    link.getContent().add(new CDARichText("Some link text</a>"));
+    link.getContent().add(new CDARichText("Some link text</a>", new ArrayList<>()));
 
     final String result = processor.process(context, link);
 

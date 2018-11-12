@@ -35,7 +35,7 @@ public class QuoteTest {
     final CDARichQuote quote = new CDARichQuote();
 
     quote.getContent().add(new CDARichText("Edel sei der Mensch,\n" +
-        "Hilfreich und gut! — Johann Wolfgang von Goethe"));
+        "Hilfreich und gut! — Johann Wolfgang von Goethe", new ArrayList<>()));
 
     final View result = processor.process(context, quote);
 

@@ -13,14 +13,14 @@ data class Page(val name: String, val document: CDARichDocument)
 val PAGES: Array<Page> = arrayOf(
         Page(name = "Text with Marks",
                 document = CDARichDocument().addAll(
-                        CDARichText("Normal Text"),
-                        CDARichText("BoldText", listOf(CDARichMarkBold())),
-                        CDARichText("Italic", listOf(CDARichMarkItalic())),
-                        CDARichText("Underline", listOf(CDARichMarkUnderline())),
-                        CDARichText("final String code;", listOf(CDARichMarkCode())),
-                        CDARichText("CustomText", listOf(CDARichMarkCustom("custom"))),
+                        text("Normal Text"),
+                        text("BoldText", listOf(CDARichMarkBold())),
+                        text("Italic", listOf(CDARichMarkItalic())),
+                        text("Underline", listOf(CDARichMarkUnderline())),
+                        text("final String code;", listOf(CDARichMarkCode())),
+                        text("CustomText", listOf(CDARichMarkCustom("custom"))),
                         CDARichHorizontalRule(),
-                        CDARichText("All in all",
+                        text("All in all",
                                 listOf(
                                         CDARichMarkCustom("custom"),
                                         CDARichMarkItalic(),
@@ -34,90 +34,90 @@ val PAGES: Array<Page> = arrayOf(
         Page(name = "Headings",
                 document = CDARichDocument().addAll(
                         *(1 until 7).map {
-                            CDARichHeading(it).addAll(CDARichText("Heading level $it"))
+                            CDARichHeading(it).addAll(text("Heading level $it"))
                         }.toTypedArray()
                 )
         ),
         Page(name = "Lists",
                 document = CDARichDocument().addAll(
                         CDARichOrderedList().addAll(
-                                CDARichListItem().addAll(CDARichText("first item")),
-                                CDARichListItem().addAll(CDARichText("second item")),
-                                CDARichListItem().addAll(CDARichText("third item"))
+                                CDARichListItem().addAll(text("first item")),
+                                CDARichListItem().addAll(text("second item")),
+                                CDARichListItem().addAll(text("third item"))
                         ),
                         CDARichUnorderedList().addAll(
-                                CDARichListItem().addAll(CDARichText("first item")),
-                                CDARichListItem().addAll(CDARichText("second item")),
-                                CDARichListItem().addAll(CDARichText("third item"))
+                                CDARichListItem().addAll(text("first item")),
+                                CDARichListItem().addAll(text("second item")),
+                                CDARichListItem().addAll(text("third item"))
                         ),
                         CDARichUnorderedList().addAll(
-                                CDARichListItem().addAll(CDARichText("first item")),
+                                CDARichListItem().addAll(text("first item")),
                                 CDARichListItem().addAll(
-                                        CDARichText("second item"),
+                                        text("second item"),
                                         CDARichOrderedList().addAll(
-                                                CDARichListItem().addAll(CDARichText("first nested item")),
-                                                CDARichListItem().addAll(CDARichText("second nested item")),
-                                                CDARichListItem().addAll(CDARichText("third nested item"))
+                                                CDARichListItem().addAll(text("first nested item")),
+                                                CDARichListItem().addAll(text("second nested item")),
+                                                CDARichListItem().addAll(text("third nested item"))
                                         )
                                 ),
-                                CDARichListItem().addAll(CDARichText("third item"))
+                                CDARichListItem().addAll(text("third item"))
                         ),
                         CDARichOrderedList().addAll(
-                                CDARichListItem().addAll(CDARichText("first item")),
+                                CDARichListItem().addAll(text("first item")),
                                 CDARichListItem().addAll(
-                                        CDARichText("second item"),
+                                        text("second item"),
                                         CDARichUnorderedList().addAll(
-                                                CDARichListItem().addAll(CDARichText("first nested item")),
-                                                CDARichListItem().addAll(CDARichText("second nested item")),
-                                                CDARichListItem().addAll(CDARichText("third nested item"))
+                                                CDARichListItem().addAll(text("first nested item")),
+                                                CDARichListItem().addAll(text("second nested item")),
+                                                CDARichListItem().addAll(text("third nested item"))
                                         )
                                 ),
-                                CDARichListItem().addAll(CDARichText("third item"))
+                                CDARichListItem().addAll(text("third item"))
                         ),
                         CDARichOrderedList().addAll(
-                                CDARichListItem().addAll(CDARichText("first item")),
+                                CDARichListItem().addAll(text("first item")),
                                 CDARichListItem().addAll(
-                                        CDARichText("second item"),
+                                        text("second item"),
                                         CDARichOrderedList().addAll(
-                                                CDARichListItem().addAll(CDARichText("first nested item")),
-                                                CDARichListItem().addAll(CDARichText("second nested item")),
-                                                CDARichListItem().addAll(CDARichText("third nested item"))
+                                                CDARichListItem().addAll(text("first nested item")),
+                                                CDARichListItem().addAll(text("second nested item")),
+                                                CDARichListItem().addAll(text("third nested item"))
                                         )
                                 ),
-                                CDARichListItem().addAll(CDARichText("third item"))
+                                CDARichListItem().addAll(text("third item"))
                         ),
                         CDARichUnorderedList().addAll(
-                                CDARichListItem().addAll(CDARichText("first item")),
+                                CDARichListItem().addAll(text("first item")),
                                 CDARichListItem().addAll(
-                                        CDARichText("second item"),
+                                        text("second item"),
                                         CDARichOrderedList().addAll(
-                                                CDARichListItem().addAll(CDARichText("first nested item")),
-                                                CDARichListItem().addAll(CDARichText("second nested item")),
-                                                CDARichListItem().addAll(CDARichText("third nested item"))
+                                                CDARichListItem().addAll(text("first nested item")),
+                                                CDARichListItem().addAll(text("second nested item")),
+                                                CDARichListItem().addAll(text("third nested item"))
                                         )
                                 ),
-                                CDARichListItem().addAll(CDARichText("third item"))
+                                CDARichListItem().addAll(text("third item"))
                         ),
                         CDARichList("1").addAll(
-                                CDARichListItem().addAll(CDARichText("one")),
+                                CDARichListItem().addAll(text("one")),
                                 CDARichList("A").addAll(
-                                        CDARichListItem().addAll(CDARichText("two")),
+                                        CDARichListItem().addAll(text("two")),
                                         CDARichList("a").addAll(
-                                                CDARichListItem().addAll(CDARichText("three")),
+                                                CDARichListItem().addAll(text("three")),
                                                 CDARichList("I").addAll(
-                                                        CDARichListItem().addAll(CDARichText("four"))
+                                                        CDARichListItem().addAll(text("four"))
                                                 )
                                         )
                                 )
                         ),
                         CDARichUnorderedList().addAll(
-                                CDARichListItem().addAll(CDARichText("one")),
+                                CDARichListItem().addAll(text("one")),
                                 CDARichUnorderedList().addAll(
-                                        CDARichListItem().addAll(CDARichText("two")),
+                                        CDARichListItem().addAll(text("two")),
                                         CDARichUnorderedList().addAll(
-                                                CDARichListItem().addAll(CDARichText("three")),
+                                                CDARichListItem().addAll(text("three")),
                                                 CDARichUnorderedList().addAll(
-                                                        CDARichListItem().addAll(CDARichText("four"))
+                                                        CDARichListItem().addAll(text("four"))
                                                 )
                                         )
                                 )
@@ -127,42 +127,37 @@ val PAGES: Array<Page> = arrayOf(
         Page(name = "Quotes",
                 document = CDARichDocument().addAll(
                         CDARichBlock().addAll(
-                                CDARichText("Quotes from "),
-                                CDARichText("Famous", listOf(CDARichMark.CDARichMarkBold())),
-                                CDARichText(" People", listOf(CDARichMark.CDARichMarkItalic()))
+                                text("Quotes from "),
+                                text("Famous", listOf(CDARichMark.CDARichMarkBold())),
+                                text(" People", listOf(CDARichMark.CDARichMarkItalic()))
                         ),
                         CDARichQuote().addAll(
-                                CDARichText("You know you’re in love when you can’t fall asleep because reality is finally better than your dreams."),
-                                CDARichText("- Dr. Suess", listOf(CDARichMark.CDARichMarkItalic()))
+                                text("You know you’re in love when you can’t fall asleep because reality is finally better than your dreams."),
+                                text("- Dr. Suess", listOf(CDARichMark.CDARichMarkItalic()))
                         ),
                         CDARichQuote().addAll(
-                                CDARichText("I’m selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can’t handle me at my worst, then you sure as hell don’t deserve me at my best."),
-                                CDARichText("- Marilyn Monroe", listOf(CDARichMark.CDARichMarkItalic()))
+                                text("I’m selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can’t handle me at my worst, then you sure as hell don’t deserve me at my best."),
+                                text("- Marilyn Monroe", listOf(CDARichMark.CDARichMarkItalic()))
                         ),
                         CDARichQuote().addAll(
-                                CDARichText("Twenty years from now you will be more disappointed by the things that you didn’t do than by the ones you did do."),
-                                CDARichText("- Mark Twain", listOf(CDARichMark.CDARichMarkItalic()))
+                                text("Twenty years from now you will be more disappointed by the things that you didn’t do than by the ones you did do."),
+                                text("- Mark Twain", listOf(CDARichMark.CDARichMarkItalic()))
                         )
                 )
 
         ),
         Page(name = "Links", document = CDARichDocument().addAll(
                 CDARichHyperLink("https://www.google.com/search?hl=en&site=imghp&tbm=isch&source=hp&q=cats")
-                        .addAll(
-                                CDARichText("Hyperlink to cats")
-                        ),
+                        .addAll(text("Hyperlink to cats")),
                 CDARichEmbeddedLink(mockCDAEntry())
-                        .addAll(
-                                CDARichText(" Embedded entry")
-                        ),
+                        .addAll(text(" Embedded entry")),
                 CDARichEmbeddedLink(mockCDAAsset())
-                        .addAll(
-                                CDARichText(" Embedded asset")
-                        )
+                        .addAll(text(" Embedded asset"))
         )
         )
 )
 
+fun text(name: String, marks:List<CDARichMark> = listOf<CDARichMark>()) = CDARichText(name, marks)
 
 fun <T : CDARichBlock> T.addAll(vararg elements: CDARichNode): T {
     elements.forEach { this.content.add(it) }

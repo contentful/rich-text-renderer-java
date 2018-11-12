@@ -43,26 +43,26 @@ public class ComplexProcessorTest {
     );
 
     final CDARichUnorderedList unorderedList = new CDARichUnorderedList();
-    unorderedList.getContent().add(new CDARichText("unordered_a"));
-    unorderedList.getContent().add(new CDARichText("unordered_b"));
-    unorderedList.getContent().add(new CDARichText("unordered_c"));
+    unorderedList.getContent().add(new CDARichText("unordered_a", new ArrayList<>()));
+    unorderedList.getContent().add(new CDARichText("unordered_b", new ArrayList<>()));
+    unorderedList.getContent().add(new CDARichText("unordered_c", new ArrayList<>()));
 
     final CDARichOrderedList innerList = new CDARichOrderedList();
-    innerList.getContent().add(new CDARichText("inner_first"));
-    innerList.getContent().add(new CDARichText("inner_second"));
+    innerList.getContent().add(new CDARichText("inner_first", new ArrayList<>()));
+    innerList.getContent().add(new CDARichText("inner_second", new ArrayList<>()));
     innerList.getContent().add(unorderedList);
-    innerList.getContent().add(new CDARichText("inner_third"));
+    innerList.getContent().add(new CDARichText("inner_third", new ArrayList<>()));
 
     final CDARichOrderedList outerList = new CDARichOrderedList();
-    outerList.getContent().add(new CDARichText("outer_top"));
+    outerList.getContent().add(new CDARichText("outer_top", new ArrayList<>()));
     outerList.getContent().add(innerList);
-    outerList.getContent().add(new CDARichText("outer_bottom"));
+    outerList.getContent().add(new CDARichText("outer_bottom", new ArrayList<>()));
 
     final CDARichParagraph paragraph = new CDARichParagraph();
-    paragraph.getContent().add(new CDARichText("first"));
-    paragraph.getContent().add(new CDARichText("second"));
+    paragraph.getContent().add(new CDARichText("first", new ArrayList<>()));
+    paragraph.getContent().add(new CDARichText("second", new ArrayList<>()));
     paragraph.getContent().add(outerList);
-    paragraph.getContent().add(new CDARichText("last"));
+    paragraph.getContent().add(new CDARichText("last", new ArrayList<>()));
 
     final String result = processor.process(siblingCountingContext, paragraph);
 

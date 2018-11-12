@@ -17,7 +17,7 @@ public class MarksTextTest {
     final HtmlProcessor processor = new HtmlProcessor();
     final HtmlContext context = new HtmlContext();
 
-    final String result = processor.process(context, new CDARichText("text"));
+    final String result = processor.process(context, new CDARichText("text", new ArrayList<>()));
 
     assertThat(result).isEqualTo("text\n");
   }

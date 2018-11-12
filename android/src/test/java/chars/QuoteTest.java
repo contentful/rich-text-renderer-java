@@ -14,6 +14,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.ArrayList;
+
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
@@ -32,7 +34,7 @@ public class QuoteTest {
     final CDARichQuote quote = new CDARichQuote();
 
     quote.getContent().add(new CDARichText("Edel sei der Mensch,\n" +
-        "Hilfreich und gut! — Johann Wolfgang von Goethe"));
+        "Hilfreich und gut! — Johann Wolfgang von Goethe", new ArrayList<>()));
 
     final CharSequence result = processor.process(context, quote);
 

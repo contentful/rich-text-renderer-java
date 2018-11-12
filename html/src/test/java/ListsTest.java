@@ -114,7 +114,7 @@ public class ListsTest {
 
   private CDARichListItem textListItem(String text) {
     final CDARichParagraph paragraph = new CDARichParagraph();
-    paragraph.getContent().add(new CDARichText(text));
+    paragraph.getContent().add(new CDARichText(text, new ArrayList<>()));
     final CDARichListItem item = new CDARichListItem();
     item.getContent().add(paragraph);
     return item;

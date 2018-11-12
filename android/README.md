@@ -23,7 +23,7 @@ allprojects {
 dependencies {
   // …
   implementation 'com.github.contentful:rich-text-renderer.java:master-SNAPSHOT'
-  implementation 'com.github.contentful:contentful.java:add~rich-text-SNAPSHOT'
+  implementation 'com.github.contentful:contentful.java:master-SNAPSHOT'
 }
 ```
 
@@ -42,7 +42,7 @@ same can be achieved by adding Maven dependencies like so:
 	<dependency>
 	    <groupId>com.github.contentful</groupId>
 	    <artifactId>contentful.java</artifactId>
-	    <version>add~rich-text-SNAPSHOT</version>
+	    <version>master-SNAPSHOT</version>
 	</dependency>
 	<dependency>
 	    <groupId>com.github.contentful</groupId>

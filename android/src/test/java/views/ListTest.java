@@ -38,13 +38,13 @@ public class ListTest {
     final AndroidContext context = new AndroidContext(activity);
 
     final CDARichListItem item1 = new CDARichListItem();
-    item1.getContent().add(new CDARichText("item1"));
+    item1.getContent().add(new CDARichText("item1", new ArrayList<>()));
 
     final CDARichListItem item2 = new CDARichListItem();
-    item2.getContent().add(new CDARichText("item2"));
+    item2.getContent().add(new CDARichText("item2", new ArrayList<>()));
 
     final CDARichListItem item3 = new CDARichListItem();
-    item3.getContent().add(new CDARichText("item3"));
+    item3.getContent().add(new CDARichText("item3", new ArrayList<>()));
 
     final CDARichUnorderedList unorderedList = new CDARichUnorderedList();
     unorderedList.getContent().add(item1);
@@ -52,7 +52,7 @@ public class ListTest {
     unorderedList.getContent().add(item3);
 
     final CDARichListItem itemWithList = new CDARichListItem();
-    itemWithList.getContent().add(new CDARichText("ordered:"));
+    itemWithList.getContent().add(new CDARichText("ordered:", new ArrayList<>()));
     itemWithList.getContent().add(unorderedList);
 
     final CDARichOrderedList list = new CDARichOrderedList();
@@ -62,7 +62,7 @@ public class ListTest {
     list.getContent().add(item3);
 
     final CDARichDocument document = new CDARichDocument();
-    document.getContent().add(new CDARichText("unordered:"));
+    document.getContent().add(new CDARichText("unordered:", new ArrayList<>()));
     document.getContent().add(list);
 
     final View result = processor.process(context, document);
@@ -95,13 +95,13 @@ public class ListTest {
     final AndroidContext context = new AndroidContext(activity);
 
     final CDARichListItem item1 = new CDARichListItem();
-    item1.getContent().add(new CDARichText("item1"));
+    item1.getContent().add(new CDARichText("item1", new ArrayList<>()));
 
     final CDARichListItem item2 = new CDARichListItem();
-    item2.getContent().add(new CDARichText("item2"));
+    item2.getContent().add(new CDARichText("item2", new ArrayList<>()));
 
     final CDARichListItem item3 = new CDARichListItem();
-    item3.getContent().add(new CDARichText("item3"));
+    item3.getContent().add(new CDARichText("item3", new ArrayList<>()));
 
     final CDARichOrderedList orderedList = new CDARichOrderedList();
     orderedList.getContent().add(item1);
@@ -109,7 +109,7 @@ public class ListTest {
     orderedList.getContent().add(item3);
 
     final CDARichListItem ordered = new CDARichListItem();
-    ordered.getContent().add(new CDARichText("ordered:"));
+    ordered.getContent().add(new CDARichText("ordered:", new ArrayList<>()));
     ordered.getContent().add(orderedList);
 
     final CDARichUnorderedList unordered = new CDARichUnorderedList();
@@ -119,7 +119,7 @@ public class ListTest {
     unordered.getContent().add(item3);
 
     final CDARichDocument document = new CDARichDocument();
-    document.getContent().add(new CDARichText("unordered:"));
+    document.getContent().add(new CDARichText("unordered:", new ArrayList<>()));
     document.getContent().add(unordered);
 
     final View result = processor.process(context, document);

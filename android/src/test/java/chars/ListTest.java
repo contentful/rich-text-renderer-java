@@ -19,6 +19,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.ArrayList;
+
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
@@ -36,13 +38,13 @@ public class ListTest {
     final AndroidContext context = new AndroidContext(activity);
 
     final CDARichListItem item1 = new CDARichListItem();
-    item1.getContent().add(new CDARichText("item1"));
+    item1.getContent().add(new CDARichText("item1", new ArrayList<>()));
 
     final CDARichListItem item2 = new CDARichListItem();
-    item2.getContent().add(new CDARichText("item2"));
+    item2.getContent().add(new CDARichText("item2", new ArrayList<>()));
 
     final CDARichListItem item3 = new CDARichListItem();
-    item3.getContent().add(new CDARichText("item3"));
+    item3.getContent().add(new CDARichText("item3", new ArrayList<>()));
 
     final CDARichUnorderedList list = new CDARichUnorderedList();
     list.getContent().add(item1);
@@ -64,13 +66,13 @@ public class ListTest {
     final AndroidContext context = new AndroidContext(activity);
 
     final CDARichListItem item1 = new CDARichListItem();
-    item1.getContent().add(new CDARichText("item1"));
+    item1.getContent().add(new CDARichText("item1", new ArrayList<>()));
 
     final CDARichListItem item2 = new CDARichListItem();
-    item2.getContent().add(new CDARichText("item2"));
+    item2.getContent().add(new CDARichText("item2", new ArrayList<>()));
 
     final CDARichListItem item3 = new CDARichListItem();
-    item3.getContent().add(new CDARichText("item3"));
+    item3.getContent().add(new CDARichText("item3", new ArrayList<>()));
 
     final CDARichOrderedList list = new CDARichOrderedList();
     list.getContent().add(item1);
@@ -92,13 +94,13 @@ public class ListTest {
     final AndroidContext context = new AndroidContext(activity);
 
     final CDARichListItem item1 = new CDARichListItem();
-    item1.getContent().add(new CDARichText("item1"));
+    item1.getContent().add(new CDARichText("item1", new ArrayList<>()));
 
     final CDARichListItem item2 = new CDARichListItem();
-    item2.getContent().add(new CDARichText("item2"));
+    item2.getContent().add(new CDARichText("item2", new ArrayList<>()));
 
     final CDARichListItem item3 = new CDARichListItem();
-    item3.getContent().add(new CDARichText("item3"));
+    item3.getContent().add(new CDARichText("item3", new ArrayList<>()));
 
     final CDARichUnorderedList unorderedList = new CDARichUnorderedList();
     unorderedList.getContent().add(item1);
@@ -106,7 +108,7 @@ public class ListTest {
     unorderedList.getContent().add(item3);
 
     final CDARichListItem itemWithList = new CDARichListItem();
-    itemWithList.getContent().add(new CDARichText("ordered:"));
+    itemWithList.getContent().add(new CDARichText("ordered:", new ArrayList<>()));
     itemWithList.getContent().add(unorderedList);
 
     final CDARichOrderedList list = new CDARichOrderedList();
@@ -116,7 +118,7 @@ public class ListTest {
     list.getContent().add(item3);
 
     final CDARichDocument document = new CDARichDocument();
-    document.getContent().add(new CDARichText("unordered:"));
+    document.getContent().add(new CDARichText("unordered:", new ArrayList<>()));
     document.getContent().add(list);
 
     final CharSequence result = processor.process(context, document);
@@ -141,13 +143,13 @@ public class ListTest {
     final AndroidContext context = new AndroidContext(activity);
 
     final CDARichListItem item1 = new CDARichListItem();
-    item1.getContent().add(new CDARichText("item1"));
+    item1.getContent().add(new CDARichText("item1", new ArrayList<>()));
 
     final CDARichListItem item2 = new CDARichListItem();
-    item2.getContent().add(new CDARichText("item2"));
+    item2.getContent().add(new CDARichText("item2", new ArrayList<>()));
 
     final CDARichListItem item3 = new CDARichListItem();
-    item3.getContent().add(new CDARichText("item3"));
+    item3.getContent().add(new CDARichText("item3", new ArrayList<>()));
 
     final CDARichOrderedList orderedList = new CDARichOrderedList();
     orderedList.getContent().add(item1);
@@ -155,7 +157,7 @@ public class ListTest {
     orderedList.getContent().add(item3);
 
     final CDARichListItem ordered = new CDARichListItem();
-    ordered.getContent().add(new CDARichText("ordered:"));
+    ordered.getContent().add(new CDARichText("ordered:", new ArrayList<>()));
     ordered.getContent().add(orderedList);
 
     final CDARichUnorderedList unordered = new CDARichUnorderedList();
@@ -165,7 +167,7 @@ public class ListTest {
     unordered.getContent().add(item3);
 
     final CDARichDocument document = new CDARichDocument();
-    document.getContent().add(new CDARichText("unordered:"));
+    document.getContent().add(new CDARichText("unordered:", new ArrayList<>()));
     document.getContent().add(unordered);
 
     final CharSequence result = processor.process(context, document);
@@ -190,7 +192,7 @@ public class ListTest {
     final AndroidContext context = new AndroidContext(activity);
 
     final CDARichOrderedList romanCaptialLetter = new CDARichOrderedList();
-    addListItem(romanCaptialLetter, new CDARichText("NESTING!!1!"));
+    addListItem(romanCaptialLetter, new CDARichText("NESTING!!1!", new ArrayList<>()));
 
     final CDARichOrderedList firstLowerCaseLetterList = new CDARichOrderedList();
     addListItem(firstLowerCaseLetterList, romanCaptialLetter);
@@ -567,7 +569,7 @@ public class ListTest {
   private void addBunchOfItems(CDARichBlock block) {
     for (int i = 0; i < 30; ++i) {
       final CDARichListItem item = new CDARichListItem();
-      item.getContent().add(new CDARichText("item " + i));
+      item.getContent().add(new CDARichText("item " + i, new ArrayList<>()));
       block.getContent().add(item);
     }
   }

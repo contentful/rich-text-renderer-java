@@ -43,7 +43,7 @@ public class MarksTextTest {
     final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
     final AndroidContext context = new AndroidContext(activity);
 
-    final View result = processor.process(context, new CDARichText("text"));
+    final View result = processor.process(context, new CDARichText("text", new ArrayList<>()));
 
     assertThat(result).isNotNull();
     final View content = result.findViewById(R.id.rich_content);

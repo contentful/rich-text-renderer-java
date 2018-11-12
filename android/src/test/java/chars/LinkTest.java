@@ -17,6 +17,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.ArrayList;
+
 import lib.ContentfulCreator;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -36,7 +38,7 @@ public class LinkTest {
     final AndroidContext context = new AndroidContext(activity);
 
     final CDARichHyperLink link = new CDARichHyperLink("https://contentful.com");
-    link.getContent().add(new CDARichText("Some link text"));
+    link.getContent().add(new CDARichText("Some link text", new ArrayList<>()));
 
     final CharSequence result = processor.process(context, link);
 
@@ -56,7 +58,7 @@ public class LinkTest {
     final AndroidContext context = new AndroidContext(activity);
 
     final CDARichHyperLink link = new CDARichHyperLink("https://contentful.com");
-    link.getContent().add(new CDARichText("Some link text</a>"));
+    link.getContent().add(new CDARichText("Some link text</a>", new ArrayList<>()));
 
     final CharSequence result = processor.process(context, link);
 
@@ -77,7 +79,7 @@ public class LinkTest {
     final AndroidContext context = new AndroidContext(activity);
 
     final CDARichHyperLink link = new CDARichEmbeddedLink(ContentfulCreator.mockCDAEntry());
-    link.getContent().add(new CDARichText("My embedded entry"));
+    link.getContent().add(new CDARichText("My embedded entry", new ArrayList<>()));
 
     final CharSequence result = processor.process(context, link);
 

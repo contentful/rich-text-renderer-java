@@ -15,6 +15,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.ArrayList;
+
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
@@ -32,7 +34,7 @@ public class HeadingTest {
     final AndroidContext context = new AndroidContext(activity);
 
     final CDARichHeading heading = new CDARichHeading(1);
-    heading.getContent().add(new CDARichText("heading 1"));
+    heading.getContent().add(new CDARichText("heading 1", new ArrayList<>()));
 
     final CharSequence result = processor.process(context, heading);
 
@@ -53,7 +55,7 @@ public class HeadingTest {
     final AndroidContext context = new AndroidContext(activity);
 
     final CDARichHeading heading = new CDARichHeading(-1);
-    heading.getContent().add(new CDARichText("illegal"));
+    heading.getContent().add(new CDARichText("illegal", new ArrayList<>()));
 
     final CharSequence result = processor.process(context, heading);
 

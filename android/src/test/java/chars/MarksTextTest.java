@@ -40,7 +40,7 @@ public class MarksTextTest {
     final AndroidProcessor<CharSequence> processor = AndroidProcessor.creatingCharSequences();
     final AndroidContext context = new AndroidContext(activity);
 
-    final CharSequence result = processor.process(context, new CDARichText("text"));
+    final CharSequence result = processor.process(context, new CDARichText("text", new ArrayList<>()));
 
     assertThat(result).isInstanceOf(Spannable.class);
     final Spannable spannable = (Spannable) result;
