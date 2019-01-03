@@ -22,7 +22,7 @@ allprojects {
 ```groovy
 dependencies {
   // …
-  implementation 'com.github.contentful:rich-text-renderer~java:master-SNAPSHOT'
+  implementation 'com.github.contentful.rich-text-renderer~java:all:master-SNAPSHOT'
   implementation 'com.github.contentful:contentful~java:master-SNAPSHOT'
 }
 ```
