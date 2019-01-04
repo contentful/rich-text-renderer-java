@@ -42,7 +42,7 @@ same can be achieved by adding Maven dependencies like so:
 	<dependency>
 	    <groupId>com.github.contentful</groupId>
 	    <artifactId>contentful.java</artifactId>
-	    <version>master-SNAPSHOT</version>
+	    <version>v10.2.0</version>
 	</dependency>
 	<dependency>
 	    <groupId>com.github.contentful</groupId>
