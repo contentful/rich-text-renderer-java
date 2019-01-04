@@ -1,5 +1,18 @@
+<p align="center">
+  🚧🚧🚧🚧🏗️👷🚧🚧👨‍💻🚧🚧👷🏗️🚧🚧🚧🚧<br>
+  <b>
+    THIS REPOSITORY IS IN BETA, FEEDBACK WANTED.<br>
+    EXPECT HEAVY CHANGES AND SUBOPTIMAL VISUAL QUALITY
+  </b>
+  <br>
+  🚧🚧🚧🚧🏗️👷🚧🚧👨‍💻🚧🚧👷🏗️🚧🚧🚧🚧<br>
+  <br>
+  <sup>Please follow https://github.com/contentful/rich-text-renderer.java/issues/2 for details.</sup>
+</p>
+
+
 Contentful Rich Text Rendering SDK for Java
-=================================================
+===========================================
 
 [![Build Status](https://travis-ci.org/contentful/rich-text-rendering.java.svg)](https://travis-ci.org/contentful/rich-text-rendering.java/builds#)
 [![codecov](https://codecov.io/gh/contentful/rich-text-rendering.java/branch/master/graph/badge.svg)](https://codecov.io/gh/contentful/rich-text-rendering.java)
