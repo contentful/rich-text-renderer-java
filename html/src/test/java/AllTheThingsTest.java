@@ -1,5 +1,4 @@
 import com.contentful.java.cda.rich.CDARichDocument;
-import com.contentful.java.cda.rich.CDARichEmbeddedLink;
 import com.contentful.java.cda.rich.CDARichHeading;
 import com.contentful.java.cda.rich.CDARichHorizontalRule;
 import com.contentful.java.cda.rich.CDARichHyperLink;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.truth.Truth.assertThat;
-import static lib.ContentfulCreator.mockCDAEntry;
 
 public class AllTheThingsTest {
   @Test
@@ -49,8 +47,6 @@ public class AllTheThingsTest {
         "    heading - 6\n" +
         "  </h6>\n" +
         "  <hr/>\n" +
-        "  <div entry=\"CDAEntry{id='fake_id'}\">\n" +
-        "  </div>\n" +
         "  <a href=\"https://contentful.com/\">\n" +
         "    Hyper hyper\n" +
         "  </a>\n" +
@@ -80,15 +76,13 @@ public class AllTheThingsTest {
         "      some list item content\n" +
         "    </li>\n" +
         "  </ul>\n" +
-        "  <p>\n" +
+        "  <div>\n" +
         "    Paragraph\n" +
-        "  </p>\n" +
+        "  </div>\n" +
         "  <blockquote>\n" +
         "    Famous quote\n" +
         "  </blockquote>\n" +
-        "  <!-- no process accepts 'CDARichNode' with a path of " +
-        "'CDARichDocument'. Please add a corresponding renderer using " +
-        "'HtmlRenderer.addRenderer(…)'. -->\n" +
+        "  <!-- no processor accepts 'CDARichNode', found at path 'CDARichDocument[0]'. Please add a corresponding renderer using 'HtmlRenderer.addRenderer(...)'. -->\n" +
         "</div>\n");
   }
 
@@ -103,9 +97,6 @@ public class AllTheThingsTest {
 
     final CDARichHorizontalRule horizontalRule = new CDARichHorizontalRule();
     result.getContent().add(horizontalRule);
-
-    final CDARichEmbeddedLink embeddedLink = new CDARichEmbeddedLink(mockCDAEntry());
-    result.getContent().add(embeddedLink);
 
     final CDARichHyperLink hyperLink = new CDARichHyperLink("https://contentful.com/");
     hyperLink.getContent().add(new CDARichText("Hyper hyper", new ArrayList<>()));
