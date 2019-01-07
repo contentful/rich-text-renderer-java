@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    api("com.github.contentful", "contentful.java", "master-SNAPSHOT")
+    api("com.github.contentful", "contentful.java", "${ext["contentful_version"]}")
     implementation("com.google.code.findbugs", "jsr305", "3.0.2")
 
     testImplementation("junit", "junit", "4.12")

@@ -4,6 +4,7 @@ import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.core.Processor;
 import com.contentful.rich.html.HtmlContext;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -13,6 +14,17 @@ import javax.annotation.Nonnull;
  */
 public class TagWithArgumentsRenderer extends TagRenderer {
   private final ArgumentsProvider provider;
+
+  @Nonnull
+  public static Map<String, String> mapifyArguments(@Nonnull String... args) {
+    final HashMap<String, String> result = new HashMap<>(args.length / 2);
+    for (int i = 0; i < args.length; i += 2) {
+      final String key = args[i];
+      final String value = args[i + 1];
+      result.put(key, value);
+    }
+    return result;
+  }
 
   /**
    * Create a tag renderer.

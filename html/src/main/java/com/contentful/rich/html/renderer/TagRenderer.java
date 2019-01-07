@@ -1,6 +1,7 @@
 package com.contentful.rich.html.renderer;
 
 import com.contentful.java.cda.rich.CDARichBlock;
+import com.contentful.java.cda.rich.CDARichHyperLink;
 import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.core.Processor;
 import com.contentful.rich.core.Renderer;
@@ -10,6 +11,9 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import static java.lang.String.format;
+import static java.util.Locale.getDefault;
 
 /**
  * This renderer will generate an html tag.
@@ -52,20 +56,48 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
           } else { // no new line found.
             result.append(context.getIndentation()).append(itemResult).append("\n");
           }
-        } else { // null found
-          result.append(context.getIndentation()).append("<!-- ").append("no process accepts '")
-              .append(item.getClass().getSimpleName())
-              .append("' with a path of '")
-              .append(context.getPath().stream()
-                  .map((x) -> x.getClass().getSimpleName())
-                  .collect(Collectors.joining(" > ")))
-              .append("'. Please add a corresponding renderer using ")
-              .append("'HtmlRenderer.addRenderer(…)'. -->\n");
+        } else { // none found
+          appendErrorNode(context, result, item);
         }
       }
     }
 
     return result.append(endTag(node)).toString();
+  }
+
+  private void appendErrorNode(@Nonnull HtmlContext context, StringBuilder result, CDARichNode item) {
+    result
+        .append(context.getIndentation())
+        .append("<!-- ").append("no processor accepts '")
+        .append(createNodeName(item))
+        .append("', found at path '")
+        .append(context.getPath().stream()
+            .map((x) -> createNodeName(x) + "[" + getIndexInParent(context, x) + "]")
+            .collect(Collectors.joining(" > ")))
+        .append("'. Please add a corresponding renderer using ")
+        .append("'HtmlRenderer.addRenderer(...)'. -->\n");
+  }
+
+  private String createNodeName(CDARichNode node) {
+    if (node instanceof CDARichHyperLink && ((CDARichHyperLink) node).getData() != null) {
+      final CDARichHyperLink link = (CDARichHyperLink) node;
+      return format(
+          getDefault(),
+          "%s<%s>",
+          link.getClass().getSimpleName(),
+          link.getData().getClass().getSimpleName());
+    } else {
+      return node.getClass().getSimpleName();
+    }
+  }
+
+  private int getIndexInParent(@Nonnull HtmlContext context, CDARichNode x) {
+    final int currentIndex = context.getPath().indexOf(x);
+    if (currentIndex > 0) {
+      return ((CDARichBlock) context.getPath().get(currentIndex - 1)).getContent().indexOf(x);
+    } else {
+      return 0;
+    }
   }
 
   /**

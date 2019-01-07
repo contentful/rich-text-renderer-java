@@ -1,7 +1,6 @@
 package com.contentful.rich.html;
 
 import com.contentful.java.cda.rich.CDARichDocument;
-import com.contentful.java.cda.rich.CDARichEmbeddedLink;
 import com.contentful.java.cda.rich.CDARichHeading;
 import com.contentful.java.cda.rich.CDARichHorizontalRule;
 import com.contentful.java.cda.rich.CDARichHyperLink;
@@ -20,10 +19,9 @@ import com.contentful.rich.html.renderer.TagRenderer;
 import com.contentful.rich.html.renderer.TagWithArgumentsRenderer;
 import com.contentful.rich.html.renderer.TextRenderer;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.annotation.Nonnull;
+
+import static com.contentful.rich.html.renderer.TagWithArgumentsRenderer.mapifyArguments;
 
 /**
  * This provider of renderer will provide all available default renderer for creating html output
@@ -51,22 +49,11 @@ class HtmlRendererProvider {
         new TagRenderer(processor, "div")
     );
     processor.addRenderer(
-        (context, node) -> node instanceof CDARichEmbeddedLink && ((CDARichEmbeddedLink) node).getData() != null,
-        new TagWithArgumentsRenderer(
-            processor,
-            "div",
-            (node) -> mapifyArguments("entry", ((CDARichEmbeddedLink) node).getData().toString()))
-    );
-    processor.addRenderer(
-        (context, node) -> node instanceof CDARichHyperLink && ((CDARichHyperLink) node).getData() != null,
+        (context, node) -> node instanceof CDARichHyperLink && ((CDARichHyperLink) node).getData() instanceof String,
         new TagWithArgumentsRenderer(
             processor,
             "a",
             (node) -> mapifyArguments("href", (String) ((CDARichHyperLink) node).getData()))
-    );
-    processor.addRenderer(
-        (context, node) -> node instanceof CDARichHyperLink && ((CDARichHyperLink) node).getData() == null,
-        new TagRenderer(processor, "a")
     );
     processor.addRenderer(
         (context, node) -> node instanceof CDARichQuote,
@@ -94,18 +81,7 @@ class HtmlRendererProvider {
     // needs to be last but one
     processor.addRenderer(
         (context, node) -> node instanceof CDARichParagraph,
-        new TagRenderer(processor, "p")
+        new TagRenderer(processor, "div")
     );
-  }
-
-  @Nonnull
-  private Map<String, String> mapifyArguments(@Nonnull String... args) {
-    final HashMap<String, String> result = new HashMap<>(args.length / 2);
-    for (int i = 0; i < args.length; i += 2) {
-      final String key = args[i];
-      final String value = args[i + 1];
-      result.put(key, value);
-    }
-    return result;
   }
 }

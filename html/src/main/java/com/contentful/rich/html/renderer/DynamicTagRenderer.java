@@ -7,7 +7,7 @@ import com.contentful.rich.html.HtmlContext;
 import javax.annotation.Nonnull;
 
 /**
- * This renderer updates it's tag based on the incomming node.
+ * This renderer updates it's tag based on the incoming node.
  */
 public class DynamicTagRenderer extends TagRenderer {
   private final TagNameProvider provider;

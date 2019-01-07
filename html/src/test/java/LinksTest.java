@@ -1,5 +1,5 @@
 import com.contentful.java.cda.rich.CDARichBlock;
-import com.contentful.java.cda.rich.CDARichEmbeddedLink;
+import com.contentful.java.cda.rich.CDARichEmbeddedBlock;
 import com.contentful.java.cda.rich.CDARichHyperLink;
 import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.html.HtmlContext;
@@ -29,22 +29,6 @@ public class LinksTest {
         "<a href=\"https://contentful.com\">\n" +
         "  Some link text<br/>\n" +
         "</a>\n");
-  }
-
-  @Test
-  public void createEmbeddedLink() {
-    final HtmlProcessor processor = new HtmlProcessor();
-    final HtmlContext context = new HtmlContext();
-
-    final CDARichBlock link = new CDARichEmbeddedLink(mockCDAEntry());
-    link.getContent().add(new CDARichText("Some embedded text", new ArrayList<>()));
-
-    final String result = processor.process(context, link);
-
-    assertThat(result).isEqualTo("" +
-        "<div entry=\"CDAEntry{id='fake_id'}\">\n" +
-        "  Some embedded text\n" +
-        "</div>\n");
   }
 
   @Test

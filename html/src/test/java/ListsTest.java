@@ -30,19 +30,19 @@ public class ListsTest {
     assertThat(result).isEqualTo(
         "<ul>\n" +
             "  <li>\n" +
-            "    <p>\n" +
+            "    <div>\n" +
             "      one\n" +
-            "    </p>\n" +
+            "    </div>\n" +
             "  </li>\n" +
             "  <li>\n" +
-            "    <p>\n" +
+            "    <div>\n" +
             "      two\n" +
-            "    </p>\n" +
+            "    </div>\n" +
             "  </li>\n" +
             "  <li>\n" +
-            "    <p>\n" +
+            "    <div>\n" +
             "      three\n" +
-            "    </p>\n" +
+            "    </div>\n" +
             "  </li>\n" +
             "</ul>\n");
   }
@@ -71,43 +71,43 @@ public class ListsTest {
 
     assertThat(result).isEqualTo("<ul>\n" +
         "  <li>\n" +
-        "    <p>\n" +
+        "    <div>\n" +
         "      one\n" +
-        "    </p>\n" +
+        "    </div>\n" +
         "  </li>\n" +
         "  <li>\n" +
-        "    <p>\n" +
+        "    <div>\n" +
         "      two\n" +
-        "    </p>\n" +
+        "    </div>\n" +
         "  </li>\n" +
         "  <li>\n" +
-        "    <p>\n" +
+        "    <div>\n" +
         "      three\n" +
-        "    </p>\n" +
+        "    </div>\n" +
         "  </li>\n" +
         "  <li>\n" +
         "    <ol>\n" +
         "      <li>\n" +
-        "        <p>\n" +
+        "        <div>\n" +
         "          a\n" +
-        "        </p>\n" +
+        "        </div>\n" +
         "      </li>\n" +
         "      <li>\n" +
-        "        <p>\n" +
+        "        <div>\n" +
         "          b\n" +
-        "        </p>\n" +
+        "        </div>\n" +
         "      </li>\n" +
         "      <li>\n" +
-        "        <p>\n" +
+        "        <div>\n" +
         "          c\n" +
-        "        </p>\n" +
+        "        </div>\n" +
         "      </li>\n" +
         "    </ol>\n" +
         "  </li>\n" +
         "  <li>\n" +
-        "    <p>\n" +
+        "    <div>\n" +
         "      <\uD83D\uDC51><code><i><b><u>four</u></b></i></code></\uD83D\uDC51>\n" +
-        "    </p>\n" +
+        "    </div>\n" +
         "  </li>\n" +
         "</ul>\n");
   }
