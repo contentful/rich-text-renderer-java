@@ -98,7 +98,7 @@ Adding Custom Renderers
 -----------------------
 
 If a change of the output is wanted, adding of a new renderer or overriding a default one is needed.
-To do so, using the `.addRenderer(…,…)` or `.addRendererUpFront(…,…)` method are needed. The 
+To do so, using the `.addRenderer(…,…)` or `.overrideRenderer(…,…)` method are needed. The 
 Processor contains a list of renderers, which is iterated upon to find one matching the current 
 Node encountered. For matching a renderer to a node, a `Checker` needs to be provided while adding
 a `Renderer` to the `Processor`. 
@@ -120,7 +120,7 @@ processor.addRenderer(
 ```
 
 The now added renderer will be working as a fallback: Since it got added last (by not using 
-`.addRendererUpFront(…)`) it will get called last in the search of a renderer. It's checker is 
+`.overrideRenderer(…)`) it will get called last in the search of a renderer. It's checker is 
 setup to always return true, so this being the last, the renderer will always get called. The 
 renderer in the above example is simply returning the `.toString()` output of the given node.
 
@@ -131,7 +131,7 @@ Overriding Default Renderers
 If overriding one of the default renderer is desired, the just presented way will not be sufficient:
 Adding a new renderer to override an existing one will not get triggered, since the to be overriden
 renderer will be checked before the just added one. For those kind of challenges, the 
-`.addRendererUpFront(…)` method got added: It will move the renderer and checker to the front of
+`.overrideRenderer(…)` method got added: It will move the renderer and checker to the front of
 the list of renderer and will therefore be checked first. If the checker does not return true, the 
 default renderer will be used. Upon returning the checker returning true, the current search for a
 renderer will be aborted and the found renderer be used.

@@ -12,7 +12,7 @@ public class CustomRendererTest {
   @Test
   public void overrideExistingRenderer() {
     final HtmlProcessor processor = new HtmlProcessor();
-    processor.addRendererUpFront(
+    processor.overrideRenderer(
         (context, node) -> node instanceof CDARichParagraph,
         new TagRenderer(processor, "pete")
     );

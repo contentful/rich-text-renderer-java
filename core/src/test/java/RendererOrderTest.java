@@ -21,7 +21,7 @@ public class RendererOrderTest {
 
   @Test
   public void overrideRenderer() {
-    processor.addRendererUpFront(
+    processor.overrideRenderer(
         (context, node) -> true,
         (context, node) -> "overridden"
     );
