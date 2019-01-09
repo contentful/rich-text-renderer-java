@@ -28,11 +28,7 @@ public class HyperLinkRenderer extends BlockRenderer {
 
   @Override protected View inflateRichLayout(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
     final View inflate = context.getInflater().inflate(R.layout.rich_hyperlink_layout, null, false);
-    inflate.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        HyperLinkRenderer.this.onClick(context, node);
-      }
-    });
+    inflate.setOnClickListener(v -> HyperLinkRenderer.this.onClick(context, node));
     return inflate;
   }
 

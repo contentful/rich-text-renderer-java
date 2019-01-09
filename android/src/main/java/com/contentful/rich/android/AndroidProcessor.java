@@ -23,7 +23,6 @@ public class AndroidProcessor<T> extends Processor<AndroidContext, T> {
   private AndroidProcessor() {
   }
 
-
   /**
    * Create an Android Processor capable of generating char sequences from rich text input nodes.
    *
@@ -38,7 +37,7 @@ public class AndroidProcessor<T> extends Processor<AndroidContext, T> {
   }
 
   public static AndroidProcessor<View> creatingNativeViews() {
-    final AndroidProcessor<View> processor = new AndroidProcessor<View>();
+    final AndroidProcessor<View> processor = new AndroidProcessor<>();
     new NativeViewsRendererProvider().provide(processor);
 
     return processor;

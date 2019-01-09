@@ -33,7 +33,6 @@ public class NativeViewsRendererProvider {
         new LowerCaseCharacterDecorator(),
         new UpperCaseRomanNumeralsDecorator()
     ));
-    processor.addRenderer(new EmbeddedLinkRenderer(processor));
     processor.addRenderer(new HyperLinkRenderer(processor));
     processor.addRenderer(new QuoteRenderer(processor));
     processor.addRenderer(new BlockRenderer(processor));

@@ -4,4 +4,8 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="main_native_view_label">use native views</string>
     <string name="error_no_view">⚠ No view rendered. ⚠</string>
+    <string name="hyperlink_entry_inline">Hyperlink to entry with id \'%s\'.</string>
+    <string name="hyperlink_entry_inline_clicked">Navigate to entry with id \'%s\'.</string>
+    <string name="hyperlink_asset_inline">Hyperlink to asset with id \'%s\'.</string>
+    <string name="hyperlink_asset_inline_clicked">Navigate to asset with id \'%s\'.</string>
 </resources>

@@ -129,7 +129,7 @@ Overriding Default Renderers
 ----------------------------
 
 If overriding one of the default renderer is desired, the just presented way will not be sufficient:
-Adding a new renderer to override an existing one will not get triggered, since the to be overriden
+Adding a new renderer to override an existing one will not get triggered, since the to be overridden
 renderer will be checked before the just added one. For those kind of challenges, the 
 `.overrideRenderer(…)` method got added: It will move the renderer and checker to the front of
 the list of renderer and will therefore be checked first. If the checker does not return true, the 
@@ -139,3 +139,7 @@ renderer will be aborted and the found renderer be used.
 For inspiration on how custom renderer might look like, 
 [a look at the source of the default renderer](src/main/java/com/contentful/rich/android/renderer)
  is recommended.
+ 
+> Overriding of renderers is needed, if you want to provide embedded or hyperlinked views of your content. Sadly 
+> Contentful does not know what your content is like, and cannot create an embedded view on it. Look at the companion
+> sample android app is advised.
