@@ -61,7 +61,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0"
     implementation 'androidx.appcompat:appcompat:1.0.2'
 
-    implementation 'com.github.contentful:contentful.java:v10.2.0'
+    implementation "com.github.contentful:contentful.java:${project.contentful_version}"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
 
     implementation 'com.google.android.material:material:1.0.0'

@@ -79,7 +79,7 @@ dependencies {
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
 
     api project(':core')
-    api 'com.github.contentful:contentful.java:v10.2.0'
+    api "com.github.contentful:contentful.java:${project.contentful_version}"
 
     testImplementation 'org.robolectric:robolectric:4.0-alpha-3'
     testImplementation 'com.google.truth:truth:0.42'
