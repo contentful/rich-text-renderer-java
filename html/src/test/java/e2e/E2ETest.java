@@ -7,14 +7,17 @@ import com.contentful.java.cda.rich.CDARichDocument;
 import com.contentful.java.cda.rich.CDARichEmbeddedBlock;
 import com.contentful.java.cda.rich.CDARichEmbeddedInline;
 import com.contentful.java.cda.rich.CDARichHyperLink;
+import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.java.cda.rich.CDARichParagraph;
+import com.contentful.rich.core.simple.RemoveEmpties;
+import com.contentful.rich.core.simple.RemoveToDeepNesting;
+import com.contentful.rich.core.simple.Simplifier;
 import com.contentful.rich.html.HtmlContext;
 import com.contentful.rich.html.HtmlProcessor;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.Map;
 
 import static com.contentful.java.cda.QueryOperation.Matches;
@@ -25,8 +28,9 @@ import static com.contentful.java.cda.image.ImageOption.https;
 import static com.contentful.java.cda.image.ImageOption.widthOf;
 import static com.google.common.truth.Truth.assertThat;
 import static e2e.E2EResources.PRERENDERED_RESULTS;
+import static e2e.E2EResources.SIMPLIFIED_RESULTS;
+import static e2e.E2EResources.SIMPLIFIED_WITH_DEPTH_LIMITING_RESULT;
 import static java.lang.String.format;
-import static java.nio.file.Paths.get;
 import static java.util.Locale.getDefault;
 
 public class E2ETest {
@@ -57,7 +61,6 @@ public class E2ETest {
     assertThat(result).contains("<!-- no processor accepts 'CDARichEmbeddedInline<CDAEntry>'");
   }
 
-
   @Test
   public void producesCannedHtml() {
     final CDARichDocument document = fetchAndMergeContentfulContent();
@@ -69,6 +72,39 @@ public class E2ETest {
 
     assertThat(result).doesNotContain("<!-- no processor accepts");
     assertThat(result).isEqualTo(PRERENDERED_RESULTS);
+  }
+
+  @Test
+  public void producesSimplifiedHtml() {
+    CDARichNode document = fetchAndMergeContentfulContent();
+    document = new Simplifier().simplify(document);
+
+    final HtmlContext context = new HtmlContext();
+    final HtmlProcessor processor = new HtmlProcessor();
+    addCustomRenderer(processor);
+
+    final String result = processor.process(context, document);
+
+    assertThat(result).doesNotContain("<!-- no processor accepts");
+    assertThat(result).isEqualTo(SIMPLIFIED_RESULTS);
+  }
+
+  @Test
+  public void simplifiedHtmlCanBeLimitedByNestingLevel() {
+    CDARichNode document = fetchAndMergeContentfulContent();
+    document = new Simplifier(
+        new RemoveToDeepNesting(10),
+        new RemoveEmpties()
+    ).simplify(document);
+
+    final HtmlContext context = new HtmlContext();
+    final HtmlProcessor processor = new HtmlProcessor();
+    addCustomRenderer(processor);
+
+    final String result = processor.process(context, document);
+
+    assertThat(result).doesNotContain("<!-- no processor accepts");
+    assertThat(result).isEqualTo(SIMPLIFIED_WITH_DEPTH_LIMITING_RESULT);
   }
 
   private CDARichDocument fetchAndMergeContentfulContent() {
