@@ -92,7 +92,7 @@ public class E2ETest {
   }
 
   private void addCustomRenderer(HtmlProcessor processor) {
-    processor.addRendererUpFront(
+    processor.overrideRenderer(
         (context, node) -> node instanceof CDARichHyperLink && ((CDARichHyperLink) node).getData() instanceof CDAEntry,
         (context, node) -> {
           final CDAEntry entry = (CDAEntry) ((CDARichHyperLink) node).getData();
@@ -105,7 +105,7 @@ public class E2ETest {
           );
         }
     );
-    processor.addRendererUpFront(
+    processor.overrideRenderer(
         (context, node) -> node instanceof CDARichHyperLink && ((CDARichHyperLink) node).getData() instanceof CDAAsset,
         (context, node) -> {
           final CDAAsset asset = (CDAAsset) ((CDARichHyperLink) node).getData();
@@ -118,7 +118,7 @@ public class E2ETest {
           );
         }
     );
-    processor.addRendererUpFront(
+    processor.overrideRenderer(
         (context, node) -> node instanceof CDARichEmbeddedInline && ((CDARichEmbeddedInline) node).getData() instanceof CDAEntry,
         (context, node) -> {
           final CDAEntry entry = (CDAEntry) ((CDARichEmbeddedInline) node).getData();
@@ -129,7 +129,7 @@ public class E2ETest {
           );
         }
     );
-    processor.addRendererUpFront(
+    processor.overrideRenderer(
         (context, node) -> node instanceof CDARichEmbeddedInline && ((CDARichEmbeddedInline) node).getData() instanceof CDAAsset,
         (context, node) -> {
           final CDAAsset asset = (CDAAsset) ((CDARichEmbeddedInline) node).getData();
@@ -140,7 +140,7 @@ public class E2ETest {
           );
         }
     );
-    processor.addRendererUpFront(
+    processor.overrideRenderer(
         (context, node) -> node instanceof CDARichEmbeddedBlock && ((CDARichEmbeddedBlock) node).getData() instanceof CDAEntry,
         (context, node) -> {
           final CDAEntry entry = (CDAEntry) ((CDARichEmbeddedBlock) node).getData();
@@ -154,7 +154,7 @@ public class E2ETest {
           );
         }
     );
-    processor.addRendererUpFront(
+    processor.overrideRenderer(
         (context, node) -> node instanceof CDARichEmbeddedBlock && ((CDARichEmbeddedBlock) node).getData() instanceof CDAAsset,
         (context, node) -> {
           final CDAAsset asset = (CDAAsset) ((CDARichEmbeddedBlock) node).getData();

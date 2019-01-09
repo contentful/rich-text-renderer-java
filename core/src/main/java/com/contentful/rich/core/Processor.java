@@ -38,7 +38,7 @@ public class Processor<C extends Context, R> {
    * <p>
    * If a renderer before hand matches the node, the new renderer might not be executed. If you want
    * to make sure your renderer is considered first, either {@see #reset} the list of renderer, or
-   * {@see #addRendererUpFront} to make your renderer the first to be checked, overriding other
+   * {@see #overrideRenderer} to make your renderer the first to be checked, overriding other
    * renderer added.
    *
    * @param renderer may not be null.
@@ -57,7 +57,7 @@ public class Processor<C extends Context, R> {
    * @return this renderer for chaining.
    */
   @Nonnull
-  public Processor addRendererUpFront(@Nonnull Checker<C> checker, @Nonnull Renderer<C, R> renderer) {
+  public Processor overrideRenderer(@Nonnull Checker<C> checker, @Nonnull Renderer<C, R> renderer) {
     nodeRenderer.add(0, new CheckingRenderer<>(checker, renderer));
     return this;
   }
