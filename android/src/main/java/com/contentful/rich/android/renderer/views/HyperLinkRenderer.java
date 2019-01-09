@@ -23,7 +23,7 @@ public class HyperLinkRenderer extends BlockRenderer {
   }
 
   @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
-    return node instanceof CDARichHyperLink;
+    return node instanceof CDARichHyperLink && ((CDARichHyperLink) node).getData() instanceof String;
   }
 
   @Override protected View inflateRichLayout(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {

@@ -40,7 +40,7 @@ public class HyperLinkRenderer extends BlockRenderer {
    * @return true if the given node is a hyperlink.
    */
   @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
-    return node instanceof CDARichHyperLink;
+    return node instanceof CDARichHyperLink && ((CDARichHyperLink)node).getData() instanceof String;
   }
 
   /**

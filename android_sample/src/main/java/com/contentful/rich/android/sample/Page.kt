@@ -10,7 +10,7 @@ import java.lang.reflect.Field
 
 data class Page(val name: String, val document: CDARichDocument)
 
-val PAGES: Array<Page> = arrayOf(
+val PAGES = mutableListOf(
         Page(name = "Text with Marks",
                 document = CDARichDocument().addAll(
                         text("Normal Text"),
@@ -149,9 +149,9 @@ val PAGES: Array<Page> = arrayOf(
         Page(name = "Links", document = CDARichDocument().addAll(
                 CDARichHyperLink("https://www.google.com/search?hl=en&site=imghp&tbm=isch&source=hp&q=cats")
                         .addAll(text("Hyperlink to cats")),
-                CDARichEmbeddedLink(mockCDAEntry())
+                CDARichEmbeddedInline(mockCDAEntry())
                         .addAll(text(" Embedded entry")),
-                CDARichEmbeddedLink(mockCDAAsset())
+                CDARichEmbeddedBlock(mockCDAAsset())
                         .addAll(text(" Embedded asset"))
         )
         )

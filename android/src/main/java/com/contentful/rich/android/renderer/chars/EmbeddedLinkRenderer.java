@@ -11,7 +11,7 @@ import android.text.style.ImageSpan;
 
 import com.contentful.java.cda.CDAAsset;
 import com.contentful.java.cda.CDAEntry;
-import com.contentful.java.cda.rich.CDARichEmbeddedLink;
+import com.contentful.java.cda.rich.CDARichEmbeddedInline;
 import com.contentful.java.cda.rich.CDARichHyperLink;
 import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.android.AndroidContext;
@@ -129,7 +129,7 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
    * @return true if node is a link.
    */
   @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
-    return node instanceof CDARichEmbeddedLink;
+    return node instanceof CDARichEmbeddedInline && ((CDARichHyperLink) node).getData() != null;
   }
 
   /**
@@ -151,8 +151,11 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
     if (data instanceof CDAEntry) {
       final CDAEntry entry = (CDAEntry) data;
       final String title = entry.getField("title");
-      builder.insert(0, title);
-      builder.setSpan(new ForegroundColorSpan(Color.argb(1.0f, 1.0f, 0.5f, 1.0f)), 0, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+      if (title != null) {
+        builder.insert(0, title);
+        builder.setSpan(new ForegroundColorSpan(Color.argb(1.0f, 1.0f, 0.5f, 1.0f)), 0, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+      }
     } else if (data instanceof CDAAsset) {
       final CDAAsset asset = (CDAAsset) data;
 

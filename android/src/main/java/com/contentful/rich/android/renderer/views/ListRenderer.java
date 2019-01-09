@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.contentful.java.cda.rich.CDARichBlock;
 import com.contentful.java.cda.rich.CDARichList;
+import com.contentful.java.cda.rich.CDARichListItem;
 import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
@@ -39,7 +40,7 @@ public class ListRenderer extends BlockRenderer {
   }
 
   @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
-    if (context != null && !(node instanceof CDARichList)) {
+    if (context != null && node instanceof CDARichListItem) {
       final CDARichList list = context.getTopListOfPath();
       if (list != null) {
         return decoratorBySymbolMap.containsKey(list.getDecoration().toString());

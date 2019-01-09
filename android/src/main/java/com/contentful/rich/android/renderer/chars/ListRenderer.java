@@ -4,6 +4,7 @@ import android.text.SpannableStringBuilder;
 
 import com.contentful.java.cda.rich.CDARichBlock;
 import com.contentful.java.cda.rich.CDARichList;
+import com.contentful.java.cda.rich.CDARichListItem;
 import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
@@ -53,7 +54,7 @@ public class ListRenderer extends BlockRenderer {
    * @return true if it is a list and atelast one decorator can be used.
    */
   @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
-    if (context != null) {
+    if (context != null && node instanceof CDARichListItem) {
       final CDARichList list = context.getTopListOfPath();
       if (list != null) {
         return decoratorBySymbolMap.containsKey(list.getDecoration().toString());
