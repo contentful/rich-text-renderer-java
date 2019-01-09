@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0-alpha09'
+        classpath 'com.android.tools.build:gradle:3.4.0-alpha10'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -33,7 +33,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
@@ -44,6 +43,12 @@ android {
     }
 
     buildTypes {
+        all {
+            buildConfigField("String", "SPACE_ID", "\"${System.getenv("RICH_TEXT_SPACE_ID")}\"")
+            buildConfigField("String", "DELIVERY_TOKEN", "\"${System.getenv("RICH_TEXT_DELIVERY_TOKEN")}\"")
+            buildConfigField("String", "ENVIRONMENT_ID", "\"${System.getenv("RICH_TEXT_ENVIRONMENT_ID")}\"")
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
