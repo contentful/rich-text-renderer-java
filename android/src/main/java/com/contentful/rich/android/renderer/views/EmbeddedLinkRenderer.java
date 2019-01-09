@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.contentful.java.cda.CDAAsset;
 import com.contentful.java.cda.CDAEntry;
-import com.contentful.java.cda.rich.CDARichEmbeddedLink;
+import com.contentful.java.cda.rich.CDARichEmbeddedInline;
 import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
@@ -32,14 +32,14 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
   }
 
   @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
-    return node instanceof CDARichEmbeddedLink;
+    return node instanceof CDARichEmbeddedInline;
   }
 
   @Override protected View inflateRichLayout(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
     final View embedded = context.getInflater().inflate(R.layout.rich_embedded_layout, null, false);
     final ViewGroup content = embedded.findViewById(R.id.rich_content);
 
-    final CDARichEmbeddedLink link = (CDARichEmbeddedLink) node;
+    final CDARichEmbeddedInline link = (CDARichEmbeddedInline) node;
     final Object data = link.getData();
 
     final View toBeEmbedded;
