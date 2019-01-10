@@ -35,7 +35,7 @@ public class QuoteRenderer extends BlockRenderer {
    * @param node    node to be checked
    * @return true or false. Depending on whether the node given is a CDARichQuote.
    */
-  @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
+  @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
     return node instanceof CDARichQuote;
   }
 

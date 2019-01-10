@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
  *
  * @param <C> the custom context class to passed
  * @param <R> the result type of the rendering
- * @see Checker
+ * @see RenderabilityChecker
  */
 public interface Renderer<C, R> {
   /**

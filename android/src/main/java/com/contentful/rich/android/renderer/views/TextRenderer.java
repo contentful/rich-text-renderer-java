@@ -52,7 +52,7 @@ public class TextRenderer extends AndroidRenderer<AndroidContext, View> {
    * @param node    node to be checked
    * @return true if the node is a rich text node.
    */
-  @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
+  @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
     return node instanceof CDARichText;
   }
 

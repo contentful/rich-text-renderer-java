@@ -39,7 +39,7 @@ public class ListRenderer extends BlockRenderer {
     }
   }
 
-  @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
+  @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
     if (context != null && node instanceof CDARichListItem) {
       final CDARichList list = context.getTopListOfPath();
       if (list != null) {

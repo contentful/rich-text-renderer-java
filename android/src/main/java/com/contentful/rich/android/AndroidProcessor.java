@@ -48,7 +48,7 @@ public class AndroidProcessor<T> extends Processor<AndroidContext, T> {
    *
    * @param renderer the combined Android renderer
    * @return this instance for chaining
-   * @see com.contentful.rich.core.Checker
+   * @see com.contentful.rich.core.RenderabilityChecker
    * @see com.contentful.rich.core.Renderer
    */
   @Nonnull

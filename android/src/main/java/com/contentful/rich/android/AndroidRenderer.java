@@ -1,7 +1,7 @@
 package com.contentful.rich.android;
 
 import com.contentful.java.cda.rich.CDARichNode;
-import com.contentful.rich.core.Checker;
+import com.contentful.rich.core.RenderabilityChecker;
 import com.contentful.rich.core.Context;
 import com.contentful.rich.core.Renderer;
 
@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
  * @param <C> context to be applied to this renderer.
  * @param <R> result of rendering a node.
  */
-public abstract class AndroidRenderer<C extends Context, R> implements Checker<C>, Renderer<C, R> {
+public abstract class AndroidRenderer<C extends Context, R> implements RenderabilityChecker<C>, Renderer<C, R> {
   protected final AndroidProcessor<R> processor;
 
   /**
@@ -33,7 +33,7 @@ public abstract class AndroidRenderer<C extends Context, R> implements Checker<C
    * @param node    node to be checked
    * @return true if the node can be rendered in the context.
    */
-  @Override abstract public boolean check(@Nullable C context, @Nonnull CDARichNode node);
+  @Override abstract public boolean canRender(@Nullable C context, @Nonnull CDARichNode node);
 
   /**
    * Performs the rendering resulting in type R.

@@ -42,7 +42,7 @@ public class HeadingRenderer extends BlockRenderer {
    * @param node    node to be checked
    * @return true if node is a rich CDARichHeading.
    */
-  @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
+  @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
     if (node instanceof CDARichHeading) {
       final CDARichHeading heading = (CDARichHeading) node;
       if (heading.getLevel() > 0 && ((CDARichHeading) node).getLevel() < 7) {
