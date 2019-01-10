@@ -143,3 +143,24 @@ For inspiration on how custom renderer might look like,
 > Overriding of renderers is needed, if you want to provide embedded or hyperlinked views of your content. Sadly 
 > Contentful does not know what your content is like, and cannot create an embedded view on it. Look at the companion
 > sample android app is advised.
+
+
+Android specifics for Rich Text rendering
+-----------------------------------------
+
+This section covers general advice for using the accompanying rich text renderer for Android.
+
+Rendering times
+===============
+
+Sometimes the rendering of native Android views can get very time consuming, especially if the nesting level of the rich
+text nodes is high. For this reason it is advised to take a look at `RemoveToDeepNesting`-simplifier, since this
+simplifier will remove all elements below a given nesting level.
+
+Rendering Embedded / Hyperlinks
+===============================
+
+Every custom visualization needs to be defined by the client. If a client needs a hyperlink or embedded link to an
+Entry or to an Asset, they would need to add the renderer as described above. Sadly Contentful cannot know their use
+case especially the build of an entries fields cannot be predicted (Which field to use for the description? Anything
+important to be displayed, etc.) This library does require the help of customers to render custom material.
