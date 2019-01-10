@@ -11,7 +11,7 @@ import com.contentful.java.cda.rich.CDARichParagraph;
 import com.contentful.java.cda.rich.CDARichQuote;
 import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.java.cda.rich.CDARichUnorderedList;
-import com.contentful.rich.core.Checker;
+import com.contentful.rich.core.RenderabilityChecker;
 import com.contentful.rich.core.Processor;
 import com.contentful.rich.core.Renderer;
 import com.contentful.rich.html.renderer.DynamicTagRenderer;
@@ -27,7 +27,7 @@ import static com.contentful.rich.html.renderer.TagWithArgumentsRenderer.mapifyA
  * This provider of renderer will provide all available default renderer for creating html output
  * from rich text.
  *
- * @see Processor#addRenderer(Checker, Renderer)
+ * @see Processor#addRenderer(RenderabilityChecker, Renderer)
  * @see Processor#process(com.contentful.rich.core.Context, CDARichNode)
  */
 class HtmlRendererProvider {

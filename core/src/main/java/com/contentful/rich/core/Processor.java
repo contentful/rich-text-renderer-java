@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
  * @param <C> the context type used throughout this rendering process.
  * @param <R> the result type of the rendering process.
  * @see Renderer
- * @see Checker
+ * @see RenderabilityChecker
  */
 public class Processor<C extends Context, R> {
 
@@ -45,7 +45,7 @@ public class Processor<C extends Context, R> {
    * @return this renderer for chaining.
    */
   @Nonnull
-  public Processor addRenderer(@Nonnull Checker<C> checker, @Nonnull Renderer<C, R> renderer) {
+  public Processor addRenderer(@Nonnull RenderabilityChecker<C> checker, @Nonnull Renderer<C, R> renderer) {
     nodeRenderer.add(new CheckingRenderer<>(checker, renderer));
     return this;
   }
@@ -57,7 +57,7 @@ public class Processor<C extends Context, R> {
    * @return this renderer for chaining.
    */
   @Nonnull
-  public Processor overrideRenderer(@Nonnull Checker<C> checker, @Nonnull Renderer<C, R> renderer) {
+  public Processor overrideRenderer(@Nonnull RenderabilityChecker<C> checker, @Nonnull Renderer<C, R> renderer) {
     nodeRenderer.add(0, new CheckingRenderer<>(checker, renderer));
     return this;
   }
@@ -77,9 +77,9 @@ public class Processor<C extends Context, R> {
 
     R result = null;
     for (final CheckingRenderer<C, R> pair : nodeRenderer) {
-      final Checker<C> checker = pair.checker;
+      final RenderabilityChecker<C> checker = pair.checker;
 
-      if (checker.check(context, node)) {
+      if (checker.canRender(context, node)) {
         final Renderer<C, R> renderer = pair.renderer;
         result = renderer.render(context, node);
         if (result != null) {
@@ -102,7 +102,7 @@ public class Processor<C extends Context, R> {
    * @param <R> Result class of the rendering
    */
   private static class CheckingRenderer<C, R> {
-    final Checker<C> checker;
+    final RenderabilityChecker<C> checker;
     final Renderer<C, R> renderer;
 
     /**
@@ -111,7 +111,7 @@ public class Processor<C extends Context, R> {
      * @param checker  the checker to be used
      * @param renderer the renderer to be checked
      */
-    CheckingRenderer(@Nonnull Checker<C> checker, @Nonnull Renderer<C, R> renderer) {
+    CheckingRenderer(@Nonnull RenderabilityChecker<C> checker, @Nonnull Renderer<C, R> renderer) {
       this.checker = checker;
       this.renderer = renderer;
     }

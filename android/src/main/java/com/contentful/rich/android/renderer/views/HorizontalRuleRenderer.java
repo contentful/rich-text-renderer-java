@@ -34,7 +34,7 @@ public class HorizontalRuleRenderer extends AndroidRenderer<AndroidContext, View
    * @param node    node to be checked
    * @return true if the node is a rich rule node.
    */
-  @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
+  @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
     return node instanceof CDARichHorizontalRule;
   }
 

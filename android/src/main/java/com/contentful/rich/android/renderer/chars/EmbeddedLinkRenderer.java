@@ -128,7 +128,7 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
    * @param node    node to be checked.
    * @return true if node is a link.
    */
-  @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
+  @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
     return node instanceof CDARichEmbeddedInline && ((CDARichHyperLink) node).getData() != null;
   }
 

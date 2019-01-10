@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
  * @param <C> Custom Context Class
  * @see Renderer
  */
-public interface Checker<C> {
+public interface RenderabilityChecker<C> {
 
   /**
    * Return true if the associated renderer can process the node.
@@ -21,5 +21,5 @@ public interface Checker<C> {
    * @param node    node to be checked
    * @return false if the renderer cannot be used.
    */
-  boolean check(@Nullable C context, @Nonnull CDARichNode node);
+  boolean canRender(@Nullable C context, @Nonnull CDARichNode node);
 }

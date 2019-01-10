@@ -37,7 +37,7 @@ public class HorizontalRuleRenderer extends AndroidRenderer<AndroidContext, Char
    * @param node    node to be checked
    * @return true if the given node is a rule
    */
-  @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
+  @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
     return node instanceof CDARichHorizontalRule;
   }
 

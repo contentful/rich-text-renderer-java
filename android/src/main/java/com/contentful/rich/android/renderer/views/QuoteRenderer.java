@@ -16,7 +16,7 @@ public class QuoteRenderer extends BlockRenderer {
     super(processor);
   }
 
-  @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
+  @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
     return node instanceof CDARichQuote;
   }
 

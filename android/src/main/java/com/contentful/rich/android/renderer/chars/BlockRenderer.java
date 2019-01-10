@@ -39,7 +39,7 @@ public class BlockRenderer extends AndroidRenderer<AndroidContext, CharSequence>
    * @param node    node to be checked
    * @return true if the node can be rendered.
    */
-  @Override public boolean check(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
+  @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
     if (context != null) {
       if (node instanceof CDARichBlock) {
         return true;
