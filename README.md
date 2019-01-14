@@ -7,7 +7,7 @@
   <br>
   🚧🚧🚧🚧🏗️👷🚧🚧👨‍💻🚧🚧👷🏗️🚧🚧🚧🚧<br>
   <br>
-  <sup>Please follow https://github.com/contentful/rich-text-renderer.java/issues/2 for details.</sup>
+  <sup>Please create a new issue https://github.com/contentful/rich-text-renderer.java/issues/new for requests.</sup>
 </p>
 
 
