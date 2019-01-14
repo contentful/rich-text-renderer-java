@@ -14,10 +14,6 @@
 Contentful Rich Text Rendering SDK for Java
 ===========================================
 
-[![Build Status](https://travis-ci.org/contentful/rich-text-rendering.java.svg)](https://travis-ci.org/contentful/rich-text-rendering.java/builds#)
-[![codecov](https://codecov.io/gh/contentful/rich-text-rendering.java/branch/master/graph/badge.svg)](https://codecov.io/gh/contentful/rich-text-rendering.java)
-
-
 > Java SDK for [Rich Text API](https://www.contentful.com/developers/docs/tutorials/general/rich-text-field-type-alpha/) . It helps in easily rendering rich text stored in Contentful using Java.
 
 
