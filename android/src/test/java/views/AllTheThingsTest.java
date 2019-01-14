@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.View;
 
 import com.contentful.java.cda.rich.CDARichDocument;
-import com.contentful.java.cda.rich.CDARichEmbeddedLink;
+import com.contentful.java.cda.rich.CDARichEmbeddedBlock;
 import com.contentful.java.cda.rich.CDARichHeading;
 import com.contentful.java.cda.rich.CDARichHorizontalRule;
 import com.contentful.java.cda.rich.CDARichHyperLink;
@@ -75,7 +75,7 @@ public class AllTheThingsTest {
     final CDARichHorizontalRule horizontalRule = new CDARichHorizontalRule();
     result.getContent().add(horizontalRule);
 
-    final CDARichEmbeddedLink embeddedLink = new CDARichEmbeddedLink(mockCDAEntry());
+    final CDARichEmbeddedBlock embeddedLink = new CDARichEmbeddedBlock(mockCDAEntry());
     result.getContent().add(embeddedLink);
 
     final CDARichHyperLink hyperLink = new CDARichHyperLink("https://contentful.com/");

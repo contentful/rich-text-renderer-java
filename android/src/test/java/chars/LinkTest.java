@@ -5,7 +5,7 @@ import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
 
-import com.contentful.java.cda.rich.CDARichEmbeddedLink;
+import com.contentful.java.cda.rich.CDARichEmbeddedBlock;
 import com.contentful.java.cda.rich.CDARichHyperLink;
 import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.android.AndroidContext;
@@ -78,16 +78,12 @@ public class LinkTest {
     final AndroidProcessor<CharSequence> processor = AndroidProcessor.creatingCharSequences();
     final AndroidContext context = new AndroidContext(activity);
 
-    final CDARichHyperLink link = new CDARichEmbeddedLink(ContentfulCreator.mockCDAEntry());
+    final CDARichHyperLink link = new CDARichEmbeddedBlock(ContentfulCreator.mockCDAEntry());
     link.getContent().add(new CDARichText("My embedded entry", new ArrayList<>()));
 
     final CharSequence result = processor.process(context, link);
 
     assertThat(result).isInstanceOf(Spannable.class);
-    assertThat(result.toString()).isEqualTo("TitleMy embedded entry");
-
-    final Object[] spans = ((Spannable) result).getSpans(0, result.length(), Object.class);
-    assertThat(spans).hasLength(1);
-    assertThat(spans[0]).isInstanceOf(ForegroundColorSpan.class);
+    assertThat(result.toString()).isEqualTo("My embedded entry");
   }
 }

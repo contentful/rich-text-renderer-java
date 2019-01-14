@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.contentful.java.cda.rich.CDARichEmbeddedLink;
+import com.contentful.java.cda.rich.CDARichEmbeddedBlock;
 import com.contentful.java.cda.rich.CDARichHyperLink;
 import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.android.AndroidContext;
@@ -77,7 +77,7 @@ public class LinkTest {
     final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
     final AndroidContext context = new AndroidContext(activity);
 
-    final CDARichHyperLink link = new CDARichEmbeddedLink(ContentfulCreator.mockCDAEntry());
+    final CDARichHyperLink link = new CDARichEmbeddedBlock(ContentfulCreator.mockCDAEntry());
     link.getContent().add(new CDARichText("My embedded entry", new ArrayList<>()));
 
     final View result = processor.process(context, link);

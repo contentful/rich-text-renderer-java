@@ -81,7 +81,7 @@ dependencies {
     api project(':core')
     api "com.github.contentful:contentful.java:${project.contentful_version}"
 
-    testImplementation 'org.robolectric:robolectric:4.0-alpha-3'
+    testImplementation 'org.robolectric:robolectric:4.1'
     testImplementation 'com.google.truth:truth:0.42'
     testImplementation 'junit:junit:4.12'
 }
