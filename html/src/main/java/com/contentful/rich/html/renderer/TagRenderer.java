@@ -49,13 +49,7 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
       for (final CDARichNode item : ((CDARichBlock) node).getContent()) {
         final String itemResult = processor.process(context, item);
         if (itemResult != null) {
-          if (itemResult.contains("\n")) {
-            for (final String line : itemResult.split("\n")) {
-              result.append(context.getIndentation()).append(line).append("\n");
-            }
-          } else { // no new line found.
-            result.append(context.getIndentation()).append(itemResult).append("\n");
-          }
+          result.append(itemResult);
         } else { // none found
           appendErrorNode(context, result, item);
         }
@@ -67,7 +61,6 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
 
   private void appendErrorNode(@Nonnull HtmlContext context, StringBuilder result, CDARichNode item) {
     result
-        .append(context.getIndentation())
         .append("<!-- ").append("no processor accepts '")
         .append(createNodeName(item))
         .append("', found at path '")
@@ -75,7 +68,7 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
             .map((x) -> createNodeName(x) + "[" + getIndexInParent(context, x) + "]")
             .collect(Collectors.joining(" > ")))
         .append("'. Please add a corresponding renderer using ")
-        .append("'HtmlRenderer.addRenderer(...)'. -->\n");
+        .append("'HtmlRenderer.addRenderer(...)'. -->");
   }
 
   private String createNodeName(CDARichNode node) {
@@ -109,7 +102,7 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
    */
   @Nonnull
   protected String startTag(@Nonnull CDARichNode node) {
-    return "<" + tag + ">\n";
+    return "<" + tag + ">";
   }
 
   /**
@@ -120,6 +113,6 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
    */
   @Nonnull
   protected String endTag(@Nonnull CDARichNode node) {
-    return "</" + tag + ">\n";
+    return "</" + tag + ">";
   }
 }

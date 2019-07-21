@@ -81,7 +81,7 @@ class HtmlRendererProvider {
     // needs to be last but one
     processor.addRenderer(
         (context, node) -> node instanceof CDARichParagraph,
-        new TagRenderer(processor, "div")
+        new TagRenderer(processor, "p")
     );
   }
 }

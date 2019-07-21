@@ -28,23 +28,12 @@ public class ListsTest {
     final String result = processor.process(context, list);
 
     assertThat(result).isEqualTo(
-        "<ul>\n" +
-            "  <li>\n" +
-            "    <div>\n" +
-            "      one\n" +
-            "    </div>\n" +
-            "  </li>\n" +
-            "  <li>\n" +
-            "    <div>\n" +
-            "      two\n" +
-            "    </div>\n" +
-            "  </li>\n" +
-            "  <li>\n" +
-            "    <div>\n" +
-            "      three\n" +
-            "    </div>\n" +
-            "  </li>\n" +
-            "</ul>\n");
+      "<ul>" +
+      "<li><p>one</p></li>" +
+      "<li><p>two</p></li>" +
+      "<li><p>three</p></li>" +
+      "</ul>"
+    );
   }
 
   @Test
@@ -69,47 +58,21 @@ public class ListsTest {
 
     final String result = processor.process(context, unorderedList);
 
-    assertThat(result).isEqualTo("<ul>\n" +
-        "  <li>\n" +
-        "    <div>\n" +
-        "      one\n" +
-        "    </div>\n" +
-        "  </li>\n" +
-        "  <li>\n" +
-        "    <div>\n" +
-        "      two\n" +
-        "    </div>\n" +
-        "  </li>\n" +
-        "  <li>\n" +
-        "    <div>\n" +
-        "      three\n" +
-        "    </div>\n" +
-        "  </li>\n" +
-        "  <li>\n" +
-        "    <ol>\n" +
-        "      <li>\n" +
-        "        <div>\n" +
-        "          a\n" +
-        "        </div>\n" +
-        "      </li>\n" +
-        "      <li>\n" +
-        "        <div>\n" +
-        "          b\n" +
-        "        </div>\n" +
-        "      </li>\n" +
-        "      <li>\n" +
-        "        <div>\n" +
-        "          c\n" +
-        "        </div>\n" +
-        "      </li>\n" +
-        "    </ol>\n" +
-        "  </li>\n" +
-        "  <li>\n" +
-        "    <div>\n" +
-        "      <\uD83D\uDC51><code><i><b><u>four</u></b></i></code></\uD83D\uDC51>\n" +
-        "    </div>\n" +
-        "  </li>\n" +
-        "</ul>\n");
+    assertThat(result).isEqualTo(
+      "<ul>" +
+      "<li><p>one</p></li>" +
+      "<li><p>two</p></li>" +
+      "<li><p>three</p></li>" +
+      "<li><ol>" +
+      "<li><p>a</p></li>" +
+      "<li><p>b</p></li>" +
+      "<li><p>c</p></li>" +
+      "</ol></li>" +
+      "<li><p>" +
+      "<\uD83D\uDC51><code><i><b><u>four</u></b></i></code></\uD83D\uDC51>" +
+      "</p></li>" +
+      "</ul>"
+    );
   }
 
   private CDARichListItem textListItem(String text) {

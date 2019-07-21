@@ -26,9 +26,9 @@ public class LinksTest {
     final String result = processor.process(context, link);
 
     assertThat(result).isEqualTo("" +
-        "<a href=\"https://contentful.com\">\n" +
-        "  Some link text<br/>\n" +
-        "</a>\n");
+        "<a href=\"https://contentful.com\">" +
+        "Some link text<br/>" +
+        "</a>");
   }
 
   @Test
@@ -42,8 +42,8 @@ public class LinksTest {
     final String result = processor.process(context, link);
 
     assertThat(result).isEqualTo("" +
-        "<a href=\"https://contentful.com\">\n" +
-        "  Some link text</a>\n" +
-        "</a>\n");
+        "<a href=\"https://contentful.com\">" +
+        "Some link text</a>" +
+        "</a>");
   }
 }

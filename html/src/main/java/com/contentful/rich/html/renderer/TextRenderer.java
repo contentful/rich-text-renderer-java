@@ -44,7 +44,6 @@ public class TextRenderer implements Renderer<HtmlContext, String> {
       }
     }
 
-    result.append("\n");
     return result.toString();
   }
 }

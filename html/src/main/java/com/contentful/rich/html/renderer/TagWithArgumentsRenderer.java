@@ -46,7 +46,7 @@ public class TagWithArgumentsRenderer extends TagRenderer {
    */
   @Nonnull @Override
   protected String startTag(@Nonnull CDARichNode node) {
-    return "<" + tag + " " + stringifyArgumentMap(provider.provide(node)) + ">\n";
+    return "<" + tag + " " + stringifyArgumentMap(provider.provide(node)) + ">";
   }
 
   String stringifyArgumentMap(Map<String, String> arguments) {

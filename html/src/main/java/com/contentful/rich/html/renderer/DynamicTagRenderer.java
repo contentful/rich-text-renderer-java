@@ -24,11 +24,11 @@ public class DynamicTagRenderer extends TagRenderer {
   }
 
   @Nonnull @Override protected String startTag(@Nonnull CDARichNode node) {
-    return "<" + provider.getTag(node) + ">\n";
+    return "<" + provider.getTag(node) + ">";
   }
 
   @Nonnull @Override protected String endTag(@Nonnull CDARichNode node) {
-    return "</" + provider.getTag(node) + ">\n";
+    return "</" + provider.getTag(node) + ">";
   }
 
   public interface TagNameProvider {

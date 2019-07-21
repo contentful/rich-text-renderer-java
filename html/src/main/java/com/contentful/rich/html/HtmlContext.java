@@ -14,30 +14,6 @@ import javax.annotation.Nonnull;
  */
 public class HtmlContext extends Context<List<CDARichNode>> {
   private final List<CDARichNode> path = new ArrayList<>();
-  final String indentation;
-
-  /**
-   * Create a default context with indentation of two spaces.
-   */
-  public HtmlContext() {
-    this("  ");
-  }
-
-  /**
-   * Create a context using the given string as indentation for siblings.
-   *
-   * @param indentation a string used for indentation. Use spaces only.
-   */
-  public HtmlContext(String indentation) {
-    this.indentation = indentation;
-  }
-
-  /**
-   * Returns the indentation used for one level.
-   */
-  public String getIndentation() {
-    return indentation;
-  }
 
   /**
    * Called by the infrastructure once a paragraph is entered.

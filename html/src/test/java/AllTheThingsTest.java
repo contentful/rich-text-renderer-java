@@ -27,63 +27,32 @@ public class AllTheThingsTest {
 
     final String result = processor.process(new HtmlContext(), createAllNode());
 
-    assertThat(result).isEqualTo("<div>\n" +
-        "  <h1>\n" +
-        "    heading - 1\n" +
-        "  </h1>\n" +
-        "  <h2>\n" +
-        "    heading - 2\n" +
-        "  </h2>\n" +
-        "  <h3>\n" +
-        "    heading - 3\n" +
-        "  </h3>\n" +
-        "  <h4>\n" +
-        "    heading - 4\n" +
-        "  </h4>\n" +
-        "  <h5>\n" +
-        "    heading - 5\n" +
-        "  </h5>\n" +
-        "  <h6>\n" +
-        "    heading - 6\n" +
-        "  </h6>\n" +
-        "  <hr/>\n" +
-        "  <a href=\"https://contentful.com/\">\n" +
-        "    Hyper hyper\n" +
-        "  </a>\n" +
-        "  <top><code><i><b><u>ALL THE TEXT MARKS!</u></b></i></code></top>\n" +
-        "  <ol>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "  </ol>\n" +
-        "  <ul>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "    <li>\n" +
-        "      some list item content\n" +
-        "    </li>\n" +
-        "  </ul>\n" +
-        "  <div>\n" +
-        "    Paragraph\n" +
-        "  </div>\n" +
-        "  <blockquote>\n" +
-        "    Famous quote\n" +
-        "  </blockquote>\n" +
-        "  <!-- no processor accepts 'CDARichNode', found at path 'CDARichDocument[0]'. Please add a corresponding renderer using 'HtmlRenderer.addRenderer(...)'. -->\n" +
-        "</div>\n");
+    assertThat(result).isEqualTo("<div>" +
+        "<h1>heading - 1</h1>" +
+        "<h2>heading - 2</h2>" +
+        "<h3>heading - 3</h3>" +
+        "<h4>heading - 4</h4>" +
+        "<h5>heading - 5</h5>" +
+        "<h6>heading - 6</h6>" +
+        "<hr/>" +
+        "<a href=\"https://contentful.com/\">Hyper hyper</a>" +
+        "<top><code><i><b><u>ALL THE TEXT MARKS!</u></b></i></code></top>" +
+        "<ol>" +
+        "<li>some list item content</li>" +
+        "<li>some list item content</li>" +
+        "<li>some list item content</li>" +
+        "</ol>" +
+        "<ul>" +
+        "<li>some list item content</li>" +
+        "<li>some list item content</li>" +
+        "<li>some list item content</li>" +
+        "<li>some list item content</li>" +
+        "</ul>" +
+        "<p>Paragraph</p>" +
+        "<blockquote>Famous quote</blockquote>" +
+        "<!-- no processor accepts 'CDARichNode', found at path 'CDARichDocument[0]'. Please add a corresponding renderer using 'HtmlRenderer.addRenderer(...)'. -->" +
+        "</div>"
+    );
   }
 
   private CDARichNode createAllNode() {
