@@ -13,7 +13,7 @@ apply plugin: "maven"
 
 
 allprojects {
-    group = "com.github.contentful.rich"
+    group = "com.github.drezzzik.rich"
 
     version = '1.0.0'
 
