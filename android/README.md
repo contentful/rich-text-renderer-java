@@ -22,8 +22,8 @@ allprojects {
 ```groovy
 dependencies {
   // …
-  implementation 'com.github.contentful.rich-text-renderer-java:all:master-SNAPSHOT'
-  implementation 'com.github.contentful:contentful-java:master-SNAPSHOT'
+  implementation 'com.github.contentful:contentful.java:v10.4.1'
+  implementation 'com.github.contentful:rich-text-renderer-java:master-SNAPSHOT'
 }
 ```
 
@@ -42,7 +42,7 @@ same can be achieved by adding Maven dependencies like so:
 	<dependency>
 	    <groupId>com.github.contentful</groupId>
 	    <artifactId>contentful.java</artifactId>
-	    <version>v10.2.0</version>
+	    <version>v10.4.1</version>
 	</dependency>
 	<dependency>
 	    <groupId>com.github.contentful</groupId>
@@ -56,23 +56,24 @@ Calling Contentful Main SDK
 
 Now that the base SDK is in place, the next step is to retrieve (_fetch_) an entry from Contentful,
 containing Rich Text Data. Following code snippet does this by using `SPACE_ID`, `TOKEN` and
-`ENTRY_ID` as placeholders for the actual content that needs fetching.
+`ENTRY_ID` as placeholders for the actual content that needs fetching. Code needs to run in a background thread.
 
 ```java
-final CDAClient client = new CDACllient.builder()
-  .setSpace(SPACE_ID)
-  .setToken(TOKEN);
+final CDAClient client = CDAClient.builder()
+    .setSpace(SPACE_ID)
+    .setToken(TOKEN)
+    .build();
 
 final CDAEntry entry = client
   .fetch(CDAEntry.class)
   .one(ENTRY_ID);
 ```
 
-With the `entry` at hand, getting the `CDARichTextNode`, the base of all Rich Text
+With the `entry` at hand, getting the `CDARichDocument`, the base of all Rich Text
 nodes in the main SDK, is easy if the field id is known:
 
 ```java
-final CDARichTextNode node = entry.getField(FIELD_ID);
+final CDARichDocument node = entry.getField(FIELD_ID);
 ```
 
 The last step includes the conversion of the rich text node into wither spannables or custom views. Following code shows
