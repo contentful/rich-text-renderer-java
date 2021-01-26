@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -109,12 +108,24 @@ public class ListRenderer extends BlockRenderer {
     decoration.setText(currentDecorator.decorate(childIndex + 1));
   }
 
+  /**
+   * Count lists on the path.
+   *
+   * @param context where is the path stored in? The context!
+   * @param list    the list to be listed.
+   * @return the number of lists of the supported type.
+   */
   private long getListOfTypeCount(@Nonnull AndroidContext context, CDARichList list) {
-    return (context.getPath().stream().filter(new Predicate<CDARichNode>() {
-      @Override public boolean test(CDARichNode x) {
-        return x instanceof CDARichList && ((CDARichList) x).getDecoration().equals(list.getDecoration());
+    if (context.getPath() == null) {
+      return 0;
+    }
+    int count = 0;
+    for (CDARichNode node: context.getPath()) {
+      if (node instanceof CDARichList && ((CDARichList) node).getDecoration().equals(list.getDecoration())) {
+        count++;
       }
-    }).count() - 1);
+    }
+    return count;
   }
 
 }
