@@ -1,16 +1,3 @@
-<p align="center">
-  🚧🚧🚧🚧🏗️👷🚧🚧👨‍💻🚧🚧👷🏗️🚧🚧🚧🚧<br>
-  <b>
-    THIS REPOSITORY IS IN BETA, FEEDBACK WANTED.<br>
-    EXPECT HEAVY CHANGES AND SUBOPTIMAL VISUAL QUALITY
-  </b>
-  <br>
-  🚧🚧🚧🚧🏗️👷🚧🚧👨‍💻🚧🚧👷🏗️🚧🚧🚧🚧<br>
-  <br>
-  <sup>Please create a new issue https://github.com/contentful/rich-text-renderer.java/issues/new for requests.</sup>
-</p>
-
-
 Contentful Rich Text Rendering SDK for Java
 ===========================================
 
