@@ -20,7 +20,7 @@ allprojects {
     sourceCompatibility = 1.8 // java 8
     targetCompatibility = 1.8
 
-    ext.contentful_version = "v10.4.1"
+    ext.contentful_version = "10.4.5"
 
     repositories {
         mavenCentral()
