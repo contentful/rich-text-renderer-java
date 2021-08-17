@@ -1,7 +1,7 @@
 Contentful Rich Text Rendering Library for Java
 ===============================================
 
-> Java Library for [Rich Text API](https://www.contentful.com/developers/docs/tutorials/general/rich-text-field-type-alpha/) . It helps in easily rendering rich text stored in Contentful using Java.
+> Java library for [Rich Text API](https://www.contentful.com/developers/docs/tutorials/general/rich-text-field-type-alpha/) . It helps in easily rendering rich text stored in Contentful using Java.
 
 
 What is Contentful?
