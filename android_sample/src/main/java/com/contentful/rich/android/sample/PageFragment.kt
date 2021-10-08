@@ -19,7 +19,7 @@ class PageFragment : Fragment() {
         rootView.page_recycler.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         rootView.page_recycler.adapter =
                 RichCharSequenceAdapter(arguments?.getInt(ARG_PAGE_INDEX, 0)
-                        ?: 0, context!!)
+                        ?: 0, requireContext())
 
         rootView.main_native_check.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -36,7 +36,7 @@ class PageFragment : Fragment() {
         fragment_page.page_recycler.adapter =
                 RichNativeViewAdapter(
                         arguments?.getInt(ARG_PAGE_INDEX, 0) ?: 0,
-                        context!!)
+                        requireContext())
 
     }
 
@@ -44,7 +44,7 @@ class PageFragment : Fragment() {
         fragment_page.page_recycler.adapter =
                 RichCharSequenceAdapter(
                         arguments?.getInt(ARG_PAGE_INDEX, 0) ?: 0,
-                        context!!)
+                        requireContext())
     }
 
     companion object {

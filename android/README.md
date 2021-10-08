@@ -22,7 +22,7 @@ allprojects {
 ```groovy
 dependencies {
   // …
-  implementation 'com.github.contentful:contentful.java:v10.4.1'
+  implementation 'com.github.contentful:contentful.java:v10.4.5'
   implementation 'com.github.contentful:rich-text-renderer-java:master-SNAPSHOT'
 }
 ```

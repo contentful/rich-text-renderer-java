@@ -36,13 +36,15 @@ import static java.util.Locale.getDefault;
 public class E2ETest {
 
   private CDAClient client;
-
+    private String SPACE_ID = "i1ppeoxgdpvt";
+    private String TOKEN = "QuYNYLv6rVnCKOT4_-d3552xD4YIPFcKTWRb2Y227Ic";
+    private String ENVIRONMENT = "master";
   @Before
   public void setup() {
     client = CDAClient.builder()
-        .setSpace(System.getenv("RICH_TEXT_SPACE_ID"))
-        .setToken(System.getenv("RICH_TEXT_DELIVERY_TOKEN"))
-        .setEnvironment(System.getenv("RICH_TEXT_ENVIRONMENT_ID"))
+        .setSpace(SPACE_ID)
+        .setToken(TOKEN)
+        .setEnvironment(ENVIRONMENT)
         .build();
   }
 
