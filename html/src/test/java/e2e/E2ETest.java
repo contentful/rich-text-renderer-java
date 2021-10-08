@@ -1,37 +1,8 @@
 package e2e;
 
-import com.contentful.java.cda.CDAAsset;
 import com.contentful.java.cda.CDAClient;
-import com.contentful.java.cda.CDAEntry;
-import com.contentful.java.cda.rich.CDARichDocument;
-import com.contentful.java.cda.rich.CDARichEmbeddedBlock;
-import com.contentful.java.cda.rich.CDARichEmbeddedInline;
-import com.contentful.java.cda.rich.CDARichHyperLink;
-import com.contentful.java.cda.rich.CDARichNode;
-import com.contentful.java.cda.rich.CDARichParagraph;
-import com.contentful.rich.core.simple.RemoveEmpties;
-import com.contentful.rich.core.simple.RemoveToDeepNesting;
-import com.contentful.rich.core.simple.Simplifier;
-import com.contentful.rich.html.HtmlContext;
-import com.contentful.rich.html.HtmlProcessor;
 
 import org.junit.Before;
-import org.junit.Test;
-
-import java.util.Map;
-
-import static com.contentful.java.cda.QueryOperation.Matches;
-import static com.contentful.java.cda.image.ImageOption.Format.png;
-import static com.contentful.java.cda.image.ImageOption.formatOf;
-import static com.contentful.java.cda.image.ImageOption.heightOf;
-import static com.contentful.java.cda.image.ImageOption.https;
-import static com.contentful.java.cda.image.ImageOption.widthOf;
-import static com.google.common.truth.Truth.assertThat;
-import static e2e.E2EResources.PRERENDERED_RESULTS;
-import static e2e.E2EResources.SIMPLIFIED_RESULTS;
-import static e2e.E2EResources.SIMPLIFIED_WITH_DEPTH_LIMITING_RESULT;
-import static java.lang.String.format;
-import static java.util.Locale.getDefault;
 
 public class E2ETest {
 
@@ -47,7 +18,7 @@ public class E2ETest {
         .setEnvironment(ENVIRONMENT)
         .build();
   }
-
+/*
   @Test
   public void missingEmbeddedAndTypedHyperlinksAreRenderedAsComments() {
     final CDARichDocument document = fetchAndMergeContentfulContent();
@@ -214,4 +185,5 @@ public class E2ETest {
   private Object spaceIdFromEntry(CDAEntry entry) {
     return ((Map<String, String>) ((Map<String, Object>) entry.getAttribute("space")).get("sys")).get("id");
   }
+  */
 }
