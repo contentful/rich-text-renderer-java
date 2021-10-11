@@ -1,14 +1,7 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        google()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.2'
-    }
+plugins {
+    id 'maven-publish'
+    id("com.android.library")
 }
-
-apply plugin: 'com.android.library'
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.javaDirectories
