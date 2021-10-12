@@ -1,9 +1,8 @@
 plugins {
     id("base")
+    id("java")
     id 'maven-publish'
 }
-
-apply plugin: "java"
 
 allprojects {
     group = "com.github.contentful.rich"
@@ -21,6 +20,14 @@ allprojects {
     }
 }
 
+publishing {
+    publications {
+        java(MavenPublication) {
+            artifact jar
+        }
+    }
+
+}
 dependencies {
     // Make the root project archives configuration depend on every sub project
     subprojects.forEach {
