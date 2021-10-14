@@ -8,26 +8,15 @@ allprojects {
     group = "com.github.contentful.rich"
 
     version = '1.1.0'
-
-    sourceCompatibility = 1.8 // java 8
-    targetCompatibility = 1.8
-
     ext.contentful_version = "10.5.2"
 
     repositories {
         mavenCentral()
         google()
+        maven { url 'https://www.jitpack.io' }
     }
 }
 
-publishing {
-    publications {
-        java(MavenPublication) {
-            artifact jar
-        }
-    }
-
-}
 dependencies {
     // Make the root project archives configuration depend on every sub project
     subprojects.forEach {
@@ -37,9 +26,4 @@ dependencies {
 
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
 }

@@ -3,13 +3,19 @@ plugins {
     id("maven-publish")
 }
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.javaDirectories
-    classifier = 'sources'
-}
-
-artifacts {
-    archives sourcesJar
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            maven(MavenPublication) {
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'com.github.contentful.rich'
+                artifactId = 'android'
+                version = '1.1.0'
+                artifact(bundleReleaseAar)
+            }
+        }
+    }
 }
 
 repositories {
@@ -40,7 +46,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        minSdkVersion 26
+        minSdkVersion 21
         targetSdkVersion 29
     }
 

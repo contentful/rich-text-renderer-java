@@ -1,7 +1,7 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        jcenter()
+        mavenCentral()
         google()
     }
     resolutionStrategy {
@@ -16,10 +16,10 @@ pluginManagement {
     }
 }
 
-rootProject.name = "all"
+rootProject.name = "rich-text-renderer"
 
-include 'android'
-include 'android_sample'
-include 'core'
-include 'html'
+include ("android")
+include ("android_sample")
+include ("core")
+include ("html")
 
