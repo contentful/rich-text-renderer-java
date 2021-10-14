@@ -6,7 +6,6 @@ plugins {
 
 jar {
     from project.sourceSets.main.allSource
-    from project(":core").sourceSets.main.java.srcDirs
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
