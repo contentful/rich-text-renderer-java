@@ -23,7 +23,8 @@ allprojects {
 dependencies {
   // …
   implementation 'com.contentful.java:java-sdk:10.5.2'
-  implementation 'com.github.contentful:rich-text-renderer-java:1.1.0'
+  implementation 'com.github.contentful.rich-text-renderer-java:android:1.1.0'
+  implementation 'com.github.contentful.rich-text-renderer-java:core:1.1.0'
 
 }
 ```
@@ -46,8 +47,13 @@ same can be achieved by adding Maven dependencies like so:
 	    <version>10.5.2</version>
 	</dependency>
 	<dependency>
-	    <groupId>com.github.contentful</groupId>
-	    <artifactId>rich-text-renderer-java</artifactId>
+	    <groupId>com.github.contentful.rich</groupId>
+	    <artifactId>core</artifactId>
+	    <version>1.1.0</version>
+	</dependency>
+        <dependency>
+	    <groupId>com.github.contentful.rich</groupId>
+	    <artifactId>android</artifactId>
 	    <version>1.1.0</version>
 	</dependency>
 ```
