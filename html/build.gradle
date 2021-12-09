@@ -24,7 +24,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'com.github.contentful.rich'
             artifactId = 'html'
-            version = '1.1.0'
+            version = '1.2.0'
             from components.java
         }
     }
@@ -38,6 +38,7 @@ dependencies {
     api (project(":core"))
     api "com.contentful.java:java-sdk:${project.contentful_version}"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'org.apache.commons:commons-text:1.9'
     testImplementation 'com.google.truth:truth:0.42'
     testImplementation 'junit:junit:4.13.1'
 }

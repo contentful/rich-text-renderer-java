@@ -6,6 +6,8 @@ import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.core.Renderer;
 import com.contentful.rich.html.HtmlContext;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -23,7 +25,8 @@ public class TextRenderer implements Renderer<HtmlContext, String> {
   @Nullable @Override
   public String render(@Nonnull HtmlContext context, @Nonnull CDARichNode node) {
     final CharSequence text = ((CDARichText) node).getText();
-    final StringBuilder result = new StringBuilder(text);
+    final CharSequence escapedText = StringEscapeUtils.escapeHtml4(text.toString());
+    final StringBuilder result = new StringBuilder(escapedText);
     for (final CDARichMark mark : ((CDARichText) node).getMarks()) {
 
       if (mark instanceof CDARichMark.CDARichMarkUnderline) {
