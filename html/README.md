@@ -23,7 +23,7 @@ allprojects {
 dependencies {
   // …
   implementation 'com.contentful.java:java-sdk:10.5.2'
-  implementation 'com.github.contentful.rich-text-renderer-java:html:1.1.0'
+  implementation 'com.github.contentful.rich-text-renderer-java:html:1.2.0'
 }
 ```
 
@@ -47,7 +47,7 @@ same can be achieved by adding Maven dependencies like so:
 	<dependency>
 	    <groupId>com.github.contentful.rich</groupId>
 	    <artifactId>html</artifactId>
-	    <version>1.1.0</version>
+	    <version>1.2.0</version>
 	</dependency>
 ```
 
@@ -84,7 +84,7 @@ final HtmlContext context = new HtmlContext();
 final String html = processor.process(context, node);
 ```
 
-The `html` variable now contains the html representation of the node.
+The `html` variable now contains the html representation of the node. Please bear in mind that rich text will be escaped in the output `html`.
 
 Adding Custom Renderers
 -----------------------
