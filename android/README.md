@@ -22,9 +22,9 @@ allprojects {
 ```groovy
 dependencies {
   // …
-  implementation 'com.contentful.java:java-sdk:10.5.2'
-  implementation 'com.github.contentful.rich-text-renderer-java:android:1.1.0'
-  implementation 'com.github.contentful.rich-text-renderer-java:core:1.1.0'
+  implementation 'com.contentful.java:java-sdk:10.5.3'
+  implementation 'com.github.contentful.rich-text-renderer-java:android:1.3.0'
+  implementation 'com.github.contentful.rich-text-renderer-java:core:1.3.0'
 
 }
 ```
@@ -44,17 +44,17 @@ same can be achieved by adding Maven dependencies like so:
 	<dependency>
 	    <groupId>com.contentful.java</groupId>
 	    <artifactId>java-sdk</artifactId>
-	    <version>10.5.2</version>
+	    <version>10.5.3</version>
 	</dependency>
 	<dependency>
 	    <groupId>com.github.contentful.rich</groupId>
 	    <artifactId>core</artifactId>
-	    <version>1.1.0</version>
+	    <version>1.3.0</version>
 	</dependency>
         <dependency>
 	    <groupId>com.github.contentful.rich</groupId>
 	    <artifactId>android</artifactId>
-	    <version>1.1.0</version>
+	    <version>1.3.0</version>
 	</dependency>
 ```
 
