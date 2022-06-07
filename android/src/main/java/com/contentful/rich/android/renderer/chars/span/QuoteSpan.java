@@ -80,4 +80,9 @@ public class QuoteSpan implements LeadingMarginSpan, ParcelableSpan {
   @Override public int getSpanTypeId() {
     return 1000;
   }
+
+  public int getSpanTypeIdInternal() {
+    return getSpanTypeId();
+  }
+
 }
