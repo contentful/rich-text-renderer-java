@@ -47,12 +47,12 @@ same can be achieved by adding Maven dependencies like so:
 	    <version>10.5.3</version>
 	</dependency>
 	<dependency>
-	    <groupId>com.github.contentful.rich</groupId>
+	    <groupId>com.github.contentful.rich-text-renderer-java</groupId>
 	    <artifactId>core</artifactId>
 	    <version>1.3.0</version>
 	</dependency>
         <dependency>
-	    <groupId>com.github.contentful.rich</groupId>
+	    <groupId>com.github.contentful.rich-text-renderer-java</groupId>
 	    <artifactId>android</artifactId>
 	    <version>1.3.0</version>
 	</dependency>
