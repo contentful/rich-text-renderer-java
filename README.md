@@ -1,3 +1,6 @@
+
+[![](https://jitpack.io/v/contentful/rich-text-renderer-java.svg)](https://jitpack.io/#contentful/rich-text-renderer-java)
+
 Contentful Rich Text Rendering Library for Java
 ===============================================
 
