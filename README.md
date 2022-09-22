@@ -1,20 +1,10 @@
-<p align="center">
-  🚧🚧🚧🚧🏗️👷🚧🚧👨‍💻🚧🚧👷🏗️🚧🚧🚧🚧<br>
-  <b>
-    THIS REPOSITORY IS IN BETA, FEEDBACK WANTED.<br>
-    EXPECT HEAVY CHANGES AND SUBOPTIMAL VISUAL QUALITY
-  </b>
-  <br>
-  🚧🚧🚧🚧🏗️👷🚧🚧👨‍💻🚧🚧👷🏗️🚧🚧🚧🚧<br>
-  <br>
-  <sup>Please create a new issue https://github.com/contentful/rich-text-renderer.java/issues/new for requests.</sup>
-</p>
 
+[![](https://jitpack.io/v/contentful/rich-text-renderer-java.svg)](https://jitpack.io/#contentful/rich-text-renderer-java)
 
-Contentful Rich Text Rendering SDK for Java
-===========================================
+Contentful Rich Text Rendering Library for Java
+===============================================
 
-> Java SDK for [Rich Text API](https://www.contentful.com/developers/docs/tutorials/general/rich-text-field-type-alpha/) . It helps in easily rendering rich text stored in Contentful using Java.
+> Java library for [Rich Text API](https://www.contentful.com/developers/docs/tutorials/general/rich-text-field-type-alpha/) . It helps in easily rendering rich text stored in Contentful using Java.
 
 
 What is Contentful?
@@ -37,7 +27,7 @@ What is Contentful?
 Core Features
 =============
 
-Take rich text elements from the [BaseSdk](https://github.com/contentful/contentful.java) and render them in a representation easy to use and understand and even easier to use in own projects, due to these submodules:
+Take rich text elements from the [base library](https://github.com/contentful/contentful.java) and render them in a representation easy to use and understand and even easier to use in own projects, due to these submodules:
 
 Html
 ====

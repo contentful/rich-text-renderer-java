@@ -154,7 +154,7 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
 
       if (title != null) {
         builder.insert(0, title);
-        builder.setSpan(new ForegroundColorSpan(Color.argb(1.0f, 1.0f, 0.5f, 1.0f)), 0, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new ForegroundColorSpan(Color.argb(255, 255, 255, 255)), 0, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
       }
     } else if (data instanceof CDAAsset) {
       final CDAAsset asset = (CDAAsset) data;
