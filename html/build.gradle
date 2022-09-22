@@ -1,0 +1,48 @@
+plugins {
+    id('java-library')
+    id('maven-publish')
+}
+
+
+jar {
+    from project.sourceSets.main.allSource
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+    archives jar
+}
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'com.github.contentful.rich'
+            artifactId = 'html'
+            version = '1.2.0'
+            from components.java
+        }
+    }
+}
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    api (project(":core"))
+    api "com.contentful.java:java-sdk:${project.contentful_version}"
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'org.apache.commons:commons-text:1.9'
+    testImplementation 'com.google.truth:truth:0.42'
+    testImplementation 'junit:junit:4.13.1'
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}

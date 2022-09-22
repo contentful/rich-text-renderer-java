@@ -17,11 +17,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+private const val SPACE_ID = "i1ppeoxgdpvt"
+private const val TOKEN = "MU0hFqSvQ7QdXT82RgduxtQCGQBckJqqZkPw3U6T-rY"
+private const val ENVIRONMENT = "master"
+
 class MainActivity(
         private val client: CDAClient = CDAClient.builder()
-                .setSpace(BuildConfig.SPACE_ID)
-                .setToken(BuildConfig.DELIVERY_TOKEN)
-                .setEnvironment(BuildConfig.ENVIRONMENT_ID)
+                .setSpace(SPACE_ID)
+                .setToken(TOKEN)
+                .setEnvironment(ENVIRONMENT)
                 .build()
 ) : AppCompatActivity() {
 

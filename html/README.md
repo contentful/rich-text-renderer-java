@@ -22,7 +22,7 @@ allprojects {
 ```groovy
 dependencies {
   // …
-  implementation 'com.contentful.java:java-sdk:10.5.6'
+  implementation 'com.github.contentful:contentful.java:v10.5.6'
   implementation 'com.github.contentful.rich-text-renderer-java:html:1.4.0'
 }
 ```
@@ -40,15 +40,15 @@ same can be achieved by adding Maven dependencies like so:
 
 ```xml
 	<dependency>
-	    <groupId>com.contentful.java</groupId>
-	    <artifactId>java-sdk</artifactId>
-	    <version>10.5.6</version>
+	    <groupId>com.github.contentful</groupId>
+	    <artifactId>contentful.java</artifactId>
+	    <version>v10.5.6</version>
 	</dependency>
-	<dependency>
-	    <groupId>com.github.contentful.rich-text-renderer-java</groupId>
-	    <artifactId>html</artifactId>
-	    <version>1.4.0</version>
-	</dependency>
+   <dependency>
+        <groupId>com.github.contentful.rich-text-renderer-java</groupId>
+        <artifactId>html</artifactId>
+        <version>1.4.0</version>
+   </dependency>
 ```
 
 Calling Contentful Main SDK
@@ -84,7 +84,7 @@ final HtmlContext context = new HtmlContext();
 final String html = processor.process(context, node);
 ```
 
-The `html` variable now contains the html representation of the node. Please bear in mind that rich text will be escaped in the output `html`.
+The `html` variable now contains the html representation of the node.
 
 Adding Custom Renderers
 -----------------------

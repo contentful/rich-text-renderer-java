@@ -38,6 +38,7 @@ public class HyperLinkRenderer extends BlockRenderer {
 
     final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
     intent.putExtra(Browser.EXTRA_APPLICATION_ID, androidContext.getPackageName());
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     try {
       androidContext.startActivity(intent);
     } catch (ActivityNotFoundException e) {

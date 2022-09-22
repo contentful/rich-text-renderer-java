@@ -1,31 +1,19 @@
-buildscript {
-    dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-    }
-}
-
 plugins {
     id("base")
+    id("java")
+    id 'maven-publish'
 }
-
-apply plugin: "java"
-apply plugin: "maven"
-
 
 allprojects {
     group = "com.github.contentful.rich"
 
-    version = '1.0.0'
-
-    sourceCompatibility = 1.8 // java 8
-    targetCompatibility = 1.8
-
-    ext.contentful_version = "v10.4.1"
+    version = '1.2.0'
+    ext.contentful_version = "10.5.6"
 
     repositories {
         mavenCentral()
-        jcenter()
         google()
+        maven { url 'https://www.jitpack.io' }
     }
 }
 

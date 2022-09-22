@@ -1,6 +1,0 @@
-rootProject.name = "all"
-
-include 'android'
-include 'android_sample'
-include 'core'
-include 'html'

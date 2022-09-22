@@ -22,10 +22,9 @@ allprojects {
 ```groovy
 dependencies {
   // …
-  implementation 'com.contentful.java:java-sdk:10.5.3'
-  implementation 'com.github.contentful.rich-text-renderer-java:android:1.3.0'
-  implementation 'com.github.contentful.rich-text-renderer-java:core:1.3.0'
-
+  implementation 'com.contentful.java:java-sdk:10.5.6'
+  implementation 'com.github.contentful.rich-text-renderer-java:android:1.4.0'
+  implementation 'com.github.contentful.rich-text-renderer-java:core:1.4.0'
 }
 ```
 
@@ -41,21 +40,21 @@ same can be achieved by adding Maven dependencies like so:
 ```
 
 ```xml
-	<dependency>
-	    <groupId>com.contentful.java</groupId>
-	    <artifactId>java-sdk</artifactId>
-	    <version>10.5.6</version>
-	</dependency>
-	<dependency>
-	    <groupId>com.github.contentful.rich-text-renderer-java</groupId>
-	    <artifactId>core</artifactId>
-	    <version>1.4.0</version>
-	</dependency>
-        <dependency>
-	    <groupId>com.github.contentful.rich-text-renderer-java</groupId>
-	    <artifactId>android</artifactId>
-	    <version>1.4.0</version>
-	</dependency>
+   <dependency>
+        <groupId>com.contentful.java</groupId>
+        <artifactId>java-sdk</artifactId>
+        <version>10.5.6</version>
+   </dependency>
+   <dependency>
+       <groupId>com.github.contentful.rich-text-renderer-java</groupId>
+       <artifactId>core</artifactId>
+       <version>1.4.0</version>
+   </dependency>
+   <dependency>
+       <groupId>com.github.contentful.rich-text-renderer-java</groupId>
+       <artifactId>android</artifactId>
+       <version>1.4.0</version>
+   </dependency>
 ```
 
 Calling Contentful Main SDK
