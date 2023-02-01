@@ -16,6 +16,8 @@ val PAGES = mutableListOf(
                         text("Normal Text"),
                         text("BoldText", listOf(CDARichMarkBold())),
                         text("Italic", listOf(CDARichMarkItalic())),
+                        text("Superscript", listOf(CDARichMarkSuperscript())),
+                        text("Subscript", listOf(CDARichMarkSubscript())),
                         text("Underline", listOf(CDARichMarkUnderline())),
                         text("final String code;", listOf(CDARichMarkCode())),
                         text("CustomText", listOf(CDARichMarkCustom("custom"))),
@@ -24,6 +26,8 @@ val PAGES = mutableListOf(
                                 listOf(
                                         CDARichMarkCustom("custom"),
                                         CDARichMarkItalic(),
+                                        CDARichMarkSubscript(),
+                                        CDARichMarkSubscript(),
                                         CDARichMarkBold(),
                                         CDARichMarkCode(),
                                         CDARichMarkUnderline()
@@ -129,7 +133,9 @@ val PAGES = mutableListOf(
                         CDARichBlock().addAll(
                                 text("Quotes from "),
                                 text("Famous", listOf(CDARichMark.CDARichMarkBold())),
-                                text(" People", listOf(CDARichMark.CDARichMarkItalic()))
+                                text(" People", listOf(CDARichMark.CDARichMarkItalic())),
+                                text(" Dogs", listOf(CDARichMark.CDARichMarkSuperscript())),
+                                text(" Cats", listOf(CDARichMark.CDARichMarkSubscript())),
                         ),
                         CDARichQuote().addAll(
                                 text("You know you’re in love when you can’t fall asleep because reality is finally better than your dreams."),

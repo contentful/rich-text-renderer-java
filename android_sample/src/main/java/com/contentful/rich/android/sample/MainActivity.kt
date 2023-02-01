@@ -10,15 +10,15 @@ import com.contentful.java.cda.CDAEntry
 import com.contentful.java.cda.QueryOperation.Matches
 import com.contentful.java.cda.rich.CDARichDocument
 import com.contentful.java.cda.rich.CDARichParagraph
+import com.contentful.rich.android.sample.databinding.ActivityMainBinding
 import com.contentful.rich.core.simple.RemoveEmpties
 import com.contentful.rich.core.simple.RemoveToDeepNesting
 import com.contentful.rich.core.simple.Simplifier
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 private const val SPACE_ID = "i1ppeoxgdpvt"
-private const val TOKEN = "MU0hFqSvQ7QdXT82RgduxtQCGQBckJqqZkPw3U6T-rY"
+private const val TOKEN = "QuYNYLv6rVnCKOT4_-d3552xD4YIPFcKTWRb2Y227Ic"
 private const val ENVIRONMENT = "master"
 
 class MainActivity(
@@ -29,19 +29,23 @@ class MainActivity(
                 .build()
 ) : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         if (PAGES.last().name != "Contentful") {
-            spinner.prompt = "⌛ Loading from Contentful ⏳"
+            binding.spinner.prompt = "⌛ Loading from Contentful ⏳"
             loadPageFromContentful()
         }
 
-        spinner.onItemSelectedListener = object : OnItemSelectedListener {
+        binding.spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.container, PageFragment.newInstance(position))
@@ -63,7 +67,11 @@ class MainActivity(
                     .entries()
                     .values
                     .map { entry ->
-                        entry.getField<Any>("rich") as CDARichDocument
+                        if(entry.getField<Any>("rich") != null) {
+                            entry.getField<Any>("rich") as CDARichDocument
+                        } else {
+                            CDARichDocument()
+                        }
                     }.reduce { a, b ->
                         val p = CDARichParagraph()
                         p.content.addAll(b.content)
@@ -80,8 +88,8 @@ class MainActivity(
             )
 
             runOnUiThread {
-                spinner.prompt = PAGES[0].name
-                spinner.adapter = PageAdapter(
+                binding.spinner.prompt = PAGES[0].name
+                binding.spinner.adapter = PageAdapter(
                         this@MainActivity,
                         PAGES.toTypedArray()
                 )
