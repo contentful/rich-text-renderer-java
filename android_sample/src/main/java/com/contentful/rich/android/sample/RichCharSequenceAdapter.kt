@@ -3,7 +3,6 @@ package com.contentful.rich.android.sample
 import android.content.Context
 import android.text.Spannable
 import android.text.SpannableStringBuilder
-import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -14,19 +13,18 @@ import com.contentful.java.cda.CDAEntry
 import com.contentful.java.cda.rich.CDARichHyperLink
 import com.contentful.rich.android.AndroidContext
 import com.contentful.rich.android.AndroidProcessor
-import kotlinx.android.synthetic.main.sample_item.view.*
+import com.contentful.rich.android.sample.databinding.SampleItemBinding
 
 class RichCharSequenceAdapter(pageIndex: Int, private val androidContext: Context) : RecyclerView.Adapter<PageFragment.Holder>() {
     private val page: Page = PAGES[pageIndex]
-    private val inflater: LayoutInflater = LayoutInflater.from(androidContext)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageFragment.Holder =
-            PageFragment.Holder(inflater.inflate(R.layout.sample_item, parent, false))
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageFragment.Holder {
+        val itemBinding = SampleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return PageFragment.Holder(itemBinding)
+    }
     override fun onBindViewHolder(holder: PageFragment.Holder, position: Int) {
         val item = page.document.content[position]
         val context = AndroidContext(androidContext)
-
         val processor = AndroidProcessor.creatingCharSequences()
         processor.overrideRenderer(
                 { _, node -> node is CDARichHyperLink && node.data is CDAEntry },
@@ -67,9 +65,7 @@ class RichCharSequenceAdapter(pageIndex: Int, private val androidContext: Contex
         )
 
         val text = processor.process(context, item) ?: "???"
-
-        holder.itemView.sample_item_text.text = text
-        holder.itemView.sample_item_text.movementMethod = LinkMovementMethod.getInstance()
+        holder.bind(text.toString())
     }
 
     override fun getItemCount(): Int = page.document.content.size

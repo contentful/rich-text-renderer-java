@@ -5,9 +5,10 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.StyleSpan;
+import android.text.style.SubscriptSpan;
+import android.text.style.SuperscriptSpan;
 import android.text.style.TextAppearanceSpan;
 import android.text.style.UnderlineSpan;
-
 import com.contentful.java.cda.rich.CDARichMark;
 import com.contentful.java.cda.rich.CDARichMark.CDARichMarkBold;
 import com.contentful.java.cda.rich.CDARichMark.CDARichMarkItalic;
@@ -67,9 +68,14 @@ public class TextRenderer extends AndroidRenderer<AndroidContext, CharSequence> 
       if (mark instanceof CDARichMarkUnderline) {
         result.setSpan(new UnderlineSpan(), 0, result.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
       }
-
       if (mark instanceof CDARichMarkBold) {
         result.setSpan(new StyleSpan(Typeface.BOLD), 0, result.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+      }
+      if (mark instanceof CDARichMark.CDARichMarkSubscript) {
+        result.setSpan(new SubscriptSpan(), 0, result.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+      }
+      if (mark instanceof CDARichMark.CDARichMarkSuperscript) {
+        result.setSpan(new SuperscriptSpan(), 0, result.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
       }
       if (mark instanceof CDARichMarkItalic) {
         result.setSpan(new StyleSpan(Typeface.ITALIC), 0, result.length(), SPAN_EXCLUSIVE_EXCLUSIVE);

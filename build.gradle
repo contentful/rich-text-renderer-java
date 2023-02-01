@@ -8,7 +8,7 @@ allprojects {
     group = "com.github.contentful.rich"
 
     version = '1.2.0'
-    ext.contentful_version = "10.5.6"
+    ext.contentful_version = "10.5.12"
 
     repositories {
         mavenCentral()
@@ -26,4 +26,8 @@ dependencies {
 
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }

@@ -2,15 +2,15 @@ package com.contentful.rich.android.renderer.views;
 
 import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
-import android.text.style.AbsoluteSizeSpan;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.StyleSpan;
+import android.text.style.SubscriptSpan;
+import android.text.style.SuperscriptSpan;
 import android.text.style.TextAppearanceSpan;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
-
 import com.contentful.java.cda.rich.CDARichHeading;
 import com.contentful.java.cda.rich.CDARichMark;
 import com.contentful.java.cda.rich.CDARichMark.CDARichMarkBold;
@@ -76,6 +76,12 @@ public class TextRenderer extends AndroidRenderer<AndroidContext, View> {
       }
       if (mark instanceof CDARichMarkBold) {
         textContent.setSpan(new StyleSpan(Typeface.BOLD), 0, textContent.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+      }
+      if (mark instanceof CDARichMark.CDARichMarkSuperscript) {
+        textContent.setSpan(new SuperscriptSpan(), 0, textContent.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+      }
+      if (mark instanceof CDARichMark.CDARichMarkSubscript) {
+        textContent.setSpan(new SubscriptSpan(), 0, textContent.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
       }
       if (mark instanceof CDARichMarkItalic) {
         textContent.setSpan(new StyleSpan(Typeface.ITALIC), 0, textContent.length(), SPAN_EXCLUSIVE_EXCLUSIVE);

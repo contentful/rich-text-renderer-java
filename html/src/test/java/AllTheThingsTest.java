@@ -76,9 +76,9 @@ public class AllTheThingsTest {
         "      some list item content\n" +
         "    </li>\n" +
         "  </ul>\n" +
-        "  <div>\n" +
+        "  <p>\n" +
         "    Paragraph\n" +
-        "  </div>\n" +
+        "  </p>\n" +
         "  <blockquote>\n" +
         "    Famous quote\n" +
         "  </blockquote>\n" +

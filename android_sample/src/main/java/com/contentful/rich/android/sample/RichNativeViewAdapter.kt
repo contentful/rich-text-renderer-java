@@ -11,14 +11,16 @@ import com.contentful.java.cda.CDAEntry
 import com.contentful.java.cda.rich.CDARichHyperLink
 import com.contentful.rich.android.AndroidContext
 import com.contentful.rich.android.AndroidProcessor
-import kotlinx.android.synthetic.main.sample_item.view.*
+import com.contentful.rich.android.sample.databinding.SampleItemBinding
 
 class RichNativeViewAdapter(pageIndex: Int, private val androidContext: Context) : RecyclerView.Adapter<PageFragment.Holder>() {
     private val page: Page = PAGES[pageIndex]
     private val inflater: LayoutInflater = LayoutInflater.from(androidContext)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageFragment.Holder =
-            PageFragment.Holder(inflater.inflate(R.layout.sample_item, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageFragment.Holder {
+        val itemBinding = SampleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return PageFragment.Holder(itemBinding)
+    }
 
     override fun onBindViewHolder(holder: PageFragment.Holder, position: Int) {
         val item = page.document.content[position]
@@ -54,8 +56,7 @@ class RichNativeViewAdapter(pageIndex: Int, private val androidContext: Context)
         val view = processor.process(context, item)
                 ?: TextView(this.androidContext).apply { setText(R.string.error_no_view) }
 
-        holder.itemView.sample_item_card.removeAllViews()
-        holder.itemView.sample_item_card.addView(view)
+       holder.removeViews(view)
     }
 
     override fun getItemCount(): Int = page.document.content.size

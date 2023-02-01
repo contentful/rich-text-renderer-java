@@ -38,6 +38,12 @@ public class TextRenderer implements Renderer<HtmlContext, String> {
       if (mark instanceof CDARichMark.CDARichMarkItalic) {
         result.insert(0, "<i>").append("</i>");
       }
+      if (mark instanceof CDARichMark.CDARichMarkSuperscript) {
+        result.insert(0, "<sup>").append("</sup>");
+      }
+      if (mark instanceof CDARichMark.CDARichMarkSubscript) {
+        result.insert(0, "<sub>").append("</sub>");
+      }
       if (mark instanceof CDARichMark.CDARichMarkCode) {
         result.insert(0, "<code>").append("</code>");
       }
