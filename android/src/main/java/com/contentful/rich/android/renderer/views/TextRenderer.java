@@ -103,11 +103,29 @@ public class TextRenderer extends AndroidRenderer<AndroidContext, View> {
       }
 
       if (heading != null) {
-        content.setTextSize(TypedValue.COMPLEX_UNIT_PX, content.getTextSize() * (7f - heading.getLevel()) * 0.75f);
+        content.setTextSize(TypedValue.COMPLEX_UNIT_SP, getHeadingTextSize(heading.getLevel()));
       }
     }
 
     content.setText(textContent);
     return result;
+  }
+
+  private float getHeadingTextSize(int level) {
+    switch(level) {
+      case 1:
+        return 24f;
+      case 2:
+        return 18f;
+      case 3:
+        return 16f;
+      case 4:
+        return 15f;
+      case 5:
+        return 14f;
+      case 6:
+        return 13f;
+    }
+    return 16f;
   }
 }
