@@ -22,8 +22,8 @@ allprojects {
 ```groovy
 dependencies {
   // …
-  implementation 'com.github.contentful:contentful.java:v10.5.6'
-  implementation 'com.github.contentful.rich-text-renderer-java:html:1.6.0'
+  implementation 'com.github.contentful:contentful.java:v10.5.14'
+  implementation 'com.github.contentful.rich-text-renderer-java:html:1.7.0'
 }
 ```
 
