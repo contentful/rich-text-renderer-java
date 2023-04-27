@@ -6,6 +6,8 @@ import com.contentful.rich.html.HtmlProcessor;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -26,6 +28,24 @@ public class LinksTest {
         "<a href=\"https://contentful.com\">\n" +
         "  Some link text&lt;br/&gt;\n" +
         "</a>\n");
+  }
+
+  @Test
+  public void renderLinkWithUriTest() {
+    final HtmlProcessor processor = new HtmlProcessor();
+    final HtmlContext context = new HtmlContext();
+
+    final Map<String, Object> linkProps = new HashMap<>();
+    linkProps.put("uri", "https://contentful.com");
+    final CDARichHyperLink link = new CDARichHyperLink(linkProps);
+    link.getContent().add(new CDARichText("Some link text<br/>", new ArrayList<>()));
+
+    final String result = processor.process(context, link);
+
+    assertThat(result).isEqualTo("" +
+            "<a href=\"https://contentful.com\">\n" +
+            "  Some link text&lt;br/&gt;\n" +
+            "</a>\n");
   }
 
   @Test

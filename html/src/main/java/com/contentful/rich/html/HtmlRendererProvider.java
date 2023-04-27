@@ -22,9 +22,9 @@ import com.contentful.rich.html.renderer.DynamicTagRenderer;
 import com.contentful.rich.html.renderer.TagRenderer;
 import com.contentful.rich.html.renderer.TagWithArgumentsRenderer;
 import com.contentful.rich.html.renderer.TextRenderer;
-import com.google.gson.internal.LinkedTreeMap;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 
 import static com.contentful.rich.html.renderer.TagWithArgumentsRenderer.mapifyArguments;
 
@@ -61,11 +61,11 @@ class HtmlRendererProvider {
             (node) -> mapifyArguments("href", (String) ((CDARichHyperLink) node).getData()))
     );
     processor.addRenderer(
-            (context, node) -> node instanceof CDARichHyperLink && ((CDARichHyperLink) node).getData() instanceof LinkedTreeMap,
+            (context, node) -> node instanceof CDARichHyperLink && ((CDARichHyperLink) node).getData() instanceof Map,
             new TagWithArgumentsRenderer(
                     processor,
                     "a",
-                    (node) -> mapifyArguments("href", (String) ((LinkedTreeMap<?, ?>) ((CDARichHyperLink) node).getData()).get("uri")))
+                    (node) -> mapifyArguments("href", (String) ((Map<?, ?>) ((CDARichHyperLink) node).getData()).get("uri")))
     );
     processor.addRenderer(
         (context, node) -> node instanceof CDARichQuote,
