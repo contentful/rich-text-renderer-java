@@ -7,10 +7,9 @@ import com.contentful.rich.core.Processor;
 import com.contentful.rich.core.Renderer;
 import com.contentful.rich.html.HtmlContext;
 
-import java.util.stream.Collectors;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static java.util.Locale.getDefault;
@@ -47,11 +46,15 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
 
     if (node instanceof CDARichBlock) {
       for (final CDARichNode item : ((CDARichBlock) node).getContent()) {
-        final String itemResult = processor.process(context, item);
+        String itemResult = processor.process(context, item);
         if (itemResult != null) {
           if (itemResult.contains("\n")) {
-            for (final String line : itemResult.split("\n")) {
-              result.append(context.getIndentation()).append(line).append("\n");
+            if(node instanceof CDARichHyperLink) {
+              result.append(itemResult.replace("\n",""));
+            } else {
+              for (final String line : itemResult.split("\n")) {
+                result.append(context.getIndentation()).append(line).append("\n");
+              }
             }
           } else { // no new line found.
             result.append(context.getIndentation()).append(itemResult).append("\n");
