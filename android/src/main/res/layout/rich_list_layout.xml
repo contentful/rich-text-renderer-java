@@ -11,6 +11,7 @@
         android:id="@+id/rich_list_decoration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:paddingEnd="4dp"
         tools:text="1)"
         />
@@ -19,6 +20,7 @@
         android:id="@id/rich_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_toEndOf="@id/rich_list_decoration"
         android:orientation="vertical"
         />

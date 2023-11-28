@@ -104,6 +104,7 @@ public class TextRenderer extends AndroidRenderer<AndroidContext, View> {
 
       if (heading != null) {
         content.setTextSize(TypedValue.COMPLEX_UNIT_SP, getHeadingTextSize(heading.getLevel()));
+        content.setTypeface(null, Typeface.BOLD);
       }
     }
 
@@ -114,9 +115,9 @@ public class TextRenderer extends AndroidRenderer<AndroidContext, View> {
   private float getHeadingTextSize(int level) {
     switch(level) {
       case 1:
-        return 24f;
+        return 28f;
       case 2:
-        return 18f;
+        return 20f;
       case 3:
         return 16f;
       case 4:
