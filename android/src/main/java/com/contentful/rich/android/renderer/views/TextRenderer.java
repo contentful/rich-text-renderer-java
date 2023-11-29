@@ -2,6 +2,7 @@ package com.contentful.rich.android.renderer.views;
 
 import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
+import android.text.method.LinkMovementMethod;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.StyleSpan;
 import android.text.style.SubscriptSpan;
@@ -107,7 +108,7 @@ public class TextRenderer extends AndroidRenderer<AndroidContext, View> {
         content.setTypeface(null, Typeface.BOLD);
       }
     }
-
+    content.setMovementMethod(LinkMovementMethod.getInstance());
     content.setText(textContent);
     return result;
   }
