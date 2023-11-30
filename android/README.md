@@ -23,8 +23,8 @@ allprojects {
 dependencies {
   // …
   implementation 'com.contentful.java:java-sdk:10.5.12'
-  implementation 'com.github.contentful.rich-text-renderer-java:android:1.6.0'
-  implementation 'com.github.contentful.rich-text-renderer-java:core:1.6.0'
+  implementation 'com.github.contentful.rich-text-renderer-java:android:1.9.0'
+  implementation 'com.github.contentful.rich-text-renderer-java:core:1.9.0'
 }
 ```
 
@@ -48,12 +48,12 @@ same can be achieved by adding Maven dependencies like so:
    <dependency>
        <groupId>com.github.contentful.rich-text-renderer-java</groupId>
        <artifactId>core</artifactId>
-       <version>1.7.0</version>
+       <version>1.9.0</version>
    </dependency>
    <dependency>
        <groupId>com.github.contentful.rich-text-renderer-java</groupId>
        <artifactId>android</artifactId>
-       <version>1.7.0</version>
+       <version>1.9.0</version>
    </dependency>
 ```
 
