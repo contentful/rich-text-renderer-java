@@ -22,8 +22,8 @@ allprojects {
 ```groovy
 dependencies {
   // …
-  implementation 'com.github.contentful:contentful.java:v10.5.16'
-  implementation 'com.github.contentful.rich-text-renderer-java:html:1.7.1'
+  implementation 'com.github.contentful:contentful.java:v10.5.17'
+  implementation 'com.github.contentful.rich-text-renderer-java:html:1.9.0'
 }
 ```
 
@@ -42,12 +42,12 @@ same can be achieved by adding Maven dependencies like so:
 	<dependency>
 	    <groupId>com.github.contentful</groupId>
 	    <artifactId>contentful.java</artifactId>
-	    <version>v10.5.16</version>
+	    <version>v10.5.17</version>
 	</dependency>
    <dependency>
         <groupId>com.github.contentful.rich-text-renderer-java</groupId>
         <artifactId>html</artifactId>
-        <version>1.7.1</version>
+        <version>1.9.0</version>
    </dependency>
 ```
 
