@@ -47,18 +47,8 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
     if (node instanceof CDARichBlock) {
       for (final CDARichNode item : ((CDARichBlock) node).getContent()) {
         String itemResult = processor.process(context, item);
-        if (itemResult != null) {
-          if (itemResult.contains("\n")) {
-            if(node instanceof CDARichHyperLink) {
-              result.append(itemResult.replace("\n",""));
-            } else {
-              for (final String line : itemResult.split("\n")) {
-                result.append(context.getIndentation()).append(line).append("\n");
-              }
-            }
-          } else { // no new line found.
-            result.append(context.getIndentation()).append(itemResult).append("\n");
-          }
+         if (itemResult != null) {
+           result.append(itemResult);
         } else { // none found
           appendErrorNode(context, result, item);
         }
@@ -112,7 +102,7 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
    */
   @Nonnull
   protected String startTag(@Nonnull CDARichNode node) {
-    return "<" + tag + ">\n";
+    return "<" + tag + ">";
   }
 
   /**
@@ -123,6 +113,11 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
    */
   @Nonnull
   protected String endTag(@Nonnull CDARichNode node) {
-    return "</" + tag + ">\n";
+    if(tag.equals("a")) {
+      return "</" + tag + ">";
+    } else {
+      return "</" + tag + ">";
+    }
+
   }
 }

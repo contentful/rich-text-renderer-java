@@ -4,10 +4,9 @@ import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.core.Processor;
 import com.contentful.rich.html.HtmlContext;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.annotation.Nonnull;
 
 /**
  * Adds arguments to a tag when rendering a Rich Text.
@@ -46,7 +45,7 @@ public class TagWithArgumentsRenderer extends TagRenderer {
    */
   @Nonnull @Override
   protected String startTag(@Nonnull CDARichNode node) {
-    return "<" + tag + " " + stringifyArgumentMap(provider.provide(node)) + ">\n";
+    return "<" + tag + " " + stringifyArgumentMap(provider.provide(node)) + ">";
   }
 
   String stringifyArgumentMap(Map<String, String> arguments) {
