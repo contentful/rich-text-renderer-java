@@ -21,7 +21,7 @@ public class CustomRendererTest {
 
     final String result = processor.process(new HtmlContext(), paragraph);
 
-    assertThat(result).isEqualTo("<pete>\n</pete>\n");
+    assertThat(result).isEqualTo("<pete></pete>");
   }
 
   @Test
@@ -36,6 +36,6 @@ public class CustomRendererTest {
 
     final String result = processor.process(new HtmlContext(), node);
 
-    assertThat(result).isEqualTo("<\uD83E\uDD37>\n</\uD83E\uDD37>\n");
+    assertThat(result).isEqualTo("<\uD83E\uDD37></\uD83E\uDD37>");
   }
 }

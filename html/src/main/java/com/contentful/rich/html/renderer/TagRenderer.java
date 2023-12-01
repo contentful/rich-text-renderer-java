@@ -68,7 +68,7 @@ public class TagRenderer implements Renderer<HtmlContext, String> {
             .map((x) -> createNodeName(x) + "[" + getIndexInParent(context, x) + "]")
             .collect(Collectors.joining(" > ")))
         .append("'. Please add a corresponding renderer using ")
-        .append("'HtmlRenderer.addRenderer(...)'. -->\n");
+        .append("'HtmlRenderer.addRenderer(...)'. -->");
   }
 
   private String createNodeName(CDARichNode node) {

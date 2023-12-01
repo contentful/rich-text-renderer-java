@@ -19,7 +19,7 @@ public class MarksTextTest {
 
     final String result = processor.process(context, new CDARichText("text", new ArrayList<>()));
 
-    assertThat(result).isEqualTo("text\n");
+    assertThat(result).isEqualTo("text");
   }
 
   @Test
@@ -32,7 +32,7 @@ public class MarksTextTest {
 
     final String result = processor.process(context, new CDARichText("BoldText", markers));
 
-    assertThat(result).isEqualTo("<b>BoldText</b>\n");
+    assertThat(result).isEqualTo("<b>BoldText</b>");
   }
 
   @Test
@@ -45,7 +45,7 @@ public class MarksTextTest {
 
     final String result = processor.process(context, new CDARichText("Underlined", markers));
 
-    assertThat(result).isEqualTo("<u>Underlined</u>\n");
+    assertThat(result).isEqualTo("<u>Underlined</u>");
   }
 
   @Test
@@ -58,7 +58,7 @@ public class MarksTextTest {
 
     final String result = processor.process(context, new CDARichText("Italic", markers));
 
-    assertThat(result).isEqualTo("<i>Italic</i>\n");
+    assertThat(result).isEqualTo("<i>Italic</i>");
   }
 
   @Test
@@ -71,7 +71,7 @@ public class MarksTextTest {
 
     final String result = processor.process(context, new CDARichText("final String code;", markers));
 
-    assertThat(result).isEqualTo("<code>final String code;</code>\n");
+    assertThat(result).isEqualTo("<code>final String code;</code>");
   }
 
   @Test
@@ -84,7 +84,7 @@ public class MarksTextTest {
 
     final String result = processor.process(context, new CDARichText("🐭", markers));
 
-    assertThat(result).isEqualTo("<🧀>🐭</🧀>\n");
+    assertThat(result).isEqualTo("<🧀>🐭</🧀>");
   }
 
   @Test
@@ -102,6 +102,6 @@ public class MarksTextTest {
 
     final String result = processor.process(context, new CDARichText("All in all", markers));
 
-    assertThat(result).isEqualTo("<span><u><code><b><i><custom>All in all</custom></i></b></code></u></span>\n");
+    assertThat(result).isEqualTo("<span><u><code><b><i><custom>All in all</custom></i></b></code></u></span>");
   }
 }
