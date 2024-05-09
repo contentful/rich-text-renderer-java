@@ -81,6 +81,14 @@ nodes in the main SDK, is easy if the field id is known:
 ```java
 final CDARichDocument node = entry.getField(FIELD_ID);
 ```
+If your data is fetched from an external tool (e.g., a JavaScript library), it is possible to create a `CDARichDocument` from plain `JSON`. This is especially useful when working with content that is not directly retrieved through the Contentful Java library. To accomplish this, the following steps can be followed using the `GSON` library for `JSON` processing:
+
+```java
+private final Gson gson = new Gson();
+Type type = new TypeToken<Map<String, Object>>(){}.getType();
+Map<String, Object> jsonMap = gson.fromJson(json, type);
+final CDARichDocument node =  RichTextFactory.resolveRichNode(jsonMap);
+```
 
 The last step includes the conversion of the rich text node into wither spannables or custom views. Following code shows
 how to create renderers to create charsequences or native android views:
