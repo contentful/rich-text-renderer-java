@@ -28,23 +28,23 @@ public class ListsTest {
     final String result = processor.process(context, list);
 
     assertThat(result).isEqualTo(
-        "<ul>\n" +
-            "  <li>\n" +
-            "    <p>\n" +
-            "      one\n" +
-            "    </p>\n" +
-            "  </li>\n" +
-            "  <li>\n" +
-            "    <p>\n" +
-            "      two\n" +
-            "    </p>\n" +
-            "  </li>\n" +
-            "  <li>\n" +
-            "    <p>\n" +
-            "      three\n" +
-            "    </p>\n" +
-            "  </li>\n" +
-            "</ul>\n");
+        "<ul>"+
+            "<li>"+
+            "<p>"+
+            "one"+
+            "</p>"+
+            "</li>"+
+            "<li>"+
+            "<p>"+
+            "two"+
+            "</p>"+
+            "</li>"+
+            "<li>"+
+            "<p>"+
+            "three"+
+            "</p>"+
+            "</li>"+
+            "</ul>");
   }
 
   @Test
@@ -69,47 +69,47 @@ public class ListsTest {
 
     final String result = processor.process(context, unorderedList);
 
-    assertThat(result).isEqualTo("<ul>\n" +
-        "  <li>\n" +
-        "    <p>\n" +
-        "      one\n" +
-        "    </p>\n" +
-        "  </li>\n" +
-        "  <li>\n" +
-        "    <p>\n" +
-        "      two\n" +
-        "    </p>\n" +
-        "  </li>\n" +
-        "  <li>\n" +
-        "    <p>\n" +
-        "      three\n" +
-        "    </p>\n" +
-        "  </li>\n" +
-        "  <li>\n" +
-        "    <ol>\n" +
-        "      <li>\n" +
-        "        <p>\n" +
-        "          a\n" +
-        "        </p>\n" +
-        "      </li>\n" +
-        "      <li>\n" +
-        "        <p>\n" +
-        "          b\n" +
-        "        </p>\n" +
-        "      </li>\n" +
-        "      <li>\n" +
-        "        <p>\n" +
-        "          c\n" +
-        "        </p>\n" +
-        "      </li>\n" +
-        "    </ol>\n" +
-        "  </li>\n" +
-        "  <li>\n" +
-        "    <p>\n" +
-        "      <\uD83D\uDC51><code><i><b><u>four</u></b></i></code></\uD83D\uDC51>\n" +
-        "    </p>\n" +
-        "  </li>\n" +
-        "</ul>\n");
+    assertThat(result).isEqualTo("<ul>"+
+        "<li>"+
+        "<p>"+
+        "one"+
+        "</p>"+
+        "</li>"+
+        "<li>"+
+        "<p>"+
+        "two"+
+        "</p>"+
+        "</li>"+
+        "<li>"+
+        "<p>"+
+        "three"+
+        "</p>"+
+        "</li>"+
+        "<li>"+
+        "<ol>"+
+        "<li>"+
+        "<p>"+
+        "a"+
+        "</p>"+
+        "</li>"+
+        "<li>"+
+        "<p>"+
+        "b"+
+        "</p>"+
+        "</li>"+
+        "<li>"+
+        "<p>"+
+        "c"+
+        "</p>"+
+        "</li>"+
+        "</ol>"+
+        "</li>"+
+        "<li>"+
+        "<p>"+
+        "<\uD83D\uDC51><code><i><b><u>four</u></b></i></code></\uD83D\uDC51>"+
+        "</p>"+
+        "</li>"+
+        "</ul>");
   }
 
   private CDARichListItem textListItem(String text) {

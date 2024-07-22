@@ -4,7 +4,6 @@ import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.contentful.java.cda.rich.CDARichBlock;
 import com.contentful.java.cda.rich.CDARichList;
 import com.contentful.java.cda.rich.CDARichListItem;
@@ -14,14 +13,13 @@ import com.contentful.rich.android.AndroidProcessor;
 import com.contentful.rich.android.R;
 import com.contentful.rich.android.renderer.listdecorator.Decorator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class ListRenderer extends BlockRenderer {
 
@@ -67,6 +65,9 @@ public class ListRenderer extends BlockRenderer {
             lastTextView.setText(
                 new SpannableStringBuilder(lastTextView.getText()).append(childTextView.getText())
             );
+            if(childTextView.getMovementMethod() != null) {
+              lastTextView.setMovementMethod(childTextView.getMovementMethod());
+            }
           } else {
             lastTextView = childTextView;
             content.addView(childView);
@@ -100,7 +101,11 @@ public class ListRenderer extends BlockRenderer {
 
       final Decorator initialDecorator = decoratorBySymbolMap.get(list.getDecoration().toString());
       final int initialDecoratorIndex = decorators.indexOf(initialDecorator);
-      final int currentPosition = (initialDecoratorIndex + nestedListCount) % decorators.size();
+      int currentPosition = ((initialDecoratorIndex + nestedListCount) % decorators.size()) - 1;
+      if(currentPosition < 0) {
+        currentPosition = 0;
+      }
+
       currentDecorator = decorators.get(currentPosition);
     }
 

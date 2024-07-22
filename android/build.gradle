@@ -76,6 +76,7 @@ dependencies {
 
     api project(':core')
     api "com.contentful.java:java-sdk:${project.contentful_version}"
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     testImplementation 'org.robolectric:robolectric:4.9'
     testImplementation 'com.google.truth:truth:0.42'
