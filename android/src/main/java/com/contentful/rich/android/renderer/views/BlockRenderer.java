@@ -40,6 +40,9 @@ public class BlockRenderer extends AndroidRenderer<AndroidContext, View> {
             lastTextView.setText(
                 new SpannableStringBuilder(lastTextView.getText()).append(childTextView.getText())
             );
+            if(childTextView.getMovementMethod() != null) {
+              lastTextView.setMovementMethod(childTextView.getMovementMethod());
+            }
           } else {
             lastTextView = childTextView;
             content.addView(childView);

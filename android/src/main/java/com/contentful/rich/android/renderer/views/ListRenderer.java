@@ -65,6 +65,9 @@ public class ListRenderer extends BlockRenderer {
             lastTextView.setText(
                 new SpannableStringBuilder(lastTextView.getText()).append(childTextView.getText())
             );
+            if(childTextView.getMovementMethod() != null) {
+              lastTextView.setMovementMethod(childTextView.getMovementMethod());
+            }
           } else {
             lastTextView = childTextView;
             content.addView(childView);
