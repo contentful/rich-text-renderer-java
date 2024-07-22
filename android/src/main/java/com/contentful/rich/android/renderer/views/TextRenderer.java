@@ -2,6 +2,7 @@ package com.contentful.rich.android.renderer.views;
 
 import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
+import android.text.method.LinkMovementMethod;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.StyleSpan;
 import android.text.style.SubscriptSpan;
@@ -104,9 +105,10 @@ public class TextRenderer extends AndroidRenderer<AndroidContext, View> {
 
       if (heading != null) {
         content.setTextSize(TypedValue.COMPLEX_UNIT_SP, getHeadingTextSize(heading.getLevel()));
+        content.setTypeface(null, Typeface.BOLD);
       }
     }
-
+    content.setMovementMethod(LinkMovementMethod.getInstance());
     content.setText(textContent);
     return result;
   }
@@ -114,9 +116,9 @@ public class TextRenderer extends AndroidRenderer<AndroidContext, View> {
   private float getHeadingTextSize(int level) {
     switch(level) {
       case 1:
-        return 24f;
+        return 28f;
       case 2:
-        return 18f;
+        return 20f;
       case 3:
         return 16f;
       case 4:

@@ -19,6 +19,6 @@ public class EncodedRichTextTest {
     final CDARichText text = new CDARichText("Some rich text with html tags<br/>", new ArrayList<>());
     final String result = processor.process(context, text);
 
-    assertThat(result).isEqualTo("Some rich text with html tags&lt;br/&gt;\n");
+    assertThat(result).isEqualTo("Some rich text with html tags&lt;br/&gt;");
   }
 }
