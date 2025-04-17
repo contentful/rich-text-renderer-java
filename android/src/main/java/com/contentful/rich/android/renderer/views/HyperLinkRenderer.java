@@ -1,7 +1,6 @@
 package com.contentful.rich.android.renderer.views;
 
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -23,6 +22,7 @@ import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
 import com.contentful.rich.android.R;
+import com.google.gson.internal.LinkedTreeMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,7 +33,11 @@ public class HyperLinkRenderer extends BlockRenderer {
   }
 
   @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
-    return node instanceof CDARichHyperLink && ((CDARichHyperLink) node).getData() instanceof String;
+    if (node instanceof CDARichHyperLink) {
+      Object data = ((CDARichHyperLink) node).getData();
+      return data instanceof String || data instanceof LinkedTreeMap;
+    }
+    return false;
   }
 
   @Override protected View inflateRichLayout(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
@@ -108,17 +112,29 @@ public class HyperLinkRenderer extends BlockRenderer {
 
   }
 
-  public void onClick(AndroidContext context, CDARichNode node) {
-    final Context androidContext = context.getAndroidContext();
-    final Uri uri = Uri.parse((String) ((CDARichHyperLink) node).getData());
+  private void onClick(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
+    final CDARichHyperLink hyperlink = (CDARichHyperLink) node;
+    final Object data = hyperlink.getData();
+    String url = null;
 
-    final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-    intent.putExtra(Browser.EXTRA_APPLICATION_ID, androidContext.getPackageName());
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    try {
-      androidContext.startActivity(intent);
-    } catch (ActivityNotFoundException e) {
-      Log.w("URLSpan", "Activity was not found for intent, " + intent.toString());
+    if (data instanceof String) {
+      url = (String) data;
+    } else if (data instanceof LinkedTreeMap) {
+      LinkedTreeMap<?, ?> map = (LinkedTreeMap<?, ?>) data;
+      Object uri = map.get("uri");
+      if (uri instanceof String) {
+        url = (String) uri;
+      }
+    }
+
+    if (url != null) {
+      final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+      intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getAndroidContext().getPackageName());
+      try {
+        context.getAndroidContext().startActivity(intent);
+      } catch (ActivityNotFoundException e) {
+        Log.w("HyperLinkRenderer", "Could not open link: " + url, e);
+      }
     }
   }
 }
