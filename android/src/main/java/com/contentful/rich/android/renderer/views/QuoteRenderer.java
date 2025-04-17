@@ -75,68 +75,7 @@ public class QuoteRenderer extends BlockRenderer {
         
         // Process paragraph content
         for (final CDARichNode paragraphChild : ((CDARichParagraph) childNode).getContent()) {
-          if (paragraphChild instanceof CDARichText) {
-            final CDARichText richText = (CDARichText) paragraphChild;
-            SpannableString textContent = new SpannableString(richText.getText());
-            
-            // Apply marks
-            for (final CDARichMark mark : richText.getMarks()) {
-              if (mark instanceof CDARichMarkBold) {
-                textContent.setSpan(new StyleSpan(Typeface.BOLD), 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-              }
-              if (mark instanceof CDARichMarkItalic) {
-                textContent.setSpan(new StyleSpan(Typeface.ITALIC), 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-              }
-              if (mark instanceof CDARichMarkUnderline) {
-                textContent.setSpan(new UnderlineSpan(), 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-              }
-              if (mark instanceof CDARichMarkCode) {
-                textContent.setSpan(new BackgroundColorSpan(0xFFF5F5F5), 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                textContent.setSpan(new StyleSpan(Typeface.MONOSPACE.getStyle()), 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-              }
-              if (mark instanceof CDARichMarkCustom) {
-                textContent.setSpan(new BackgroundColorSpan(0x80FFFF00), 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-              }
-            }
-            
-            paragraphContent.append(textContent);
-          } else if (paragraphChild instanceof CDARichHyperLink) {
-            final CDARichHyperLink hyperlink = (CDARichHyperLink) paragraphChild;
-            final String uri = (String) hyperlink.getData();
-            
-            // Process hyperlink content
-            for (final CDARichNode hyperlinkContent : hyperlink.getContent()) {
-              if (hyperlinkContent instanceof CDARichText) {
-                final CDARichText richText = (CDARichText) hyperlinkContent;
-                SpannableString linkText = new SpannableString(richText.getText());
-                
-                // Apply link styling
-                ClickableSpan clickableSpan = new ClickableSpan() {
-                  @Override
-                  public void onClick(@NonNull View widget) {
-                    String url = uri.startsWith("http") ? uri : "http://" + uri;
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    context.getAndroidContext().startActivity(intent);
-                  }
-                };
-                linkText.setSpan(clickableSpan, 0, linkText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                linkText.setSpan(new ForegroundColorSpan(Color.parseColor("#0645AD")), 0, linkText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                linkText.setSpan(new UnderlineSpan(), 0, linkText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                
-                // Apply any additional marks from the hyperlink text
-                for (final CDARichMark mark : richText.getMarks()) {
-                  if (mark instanceof CDARichMarkBold) {
-                    linkText.setSpan(new StyleSpan(Typeface.BOLD), 0, linkText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                  }
-                  if (mark instanceof CDARichMarkItalic) {
-                    linkText.setSpan(new StyleSpan(Typeface.ITALIC), 0, linkText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                  }
-                }
-                
-                paragraphContent.append(linkText);
-              }
-            }
-          }
+          processNode(paragraphChild, paragraphContent, context);
         }
         
         // Set paragraph properties
@@ -148,9 +87,93 @@ public class QuoteRenderer extends BlockRenderer {
         ));
         
         content.addView(paragraphView);
+      } else {
+        // Handle direct text nodes in quote
+        final TextView textView = new TextView(context.getAndroidContext());
+        SpannableStringBuilder textContent = new SpannableStringBuilder();
+        
+        // Enable clickable links
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        
+        processNode(childNode, textContent, context);
+        
+        // Set text properties
+        textView.setPadding(0, 4, 0, 4);
+        textView.setText(textContent);
+        textView.setLayoutParams(new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+        
+        content.addView(textView);
       }
     }
 
     return result;
+  }
+
+  private void processNode(CDARichNode node, SpannableStringBuilder content, AndroidContext context) {
+    if (node instanceof CDARichText) {
+      final CDARichText richText = (CDARichText) node;
+      SpannableString textContent = new SpannableString(richText.getText());
+      
+      // Apply marks
+      for (final CDARichMark mark : richText.getMarks()) {
+        if (mark instanceof CDARichMarkBold) {
+          textContent.setSpan(new StyleSpan(Typeface.BOLD), 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        if (mark instanceof CDARichMarkItalic) {
+          textContent.setSpan(new StyleSpan(Typeface.ITALIC), 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        if (mark instanceof CDARichMarkUnderline) {
+          textContent.setSpan(new UnderlineSpan(), 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        if (mark instanceof CDARichMarkCode) {
+          textContent.setSpan(new BackgroundColorSpan(0xFFF5F5F5), 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+          textContent.setSpan(new StyleSpan(Typeface.MONOSPACE.getStyle()), 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        if (mark instanceof CDARichMarkCustom) {
+          textContent.setSpan(new BackgroundColorSpan(0x80FFFF00), 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+      }
+      
+      content.append(textContent);
+    } else if (node instanceof CDARichHyperLink) {
+      final CDARichHyperLink hyperlink = (CDARichHyperLink) node;
+      final String uri = (String) hyperlink.getData();
+      
+      // Process hyperlink content
+      for (final CDARichNode hyperlinkContent : hyperlink.getContent()) {
+        if (hyperlinkContent instanceof CDARichText) {
+          final CDARichText richText = (CDARichText) hyperlinkContent;
+          SpannableString linkText = new SpannableString(richText.getText());
+          
+          // Apply link styling
+          ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+              String url = uri.startsWith("http") ? uri : "http://" + uri;
+              Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+              context.getAndroidContext().startActivity(intent);
+            }
+          };
+          linkText.setSpan(clickableSpan, 0, linkText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+          linkText.setSpan(new ForegroundColorSpan(Color.parseColor("#0645AD")), 0, linkText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+          linkText.setSpan(new UnderlineSpan(), 0, linkText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+          
+          // Apply any additional marks from the hyperlink text
+          for (final CDARichMark mark : richText.getMarks()) {
+            if (mark instanceof CDARichMarkBold) {
+              linkText.setSpan(new StyleSpan(Typeface.BOLD), 0, linkText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            if (mark instanceof CDARichMarkItalic) {
+              linkText.setSpan(new StyleSpan(Typeface.ITALIC), 0, linkText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+          }
+          
+          content.append(linkText);
+        }
+      }
+    }
   }
 }
