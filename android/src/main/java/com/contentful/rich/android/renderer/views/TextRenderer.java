@@ -104,8 +104,7 @@ public class TextRenderer extends AndroidRenderer<AndroidContext, View> {
       }
 
       if (heading != null) {
-        content.setTextSize(TypedValue.COMPLEX_UNIT_SP, getHeadingTextSize(heading.getLevel()));
-        content.setTypeface(null, Typeface.BOLD);
+        applyHeadingStyle(content, heading.getLevel());
       }
     }
     content.setMovementMethod(LinkMovementMethod.getInstance());
@@ -116,18 +115,31 @@ public class TextRenderer extends AndroidRenderer<AndroidContext, View> {
   private float getHeadingTextSize(int level) {
     switch(level) {
       case 1:
-        return 28f;
+        return 32f;
       case 2:
-        return 20f;
+        return 28f;
       case 3:
-        return 16f;
+        return 24f;
       case 4:
-        return 15f;
+        return 20f;
       case 5:
-        return 14f;
+        return 18f;
       case 6:
-        return 13f;
+        return 16f;
     }
     return 16f;
+  }
+
+  private void applyHeadingStyle(TextView view, int level) {
+    view.setTextSize(TypedValue.COMPLEX_UNIT_SP, getHeadingTextSize(level));
+    // Use a heavier font weight for more prominent headings
+    view.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+    // Add more vertical spacing for headings
+    view.setPadding(
+        view.getPaddingLeft(),
+        (int) (16 * view.getResources().getDisplayMetrics().density),
+        view.getPaddingRight(),
+        (int) (8 * view.getResources().getDisplayMetrics().density)
+    );
   }
 }
