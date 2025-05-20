@@ -26,6 +26,7 @@ import com.contentful.rich.android.R;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Map;
 
 public class HyperLinkRenderer extends BlockRenderer {
   public HyperLinkRenderer(@Nonnull AndroidProcessor<View> processor) {
@@ -33,7 +34,11 @@ public class HyperLinkRenderer extends BlockRenderer {
   }
 
   @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
-    return node instanceof CDARichHyperLink && ((CDARichHyperLink) node).getData() instanceof String;
+    if (!(node instanceof CDARichHyperLink)) {
+        return false;
+    }
+    Object data = ((CDARichHyperLink)node).getData();
+    return data instanceof String || (data instanceof Map && ((Map<?, ?>) data).containsKey("uri"));
   }
 
   @Override protected View inflateRichLayout(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
@@ -110,15 +115,25 @@ public class HyperLinkRenderer extends BlockRenderer {
 
   public void onClick(AndroidContext context, CDARichNode node) {
     final Context androidContext = context.getAndroidContext();
-    final Uri uri = Uri.parse((String) ((CDARichHyperLink) node).getData());
-
-    final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+    final Object data = ((CDARichHyperLink) node).getData();
+    final String uri;
+    
+    if (data instanceof String) {
+        uri = (String) data;
+    } else if (data instanceof Map) {
+        uri = (String) ((Map<?, ?>) data).get("uri");
+    } else {
+        return; // Don't handle click if data is neither String nor Map
+    }
+    
+    final Uri parsedUri = Uri.parse(uri);
+    final Intent intent = new Intent(Intent.ACTION_VIEW, parsedUri);
     intent.putExtra(Browser.EXTRA_APPLICATION_ID, androidContext.getPackageName());
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     try {
-      androidContext.startActivity(intent);
+        androidContext.startActivity(intent);
     } catch (ActivityNotFoundException e) {
-      Log.w("URLSpan", "Activity was not found for intent, " + intent.toString());
+        Log.w("URLSpan", "Activity was not found for intent, " + intent.toString());
     }
   }
 }

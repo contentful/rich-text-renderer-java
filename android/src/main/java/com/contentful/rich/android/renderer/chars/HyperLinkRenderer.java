@@ -40,7 +40,11 @@ public class HyperLinkRenderer extends BlockRenderer {
    * @return true if the given node is a hyperlink.
    */
   @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
-    return node instanceof CDARichHyperLink && ((CDARichHyperLink)node).getData() instanceof String;
+    if (!(node instanceof CDARichHyperLink)) {
+        return false;
+    }
+    Object data = ((CDARichHyperLink)node).getData();
+    return data instanceof String || (data instanceof Map && ((Map<?, ?>) data).containsKey("uri"));
   }
 
   /**
@@ -57,7 +61,18 @@ public class HyperLinkRenderer extends BlockRenderer {
       @Nonnull SpannableStringBuilder builder) {
 
     final CDARichHyperLink link = (CDARichHyperLink) node;
-    final URLSpan span = new URLSpan((String) link.getData());
+    final Object data = link.getData();
+    final String uri;
+    
+    if (data instanceof String) {
+        uri = (String) data;
+    } else if (data instanceof Map) {
+        uri = (String) ((Map<?, ?>) data).get("uri");
+    } else {
+        return builder; // Return unchanged if data is neither String nor Map
+    }
+    
+    final URLSpan span = new URLSpan(uri);
     builder.setSpan(span, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     return builder;
   }
