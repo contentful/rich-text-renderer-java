@@ -4,7 +4,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.MovementMethod;
 import android.text.style.URLSpan;
-
+import androidx.annotation.NonNull;
 import com.contentful.java.cda.rich.CDARichHyperLink;
 import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.android.AndroidContext;
@@ -12,8 +12,7 @@ import com.contentful.rich.android.AndroidProcessor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import androidx.annotation.NonNull;
+import java.util.Map;
 
 /**
  * Render the children into a hyperlink.
