@@ -4,7 +4,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.MovementMethod;
 import android.text.style.URLSpan;
-
+import androidx.annotation.NonNull;
 import com.contentful.java.cda.rich.CDARichHyperLink;
 import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.android.AndroidContext;
@@ -12,8 +12,7 @@ import com.contentful.rich.android.AndroidProcessor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import androidx.annotation.NonNull;
+import java.util.Map;
 
 /**
  * Render the children into a hyperlink.
@@ -40,7 +39,11 @@ public class HyperLinkRenderer extends BlockRenderer {
    * @return true if the given node is a hyperlink.
    */
   @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
-    return node instanceof CDARichHyperLink && ((CDARichHyperLink)node).getData() instanceof String;
+    if (!(node instanceof CDARichHyperLink)) {
+        return false;
+    }
+    Object data = ((CDARichHyperLink)node).getData();
+    return data instanceof String || (data instanceof Map && ((Map<?, ?>) data).containsKey("uri"));
   }
 
   /**
@@ -57,7 +60,18 @@ public class HyperLinkRenderer extends BlockRenderer {
       @Nonnull SpannableStringBuilder builder) {
 
     final CDARichHyperLink link = (CDARichHyperLink) node;
-    final URLSpan span = new URLSpan((String) link.getData());
+    final Object data = link.getData();
+    final String uri;
+    
+    if (data instanceof String) {
+        uri = (String) data;
+    } else if (data instanceof Map) {
+        uri = (String) ((Map<?, ?>) data).get("uri");
+    } else {
+        return builder; // Return unchanged if data is neither String nor Map
+    }
+    
+    final URLSpan span = new URLSpan(uri);
     builder.setSpan(span, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     return builder;
   }
