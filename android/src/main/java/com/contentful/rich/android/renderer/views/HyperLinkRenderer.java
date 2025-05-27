@@ -22,10 +22,10 @@ import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
 import com.contentful.rich.android.R;
-import com.google.gson.internal.LinkedTreeMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Map;
 
 public class HyperLinkRenderer extends BlockRenderer {
   public HyperLinkRenderer(@Nonnull AndroidProcessor<View> processor) {
@@ -33,11 +33,11 @@ public class HyperLinkRenderer extends BlockRenderer {
   }
 
   @Override public boolean canRender(@Nullable AndroidContext context, @Nonnull CDARichNode node) {
-    if (node instanceof CDARichHyperLink) {
-      Object data = ((CDARichHyperLink) node).getData();
-      return data instanceof String || data instanceof LinkedTreeMap;
+    if (!(node instanceof CDARichHyperLink)) {
+        return false;
     }
-    return false;
+    Object data = ((CDARichHyperLink)node).getData();
+    return data instanceof String || (data instanceof Map && ((Map<?, ?>) data).containsKey("uri"));
   }
 
   @Override protected View inflateRichLayout(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
@@ -112,29 +112,27 @@ public class HyperLinkRenderer extends BlockRenderer {
 
   }
 
-  private void onClick(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
-    final CDARichHyperLink hyperlink = (CDARichHyperLink) node;
-    final Object data = hyperlink.getData();
-    String url = null;
+  public void onClick(AndroidContext context, CDARichNode node) {
+    final Context androidContext = context.getAndroidContext();
+    final Object data = ((CDARichHyperLink) node).getData();
+    final String uri;
 
     if (data instanceof String) {
-      url = (String) data;
-    } else if (data instanceof LinkedTreeMap) {
-      LinkedTreeMap<?, ?> map = (LinkedTreeMap<?, ?>) data;
-      Object uri = map.get("uri");
-      if (uri instanceof String) {
-        url = (String) uri;
-      }
+        uri = (String) data;
+    } else if (data instanceof Map) {
+        uri = (String) ((Map<?, ?>) data).get("uri");
+    } else {
+        return; // Don't handle click if data is neither String nor Map
     }
 
-    if (url != null) {
-      final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-      intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getAndroidContext().getPackageName());
-      try {
-        context.getAndroidContext().startActivity(intent);
-      } catch (ActivityNotFoundException e) {
-        Log.w("HyperLinkRenderer", "Could not open link: " + url, e);
-      }
+    final Uri parsedUri = Uri.parse(uri);
+    final Intent intent = new Intent(Intent.ACTION_VIEW, parsedUri);
+    intent.putExtra(Browser.EXTRA_APPLICATION_ID, androidContext.getPackageName());
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    try {
+        androidContext.startActivity(intent);
+    } catch (ActivityNotFoundException e) {
+        Log.w("URLSpan", "Activity was not found for intent, " + intent.toString());
     }
   }
 }
