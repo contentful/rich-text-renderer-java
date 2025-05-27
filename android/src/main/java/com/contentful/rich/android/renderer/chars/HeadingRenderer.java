@@ -3,17 +3,15 @@ package com.contentful.rich.android.renderer.chars;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
-
 import com.contentful.java.cda.rich.CDARichHeading;
 import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Render all available headings into a spannable changing it's vertical size.
@@ -23,12 +21,12 @@ public class HeadingRenderer extends BlockRenderer {
   static private final List<Integer> SIZE_MAP = new ArrayList<>();
 
   static {
-    SIZE_MAP.add(60); // Level 1
-    SIZE_MAP.add(52); // Level 2
-    SIZE_MAP.add(48); // Level 3
-    SIZE_MAP.add(34); // Level 4
-    SIZE_MAP.add(24); // Level 5
-    SIZE_MAP.add(12); // Level 6
+    SIZE_MAP.add(72); // Level 1
+    SIZE_MAP.add(60); // Level 2
+    SIZE_MAP.add(52); // Level 3
+    SIZE_MAP.add(44); // Level 4
+    SIZE_MAP.add(36); // Level 5
+    SIZE_MAP.add(28); // Level 6
   }
 
   public HeadingRenderer(@Nonnull AndroidProcessor<CharSequence> processor) {

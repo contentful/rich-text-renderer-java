@@ -18,7 +18,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 private const val SPACE_ID = "i1ppeoxgdpvt"
-private const val TOKEN = "QuYNYLv6rVnCKOT4_-d3552xD4YIPFcKTWRb2Y227Ic"
+private const val TOKEN = "ec6NU4tHJupJ_SLf-sAq5QRDbJvJkRcBTMnha9XFYuI"
 private const val ENVIRONMENT = "master"
 
 class MainActivity(

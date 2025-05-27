@@ -1,7 +1,6 @@
 package com.contentful.rich.android.renderer.views;
 
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -117,7 +116,7 @@ public class HyperLinkRenderer extends BlockRenderer {
     final Context androidContext = context.getAndroidContext();
     final Object data = ((CDARichHyperLink) node).getData();
     final String uri;
-    
+
     if (data instanceof String) {
         uri = (String) data;
     } else if (data instanceof Map) {
@@ -125,7 +124,7 @@ public class HyperLinkRenderer extends BlockRenderer {
     } else {
         return; // Don't handle click if data is neither String nor Map
     }
-    
+
     final Uri parsedUri = Uri.parse(uri);
     final Intent intent = new Intent(Intent.ACTION_VIEW, parsedUri);
     intent.putExtra(Browser.EXTRA_APPLICATION_ID, androidContext.getPackageName());
