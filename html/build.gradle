@@ -9,7 +9,7 @@ jar {
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+    archiveClassifier = 'sources'
     from sourceSets.main.allSource
 }
 
@@ -26,6 +26,7 @@ publishing {
             artifactId = 'html'
             version = '1.2.0'
             from components.java
+            artifact(sourcesJar)
         }
     }
 }

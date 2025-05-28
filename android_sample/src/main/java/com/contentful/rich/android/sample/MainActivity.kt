@@ -59,39 +59,38 @@ class MainActivity(
     private fun loadPageFromContentful() {
         GlobalScope.launch {
             val document = client
-                    .fetch(CDAEntry::class.java)
-                    .withContentType("rich")
-                    .where("fields.name", Matches, "simple")
-                    .orderBy("fields.name")
-                    .all()
-                    .entries()
-                    .values
-                    .map { entry ->
-                        if(entry.getField<Any>("rich") != null) {
-                            entry.getField<Any>("rich") as CDARichDocument
-                        } else {
-                            CDARichDocument()
-                        }
-                    }.reduce { a, b ->
-                        val p = CDARichParagraph()
-                        p.content.addAll(b.content)
-                        a.content.add(p)
-                        a
+                .fetch(CDAEntry::class.java)
+                .withContentType("rich")
+                .where("fields.name", Matches, "simple")
+                .orderBy("fields.name")
+                .all()
+                .entries()
+                .values
+                .map { entry ->
+                    if(entry.getField<Any>("en", "rich") != null) {
+                        entry.getField<Any>("en", "rich") as CDARichDocument
+                    } else {
+                        CDARichDocument()
                     }
+                }.reduce { a, b ->
+                    val p = CDARichParagraph()
+                    p.content.addAll(b.content)
+                    a.content.add(p)
+                    a
+                }
 
             PAGES.add(
-                    Page("Contentful",
-                            Simplifier(
-                                    RemoveToDeepNesting(10),
-                                    RemoveEmpties()
-                            ).simplify(document) as CDARichDocument)
+                Page("Contentful",
+                    Simplifier(
+                        RemoveToDeepNesting(10),
+                    ).simplify(document) as CDARichDocument)
             )
 
             runOnUiThread {
                 binding.spinner.prompt = PAGES[0].name
                 binding.spinner.adapter = PageAdapter(
-                        this@MainActivity,
-                        PAGES.toTypedArray()
+                    this@MainActivity,
+                    PAGES.toTypedArray()
                 )
             }
         }
