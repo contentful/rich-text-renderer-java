@@ -44,6 +44,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation "com.contentful.java:java-sdk:${project.contentful_version}"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     testImplementation 'org.robolectric:robolectric:4.9'
     testImplementation 'com.google.truth:truth:0.42'
