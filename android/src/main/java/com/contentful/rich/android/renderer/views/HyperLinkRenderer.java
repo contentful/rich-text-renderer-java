@@ -50,67 +50,56 @@ public class HyperLinkRenderer extends BlockRenderer {
   @Nullable
   @Override
   public View render(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
+    if (!(node instanceof CDARichHyperLink)) {
+      return null;
+    }
+
     final CDARichHyperLink hyperlink = (CDARichHyperLink) node;
-    if(hyperlink.getContent().get(0) != null) {
-      final CDARichText richText = (CDARichText) hyperlink.getContent().get(0);
-      final View result = context.getInflater().inflate(R.layout.rich_text_layout, null);
-      final TextView content = result.findViewById(R.id.rich_content);
-      final SpannableStringBuilder textContent = new SpannableStringBuilder(richText.getText());
-      ClickableSpan clickableSpan = new ClickableSpan() {
-        @Override
-        public void onClick(View textView) {
-          HyperLinkRenderer.this.onClick(context, node);
-        }
+    final View result = context.getInflater().inflate(R.layout.rich_text_layout, null);
+    final TextView content = result.findViewById(R.id.rich_content);
+    final SpannableStringBuilder textContent = new SpannableStringBuilder();
 
-        @Override
-        public void updateDrawState(@NonNull TextPaint ds) {
-          ds.linkColor = Color.parseColor("#0645AD");
-          super.updateDrawState(ds);
-        }
-      };
-
-      content.setMovementMethod(LinkMovementMethod.getInstance());
-      textContent.setSpan(clickableSpan, 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-      content.setText(textContent);
-      return result;
-    } else {
-      final CDARichBlock block = (CDARichBlock) node;
-      final View result = inflateRichLayout(context, node);
-      final ViewGroup content = result.findViewById(R.id.rich_content);
-
-      TextView lastTextView = null;
-      for (final CDARichNode childNode : block.getContent()) {
-        final View childView = processor.process(context, childNode);
-
-        if (childView != null) {
-          if (childView instanceof TextView) {
-            final TextView childTextView = (TextView) childView;
-            if (lastTextView != null) {
-              lastTextView.setText(
-                      new SpannableStringBuilder(lastTextView.getText()).append(childTextView.getText())
-              );
-              if(childTextView.getMovementMethod() != null) {
-                lastTextView.setMovementMethod(childTextView.getMovementMethod());
-              }
-            } else {
-              lastTextView = childTextView;
-              content.addView(childView);
-            }
-          } else {
-            if (context.getPath() != null && context.getPath().size() > 1) {
-              final View indented = context.getInflater().inflate(R.layout.rich_indention_layout, null, false);
-              ((ViewGroup) indented.findViewById(R.id.rich_content)).addView(childView);
-              content.addView(indented);
-            } else {
-              content.addView(childView);
+    if (hyperlink.getContent() != null && !hyperlink.getContent().isEmpty()) {
+      for (CDARichNode contentNode : hyperlink.getContent()) {
+        if (contentNode instanceof CDARichText) {
+          textContent.append(((CDARichText) contentNode).getText());
+        } else if (contentNode instanceof CDARichBlock) {
+          for (CDARichNode blockNode : ((CDARichBlock) contentNode).getContent()) {
+            if (blockNode instanceof CDARichText) {
+              textContent.append(((CDARichText) blockNode).getText());
             }
           }
         }
       }
-
-      return result;
     }
 
+    if (textContent.length() == 0) {
+      Object data = hyperlink.getData();
+      if (data instanceof String) {
+        textContent.append((String) data);
+      } else if (data instanceof Map && ((Map<?, ?>) data).containsKey("uri")) {
+        textContent.append((String) ((Map<?, ?>) data).get("uri"));
+      }
+    }
+
+    // Create clickable span
+    ClickableSpan clickableSpan = new ClickableSpan() {
+      @Override
+      public void onClick(View textView) {
+        HyperLinkRenderer.this.onClick(context, node);
+      }
+
+      @Override
+      public void updateDrawState(@NonNull TextPaint ds) {
+        ds.linkColor = Color.parseColor("#0645AD");
+        super.updateDrawState(ds);
+      }
+    };
+
+    content.setMovementMethod(LinkMovementMethod.getInstance());
+    textContent.setSpan(clickableSpan, 0, textContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    content.setText(textContent);
+    return result;
   }
 
   public void onClick(AndroidContext context, CDARichNode node) {
