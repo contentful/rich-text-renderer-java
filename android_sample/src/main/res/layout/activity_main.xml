@@ -6,6 +6,7 @@
                                                      android:layout_width="match_parent"
                                                      android:layout_height="match_parent"
                                                      android:fitsSystemWindows="true"
+                                                     android:background="?android:attr/colorBackground"
                                                      tools:context=".MainActivity"
     >
 
@@ -26,12 +27,14 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:title="@string/app_name"
+            app:titleTextColor="?android:attr/textColorPrimary"
             >
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="?android:attr/textColorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 />
         </androidx.appcompat.widget.Toolbar>
@@ -43,6 +46,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:fillViewport="true"
+        android:background="?android:attr/colorBackground"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
         <FrameLayout

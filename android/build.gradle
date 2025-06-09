@@ -3,23 +3,65 @@ plugins {
     id("maven-publish")
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            maven(MavenPublication) {
-                // You can then customize attributes of the publication as shown below.
-                groupId = 'com.github.contentful.rich'
-                artifactId = 'android'
-                version = '1.2.0'
-                artifact(bundleReleaseAar)
-            }
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+android {
+    compileSdk 33
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
         }
     }
 }
 
-repositories {
-    maven { url 'https://jitpack.io' }
+dependencies {
+    implementation project(path: ':core')
+
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation "com.contentful.java:java-sdk:${project.contentful_version}"
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    testImplementation 'org.robolectric:robolectric:4.9'
+    testImplementation 'com.google.truth:truth:0.42'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.release
+                groupId = project.group
+                artifactId = 'android'
+                version = project.version
+            }
+        }
+    }
 }
 
 if (android.productFlavors.size() > 0) {
@@ -32,53 +74,11 @@ if (android.productFlavors.size() > 0) {
 
         artifacts {
             archives(bundleTask.archivePath) {
-                classifier variant.flavorName
+                archiveClassifier = variant.flavorName
                 builtBy bundleTask
                 name = project.name
             }
         }
 
     }
-}
-
-android {
-    compileSdkVersion 33
-    buildToolsVersion "30.0.3"
-
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 33
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-            returnDefaultValues = true
-        }
-    }
-}
-
-dependencies {
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.code.findbugs:jsr305:3.0.2'
-
-    api project(':core')
-    api "com.contentful.java:java-sdk:${project.contentful_version}"
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
-    testImplementation 'org.robolectric:robolectric:4.9'
-    testImplementation 'com.google.truth:truth:0.42'
-    testImplementation 'junit:junit:4.13.2'
 }

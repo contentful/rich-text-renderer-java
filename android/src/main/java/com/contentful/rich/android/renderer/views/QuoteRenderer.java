@@ -13,6 +13,7 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -49,6 +50,12 @@ public class QuoteRenderer extends BlockRenderer {
   @Override
   protected View inflateRichLayout(@Nonnull AndroidContext context, @Nonnull CDARichNode node) {
     return context.getInflater().inflate(R.layout.rich_quote_layout, null, false);
+  }
+
+  private int getThemeColor(AndroidContext context, int attr) {
+    TypedValue typedValue = new TypedValue();
+    context.getAndroidContext().getTheme().resolveAttribute(attr, typedValue, true);
+    return typedValue.data;
   }
 
   @Nullable

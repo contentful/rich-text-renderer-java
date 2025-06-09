@@ -4,6 +4,7 @@ import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.contentful.java.cda.rich.CDARichBlock;
 import com.contentful.java.cda.rich.CDARichNode;
@@ -37,9 +38,15 @@ public class BlockRenderer extends AndroidRenderer<AndroidContext, View> {
         if (childView instanceof TextView) {
           final TextView childTextView = (TextView) childView;
           if (lastTextView != null) {
-            lastTextView.setText(
-                new SpannableStringBuilder(lastTextView.getText()).append(childTextView.getText())
-            );
+            CharSequence lastText = lastTextView.getText();
+            CharSequence childText = childTextView.getText();
+            if (lastText == null) {
+              lastText = "";
+            }
+            if (childText == null) {
+              childText = "";
+            }
+            lastTextView.setText(new SpannableStringBuilder(lastText).append(childText));
             if(childTextView.getMovementMethod() != null) {
               lastTextView.setMovementMethod(childTextView.getMovementMethod());
             }
@@ -53,6 +60,13 @@ public class BlockRenderer extends AndroidRenderer<AndroidContext, View> {
             ((ViewGroup) indented.findViewById(R.id.rich_content)).addView(childView);
             content.addView(indented);
           } else {
+            // Add margin to the child view
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.topMargin = 16; // Add 16dp margin at the top
+            childView.setLayoutParams(params);
             content.addView(childView);
           }
         }

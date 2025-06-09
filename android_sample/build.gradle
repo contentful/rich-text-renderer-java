@@ -28,8 +28,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility "11"
-        targetCompatibility "11"
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = "11"
     }
 
     buildTypes {
@@ -48,11 +52,10 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':android')
     implementation project(path: ':core')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3"
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1" // Use the latest version available

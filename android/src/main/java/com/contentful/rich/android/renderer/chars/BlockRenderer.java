@@ -61,10 +61,14 @@ public class BlockRenderer extends AndroidRenderer<AndroidContext, CharSequence>
 
     final SpannableStringBuilder result = new SpannableStringBuilder();
 
-    for (final CDARichNode childNode : block.getContent()) {
-      final CharSequence childResult = processor.process(context, childNode);
-      if (childResult != null) {
-        result.append(childResult);
+    if (block.getContent() != null) {
+      for (final CDARichNode childNode : block.getContent()) {
+        if (childNode != null) {
+          final CharSequence childResult = processor.process(context, childNode);
+          if (childResult != null) {
+            result.append(childResult);
+          }
+        }
       }
     }
     childWithNewline(result);
@@ -79,8 +83,15 @@ public class BlockRenderer extends AndroidRenderer<AndroidContext, CharSequence>
    */
   @Nonnull
   protected void childWithNewline(@Nonnull SpannableStringBuilder builder) {
-    while (builder.toString().endsWith("\n")) {
-      builder.replace(builder.length() - 1, builder.length(), "");
+    if (builder != null) {
+      String text = builder.toString();
+      if (text != null) {
+        while (text.endsWith("\n")) {
+          text = text.substring(0, text.length() - 1);
+        }
+        builder.clear();
+        builder.append(text);
+      }
     }
   }
 
