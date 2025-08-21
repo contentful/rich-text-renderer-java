@@ -5,7 +5,7 @@ before_install:
   - ./gradlew wrapper
 
 install:
-  - ./gradlew clean build -x test -xlint
+  - ./gradlew clean publishToMavenLocal -x test -xlint
 
 jvm:
   - openjdk17
