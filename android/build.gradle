@@ -51,17 +51,3 @@ dependencies {
     testImplementation 'com.google.truth:truth:1.1.5'
     testImplementation 'junit:junit:4.13.2'
 }
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = project.group
-            artifactId = 'android'
-            version = project.version
-            
-            afterEvaluate {
-                artifact bundleReleaseAar
-            }
-        }
-    }
-}
