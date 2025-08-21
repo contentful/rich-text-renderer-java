@@ -51,3 +51,38 @@ dependencies {
     testImplementation 'com.google.truth:truth:1.1.5'
     testImplementation 'junit:junit:4.13.2'
 }
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = project.group
+                artifactId = 'android'
+                version = project.version
+                
+                artifact bundleReleaseAar
+                
+                pom {
+                    name = 'Rich Text Renderer Android'
+                    description = 'Android library for rendering Contentful Rich Text'
+                    url = 'https://github.com/contentful/rich-text-renderer-java'
+                    
+                    licenses {
+                        license {
+                            name = 'MIT License'
+                            url = 'https://opensource.org/licenses/MIT'
+                        }
+                    }
+                    
+                    developers {
+                        developer {
+                            id = 'contentful'
+                            name = 'Contentful'
+                            email = 'support@contentful.com'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
