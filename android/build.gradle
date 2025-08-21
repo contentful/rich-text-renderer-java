@@ -8,12 +8,13 @@ repositories {
 }
 
 android {
-    compileSdk 33
-    buildToolsVersion "30.0.3"
+    namespace "com.contentful.rich.android"
+    compileSdk 35
+    buildToolsVersion "35.0.0"
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 35
         versionCode 1
         versionName "1.0"
     }
@@ -26,8 +27,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     testOptions {
@@ -41,44 +42,26 @@ android {
 dependencies {
     implementation project(path: ':core')
 
-    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha03'
     implementation "com.contentful.java:java-sdk:${project.contentful_version}"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'androidx.cardview:cardview:1.0.0'
 
-    testImplementation 'org.robolectric:robolectric:4.9'
-    testImplementation 'com.google.truth:truth:0.42'
+    testImplementation 'org.robolectric:robolectric:4.14.1'
+    testImplementation 'com.google.truth:truth:1.1.5'
     testImplementation 'junit:junit:4.13.2'
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                from components.release
-                groupId = project.group
-                artifactId = 'android'
-                version = project.version
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = project.group
+            artifactId = 'android'
+            version = project.version
+            
+            afterEvaluate {
+                artifact bundleReleaseAar
             }
         }
-    }
-}
-
-if (android.productFlavors.size() > 0) {
-    android.libraryVariants.all { variant ->
-        if (variant.name.toLowerCase().contains("debug")) {
-            return
-        }
-
-        def bundleTask = tasks["bundle${variant.name.capitalize()}"]
-
-        artifacts {
-            archives(bundleTask.archivePath) {
-                archiveClassifier = variant.flavorName
-                builtBy bundleTask
-                name = project.name
-            }
-        }
-
     }
 }

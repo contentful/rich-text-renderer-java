@@ -92,7 +92,7 @@ public class ProcessorTest {
 
     processor.process(context, paragraph);
 
-    assertThat(events).containsAllIn(new String[]{"entered", "entered", "exited", "exited"});
+    assertThat(events).containsExactly("entered", "entered", "exited", "exited");
   }
 
 }

@@ -1,2 +1,11 @@
 jdk:
-  - openjdk11
+  - openjdk17
+
+before_install:
+  - ./gradlew wrapper
+
+install:
+  - ./gradlew clean build -x test
+
+jvm:
+  - openjdk17

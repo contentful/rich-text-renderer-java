@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    id "org.jetbrains.kotlin.android" version "1.8.0"
+    id "org.jetbrains.kotlin.android" version "1.9.22"
 }
 
 repositories {
@@ -8,32 +8,32 @@ repositories {
 }
 
 android {
-    compileSdk 33
-    buildToolsVersion "30.0.3"
-
+    namespace "com.contentful.rich.android.sample"
+    compileSdk 35
+    buildToolsVersion "35.0.0"
 
     defaultConfig {
         applicationId "com.contentful.rich.android.sample"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 35
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 
     buildTypes {
@@ -48,22 +48,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
     implementation project(path: ':android')
     implementation project(path: ':core')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3"
-    implementation 'androidx.appcompat:appcompat:1.6.0'
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1" // Use the latest version available
-
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.22"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha03'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.7.0"
 
     implementation "com.contentful.java:java-sdk:${project.contentful_version}"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
 
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }
