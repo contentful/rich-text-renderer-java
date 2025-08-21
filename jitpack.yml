@@ -5,7 +5,12 @@ before_install:
   - ./gradlew wrapper
 
 install:
-  - ./gradlew clean build -x test
+  - ./gradlew clean build -x test -xlint
 
 jvm:
   - openjdk17
+
+android:
+  - compileSdk: 35
+  - buildTools: "35.0.0"
+  - targetSdk: 35
