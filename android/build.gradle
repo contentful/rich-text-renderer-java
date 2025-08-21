@@ -73,14 +73,6 @@ afterEvaluate {
                             url = 'https://opensource.org/licenses/MIT'
                         }
                     }
-                    
-                    developers {
-                        developer {
-                            id = 'contentful'
-                            name = 'Contentful'
-                            email = 'support@contentful.com'
-                        }
-                    }
                 }
             }
         }
