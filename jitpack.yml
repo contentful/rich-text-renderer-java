@@ -1,2 +1,16 @@
 jdk:
-  - openjdk11
+  - openjdk17
+
+before_install:
+  - ./gradlew wrapper
+
+install:
+  - ./gradlew clean publishToMavenLocal -x test -xlint
+
+jvm:
+  - openjdk17
+
+android:
+  - compileSdk: 35
+  - buildTools: "35.0.0"
+  - targetSdk: 35

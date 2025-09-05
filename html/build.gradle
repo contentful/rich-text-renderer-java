@@ -24,7 +24,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'com.github.contentful.rich'
             artifactId = 'html'
-            version = '1.2.0'
+            version = '2.3.0'
             from components.java
             artifact(sourcesJar)
         }
@@ -40,10 +40,10 @@ dependencies {
     api "com.contentful.java:java-sdk:${project.contentful_version}"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'org.apache.commons:commons-text:1.10.0'
-    testImplementation 'com.google.truth:truth:0.42'
+    testImplementation 'com.google.truth:truth:1.1.5'
     testImplementation 'junit:junit:4.13.2'
 }
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }

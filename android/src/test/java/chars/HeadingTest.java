@@ -46,7 +46,7 @@ public class HeadingTest {
     final Object[] spans = spannable.getSpans(0, result.length(), Object.class);
     assertThat(spans.length).isEqualTo(1);
     assertThat(spans[0]).isInstanceOf(AbsoluteSizeSpan.class);
-    assertThat(((AbsoluteSizeSpan) spans[0]).getSize()).isEqualTo(60);
+    assertThat(((AbsoluteSizeSpan) spans[0]).getSize()).isEqualTo(72);
   }
 
   @Test

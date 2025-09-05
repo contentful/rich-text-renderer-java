@@ -6,7 +6,7 @@ plugins {
 
 allprojects {
     group = "com.github.contentful.rich"
-    version = '1.2.0'
+    version = '2.3.0'
     ext.contentful_version = "10.5.18"
 
     repositories {
@@ -25,6 +25,6 @@ configurations.all {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
