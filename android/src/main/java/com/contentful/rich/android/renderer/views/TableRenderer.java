@@ -149,8 +149,14 @@ public class TableRenderer extends BlockRenderer {
                     
                     if (cellNode != null) {
                         // Process cell content
+                        boolean isFirstParagraph = true;
                         for (final CDARichNode contentNode : ((CDARichBlock) cellNode).getContent()) {
                             if (contentNode instanceof CDARichParagraph) {
+                                // Separate paragraphs with a single line break
+                                if (!isFirstParagraph) {
+                                    cellContent.append("\n");
+                                }
+                                int lengthBeforeParagraph = cellContent.length();
                                 for (final CDARichNode paragraphContent : ((CDARichParagraph) contentNode).getContent()) {
                                     if (paragraphContent instanceof CDARichText) {
                                         final CDARichText richText = (CDARichText) paragraphContent;
@@ -224,6 +230,11 @@ public class TableRenderer extends BlockRenderer {
                                         }
                                     }
                                 }
+                                // If paragraph had no visible text/content, render it as an empty line
+                                if (cellContent.length() == lengthBeforeParagraph) {
+                                    cellContent.append("\n");
+                                }
+                                isFirstParagraph = false;
                             }
                         }
                     }

@@ -5,6 +5,11 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.updatePadding
+import androidx.core.view.WindowInsetsControllerCompat
 import com.contentful.java.cda.CDAClient
 import com.contentful.java.cda.CDAEntry
 import com.contentful.java.cda.QueryOperation.Matches
@@ -18,7 +23,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 private const val SPACE_ID = "i1ppeoxgdpvt"
-private const val TOKEN = "ec6NU4tHJupJ_SLf-sAq5QRDbJvJkRcBTMnha9XFYuI"
+private const val TOKEN = "yx3Ub1EQ6KVk7b4IATe5s7l5q2F5pdYZvCfkEiyuSNQ"
 private const val ENVIRONMENT = "master"
 
 class MainActivity(
@@ -33,12 +38,32 @@ class MainActivity(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        
+        // Set toolbar text color for better visibility
+        binding.toolbar.setTitleTextColor(android.graphics.Color.WHITE)
+        
+        // Set spinner text color for better visibility
+        binding.spinner.setPopupBackgroundResource(android.R.color.white)
+
+        // Handle window insets to prevent status bar overlap
+        ViewCompat.setOnApplyWindowInsetsListener(binding.appBarLayout) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(top = insets.top)
+            WindowInsetsCompat.CONSUMED
+        }
+
+        // Configure status bar appearance for proper contrast
+        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+        // Use system theme to determine status bar icon color
+        val isDarkTheme = (resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) == android.content.res.Configuration.UI_MODE_NIGHT_YES
+        windowInsetsController.isAppearanceLightStatusBars = !isDarkTheme
 
         if (PAGES.last().name != "Contentful") {
             binding.spinner.prompt = "⌛ Loading from Contentful ⏳"
