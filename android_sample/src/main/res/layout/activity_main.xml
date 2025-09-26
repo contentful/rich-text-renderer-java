@@ -7,16 +7,17 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.Material3.DayNight">
+        android:theme="@style/Theme.RichTextRendererSample.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.Material3.DayNight">
+            app:popupTheme="@style/Theme.RichTextRendererSample.PopupOverlay">
 
             <Spinner
                 android:id="@+id/spinner"
