@@ -6,7 +6,7 @@ plugins {
 
 allprojects {
     group = "com.github.contentful.rich"
-    version = '2.3.0'
+    version = '2.3.3'
     ext.contentful_version = "10.5.18"
 
     repositories {
