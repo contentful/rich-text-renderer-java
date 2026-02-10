@@ -6,6 +6,7 @@ import android.text.style.LeadingMarginSpan;
 import com.contentful.java.cda.rich.CDARichBlock;
 import com.contentful.java.cda.rich.CDARichList;
 import com.contentful.java.cda.rich.CDARichNode;
+import com.contentful.java.cda.rich.CDARichParagraph;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
 import com.contentful.rich.android.AndroidRenderer;
@@ -62,11 +63,16 @@ public class BlockRenderer extends AndroidRenderer<AndroidContext, CharSequence>
     final SpannableStringBuilder result = new SpannableStringBuilder();
 
     if (block.getContent() != null) {
+      CDARichNode previousChild = null;
       for (final CDARichNode childNode : block.getContent()) {
         if (childNode != null) {
           final CharSequence childResult = processor.process(context, childNode);
           if (childResult != null) {
+            if (previousChild instanceof CDARichParagraph && childNode instanceof CDARichParagraph) {
+              result.append("\n");
+            }
             result.append(childResult);
+            previousChild = childNode;
           }
         }
       }
@@ -78,19 +84,19 @@ public class BlockRenderer extends AndroidRenderer<AndroidContext, CharSequence>
 
   /**
    * Ensures child ends on exactly one newline.
+   * This method preserves all spans while removing trailing newlines.
    *
    * @param builder the current rendered spannable builder.
    */
   @Nonnull
   protected void childWithNewline(@Nonnull SpannableStringBuilder builder) {
-    if (builder != null) {
-      String text = builder.toString();
-      if (text != null) {
-        while (text.endsWith("\n")) {
-          text = text.substring(0, text.length() - 1);
-        }
-        builder.clear();
-        builder.append(text);
+    if (builder != null && builder.length() > 0) {
+      int length = builder.length();
+      while (length > 0 && builder.charAt(length - 1) == '\n') {
+        length--;
+      }
+      if (length < builder.length()) {
+        builder.delete(length, builder.length());
       }
     }
   }
@@ -144,7 +150,7 @@ public class BlockRenderer extends AndroidRenderer<AndroidContext, CharSequence>
 
     if (lists > 1) {
       final CDARichBlock block = (CDARichBlock) node;
-      if (block.getContent().size() > 0) {
+      if (!block.getContent().isEmpty()) {
         if (block.getContent().get(0) instanceof CDARichBlock) {
           builder.append("\n");
         }
