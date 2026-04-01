@@ -73,6 +73,26 @@ public class LinkTest {
   }
 
   @Test
+  public void hyperlinkWithLeadingWhitespaceTrimsUrl() {
+    final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
+    final AndroidContext context = new AndroidContext(activity);
+
+    final CDARichHyperLink link = new CDARichHyperLink("  https://contentful.com");
+    link.getContent().add(new CDARichText("Some link text", new ArrayList<>()));
+
+    final View result = processor.process(context, link);
+
+    assertThat(result).isNotNull();
+    final View content = result.findViewById(R.id.rich_content);
+    assertThat(content).isNotNull();
+
+    ArrayList<View> views = new ArrayList<>();
+    content.findViewsWithText(views, "Some link text", View.FIND_VIEWS_WITH_TEXT);
+    assertThat(views).hasSize(1);
+    assertThat(views.get(0)).isInstanceOf(TextView.class);
+  }
+
+  @Test
   public void createEmbeddedLink() {
     final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
     final AndroidContext context = new AndroidContext(activity);

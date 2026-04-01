@@ -147,7 +147,7 @@ public class QuoteRenderer extends BlockRenderer {
       content.append(textContent);
     } else if (node instanceof CDARichHyperLink) {
       final CDARichHyperLink hyperlink = (CDARichHyperLink) node;
-      final String uri = (String) hyperlink.getData();
+      final String uri = ((String) hyperlink.getData()).trim();
       
       // Process hyperlink content
       for (final CDARichNode hyperlinkContent : hyperlink.getContent()) {

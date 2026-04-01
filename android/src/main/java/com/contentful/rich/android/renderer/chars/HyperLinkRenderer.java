@@ -64,9 +64,9 @@ public class HyperLinkRenderer extends BlockRenderer {
     final String uri;
     
     if (data instanceof String) {
-        uri = (String) data;
+        uri = ((String) data).trim();
     } else if (data instanceof Map) {
-        uri = (String) ((Map<?, ?>) data).get("uri");
+        uri = ((String) ((Map<?, ?>) data).get("uri")).trim();
     } else {
         return builder; // Return unchanged if data is neither String nor Map
     }
