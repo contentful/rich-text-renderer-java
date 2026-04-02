@@ -1,6 +1,7 @@
 package views;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,12 +11,14 @@ import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
 import com.contentful.rich.android.R;
+import com.contentful.rich.android.renderer.views.HyperLinkRenderer;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.Shadows;
 
 import java.util.ArrayList;
 
@@ -90,6 +93,13 @@ public class LinkTest {
     content.findViewsWithText(views, "Some link text", View.FIND_VIEWS_WITH_TEXT);
     assertThat(views).hasSize(1);
     assertThat(views.get(0)).isInstanceOf(TextView.class);
+
+    final HyperLinkRenderer renderer = new HyperLinkRenderer(processor);
+    renderer.onClick(context, link);
+
+    final Intent startedIntent = Shadows.shadowOf(activity).getNextStartedActivity();
+    assertThat(startedIntent).isNotNull();
+    assertThat(startedIntent.getData().toString()).isEqualTo("https://contentful.com");
   }
 
   @Test
