@@ -36,6 +36,7 @@ import com.contentful.rich.android.R;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Map;
 
 public class QuoteRenderer extends BlockRenderer {
   public QuoteRenderer(@Nonnull AndroidProcessor<View> processor) {
@@ -148,8 +149,16 @@ public class QuoteRenderer extends BlockRenderer {
     } else if (node instanceof CDARichHyperLink) {
       final CDARichHyperLink hyperlink = (CDARichHyperLink) node;
       final Object data = hyperlink.getData();
-      if (!(data instanceof String)) return;
-      final String uri = ((String) data).trim();
+      final String uri;
+      if (data instanceof String) {
+        uri = ((String) data).trim();
+      } else if (data instanceof Map) {
+        final Object uriObj = ((Map<?, ?>) data).get("uri");
+        if (!(uriObj instanceof String)) return;
+        uri = ((String) uriObj).trim();
+      } else {
+        return;
+      }
       
       // Process hyperlink content
       for (final CDARichNode hyperlinkContent : hyperlink.getContent()) {
