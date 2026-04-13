@@ -191,9 +191,9 @@ public class TableRenderer extends BlockRenderer {
                                         if (data instanceof String) {
                                             uri = ((String) data).trim();
                                         } else if (data instanceof Map) {
-                                            String temp = (String) ((Map<?, ?>) data).get("uri");
-                                            if (temp == null) continue;
-                                            uri = temp.trim();
+                                            final Object uriObj = ((Map<?, ?>) data).get("uri");
+                                            if (!(uriObj instanceof String)) continue;
+                                            uri = ((String) uriObj).trim();
                                         } else {
                                             continue;
                                         }
