@@ -23,7 +23,7 @@ allprojects {
 dependencies {
   // …
   implementation 'com.github.contentful:contentful.java:v10.5.18'
-  implementation 'com.github.contentful.rich-text-renderer-java:html:2.3.1'
+  implementation 'com.github.contentful.rich-text-renderer-java:html:2.3.4'
 }
 ```
 
@@ -47,7 +47,7 @@ same can be achieved by adding Maven dependencies like so:
    <dependency>
         <groupId>com.github.contentful.rich-text-renderer-java</groupId>
         <artifactId>html</artifactId>
-        <version>2.3.1</version>
+        <version>2.3.4</version>
    </dependency>
 ```
 
