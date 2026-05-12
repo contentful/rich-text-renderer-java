@@ -40,7 +40,7 @@ graph TD
 2. An optional `Simplifier` pass removes empty nodes or enforces nesting limits (e.g., `RemoveToDeepNesting`) on the graph.
 3. Consumer instantiates a `Processor` (e.g., `HtmlProcessor`, `AndroidProcessor.creatingCharSequences()`).
 4. Consumer calls `processor.process(context, node)`.
-5. The `Processor` walks the node tree. For each node it iterates its ordered `List<CheckingRenderer>`, calling `checker.canRender(context, node)` until a match is found, then delegates to the matching `Renderer.render(context, node)`.
+5. The `Processor` walks the node tree. For each node it iterates its ordered `List<CheckingRenderer>`. For each pair it calls `checker.canRender(context, node)`; if that returns `true` it calls `renderer.render(context, node)`. Iteration stops only when a renderer returns a **non-null** result — a renderer returning `null` is treated as "no match" and the loop continues to the next `CheckingRenderer`.
 6. The `Context` accumulates the traversal path (`onBlockEntered` / `onBlockExited`) so renderers can be context-aware.
 7. Rendered output (String for HTML; CharSequence or View for Android) is returned to the consumer.
 
@@ -48,15 +48,17 @@ graph TD
 sequenceDiagram
     participant C as Consumer
     participant P as Processor
-    participant CH as RenderabilityChecker (ordered list)
+    participant CR as CheckingRenderer (ordered list)
     participant R as Renderer
 
     C->>P: process(context, rootNode)
     loop for each node
-        P->>CH: canRender(context, node)?
-        CH-->>P: true (first match wins)
-        P->>R: render(context, node)
-        R-->>P: rendered result
+        loop for each CheckingRenderer pair
+            P->>CR: checker.canRender(context, node)?
+            CR-->>P: true
+            P->>R: renderer.render(context, node)
+            R-->>P: result (non-null = stop; null = continue to next pair)
+        end
     end
     P-->>C: final result
 ```
