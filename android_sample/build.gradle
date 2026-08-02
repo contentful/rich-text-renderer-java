@@ -57,7 +57,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.25"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
     implementation 'androidx.appcompat:appcompat:1.7.1'
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.7.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.11.0"
 
     implementation "com.contentful.java:java-sdk:${project.contentful_version}"
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
