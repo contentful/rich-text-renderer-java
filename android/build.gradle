@@ -47,7 +47,7 @@ dependencies {
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'androidx.cardview:cardview:1.0.0'
 
-    testImplementation 'org.robolectric:robolectric:4.14.1'
+    testImplementation 'org.robolectric:robolectric:4.16.1'
     testImplementation 'com.google.truth:truth:1.4.5'
     testImplementation 'junit:junit:4.13.2'
 }
