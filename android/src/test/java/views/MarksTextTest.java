@@ -2,7 +2,7 @@ package views;
 
 import android.app.Activity;
 import android.graphics.Typeface;
-import android.text.SpannedString;
+import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.StyleSpan;
 import android.text.style.TextAppearanceSpan;
@@ -56,11 +56,11 @@ public class MarksTextTest {
 
     final CharSequence sequence = ((TextView) views.get(0)).getText();
     assertThat(sequence).isNotNull();
-    assertThat(sequence).isInstanceOf(SpannedString.class);
+    assertThat(sequence).isInstanceOf(Spanned.class);
     assertThat(sequence.toString()).isEqualTo("text");
 
-    final SpannedString spannedString = (SpannedString) sequence;
-    assertThat(spannedString.getSpans(0, spannedString.length(), Object.class).length).isEqualTo(0);
+    final Spanned spannedString = (Spanned) sequence;
+    assertThat(contentSpanCount(spannedString)).isEqualTo(0);
   }
 
   @Test
@@ -84,11 +84,11 @@ public class MarksTextTest {
 
     final CharSequence sequence = ((TextView) views.get(0)).getText();
     assertThat(sequence).isNotNull();
-    assertThat(sequence).isInstanceOf(SpannedString.class);
+    assertThat(sequence).isInstanceOf(Spanned.class);
     assertThat(sequence.toString()).isEqualTo("BoldText");
 
-    final SpannedString spannedString = (SpannedString) sequence;
-    final Object[] spans = spannedString.getSpans(0, spannedString.length(), Object.class);
+    final Spanned spannedString = (Spanned) sequence;
+    final Object[] spans = contentSpans(spannedString);
     assertThat(spans.length).isEqualTo(1);
 
     final Object span = spans[0];
@@ -119,13 +119,13 @@ public class MarksTextTest {
 
     final CharSequence sequence = ((TextView) views.get(0)).getText();
     assertThat(sequence).isNotNull();
-    assertThat(sequence).isInstanceOf(SpannedString.class);
+    assertThat(sequence).isInstanceOf(Spanned.class);
     assertThat(sequence.toString()).isEqualTo("Underlined");
 
-    final SpannedString spannedString = (SpannedString) sequence;
-    assertThat(spannedString.getSpans(0, spannedString.length(), Object.class).length).isEqualTo(1);
+    final Spanned spannedString = (Spanned) sequence;
+    assertThat(contentSpanCount(spannedString)).isEqualTo(1);
 
-    final Object[] spans = spannedString.getSpans(0, spannedString.length(), Object.class);
+    final Object[] spans = contentSpans(spannedString);
     assertThat(spans.length).isEqualTo(1);
 
     final Object span = spans[0];
@@ -153,13 +153,13 @@ public class MarksTextTest {
 
     final CharSequence sequence = ((TextView) views.get(0)).getText();
     assertThat(sequence).isNotNull();
-    assertThat(sequence).isInstanceOf(SpannedString.class);
+    assertThat(sequence).isInstanceOf(Spanned.class);
     assertThat(sequence.toString()).isEqualTo("Italic");
 
-    final SpannedString spannable = (SpannedString) sequence;
-    assertThat(spannable.getSpans(0, spannable.length(), Object.class).length).isEqualTo(1);
+    final Spanned spannable = (Spanned) sequence;
+    assertThat(contentSpanCount(spannable)).isEqualTo(1);
 
-    final Object[] spans = spannable.getSpans(0, spannable.length(), Object.class);
+    final Object[] spans = contentSpans(spannable);
     assertThat(spans.length).isEqualTo(1);
 
     final Object span = spans[0];
@@ -190,13 +190,13 @@ public class MarksTextTest {
 
     final CharSequence sequence = ((TextView) views.get(0)).getText();
     assertThat(sequence).isNotNull();
-    assertThat(sequence).isInstanceOf(SpannedString.class);
+    assertThat(sequence).isInstanceOf(Spanned.class);
     assertThat(sequence.toString()).isEqualTo("final String code;");
 
-    final SpannedString spannable = (SpannedString) sequence;
-    assertThat(spannable.getSpans(0, spannable.length(), Object.class).length).isEqualTo(1);
+    final Spanned spannable = (Spanned) sequence;
+    assertThat(contentSpanCount(spannable)).isEqualTo(1);
 
-    final Object[] spans = spannable.getSpans(0, spannable.length(), Object.class);
+    final Object[] spans = contentSpans(spannable);
     assertThat(spans.length).isEqualTo(1);
 
     final Object span = spans[0];
@@ -227,13 +227,13 @@ public class MarksTextTest {
 
     final CharSequence sequence = ((TextView) views.get(0)).getText();
     assertThat(sequence).isNotNull();
-    assertThat(sequence).isInstanceOf(SpannedString.class);
+    assertThat(sequence).isInstanceOf(Spanned.class);
     assertThat(sequence.toString()).isEqualTo("🐭");
 
-    final SpannedString spannable = (SpannedString) sequence;
-    assertThat(spannable.getSpans(0, spannable.length(), Object.class).length).isEqualTo(1);
+    final Spanned spannable = (Spanned) sequence;
+    assertThat(contentSpanCount(spannable)).isEqualTo(1);
 
-    final Object[] spans = spannable.getSpans(0, spannable.length(), Object.class);
+    final Object[] spans = contentSpans(spannable);
     assertThat(spans.length).isEqualTo(1);
 
     final Object span = spans[0];
@@ -266,17 +266,37 @@ public class MarksTextTest {
 
     final CharSequence sequence = ((TextView) views.get(0)).getText();
     assertThat(sequence).isNotNull();
-    assertThat(sequence).isInstanceOf(SpannedString.class);
+    assertThat(sequence).isInstanceOf(Spanned.class);
     assertThat(sequence.toString()).isEqualTo("All in all");
 
-    final SpannedString spannable = (SpannedString) sequence;
-    assertThat(spannable.getSpans(0, spannable.length(), Object.class).length).isEqualTo(6);
+    final Spanned spannable = (Spanned) sequence;
+    assertThat(contentSpanCount(spannable)).isEqualTo(6);
 
-    final Object[] spans = spannable.getSpans(0, spannable.length(), Object.class);
+    final Object[] spans = contentSpans(spannable);
     assertThat(spans.length).isEqualTo(6);
 
     assertThat(Arrays.stream(spans).map(Object::getClass).collect(Collectors.toList())).containsExactlyElementsIn(
         new Object[]{BackgroundColorSpan.class, StyleSpan.class, StyleSpan.class, TextAppearanceSpan.class, UnderlineSpan.class, BackgroundColorSpan.class}
     );
+  }
+
+  /**
+   * Count spans excluding TextView's internal bookkeeping (for example ChangeWatcher),
+   * which TextView adds itself once a MovementMethod is set.
+   */
+  private static Object[] contentSpans(android.text.Spanned spanned) {
+    final java.util.List<Object> spans = new java.util.ArrayList<>();
+    for (final Object span : spanned.getSpans(0, spanned.length(), Object.class)) {
+      final String name = span.getClass().getName();
+      if (!name.startsWith("android.widget.TextView$")
+          && !name.startsWith("android.text.method.")) {
+        spans.add(span);
+      }
+    }
+    return spans.toArray();
+  }
+
+  private static int contentSpanCount(android.text.Spanned spanned) {
+    return contentSpans(spanned).length;
   }
 }
