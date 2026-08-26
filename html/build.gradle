@@ -24,7 +24,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'com.github.contentful.rich'
             artifactId = 'html'
-            version = '2.3.0'
+            version = project.version
             from components.java
             artifact(sourcesJar)
         }

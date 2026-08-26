@@ -121,4 +121,51 @@ public class LinkTest {
     assertThat(views).hasSize(1);
     assertThat(views.get(0)).isInstanceOf(TextView.class);
   }
+
+  @Test
+  public void onClickBlocksJavascriptUriScheme() {
+    final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
+    final AndroidContext context = new AndroidContext(activity);
+
+    final CDARichHyperLink link = new CDARichHyperLink("javascript:alert(1)");
+    link.getContent().add(new CDARichText("Click me", new ArrayList<>()));
+
+    final HyperLinkRenderer renderer = new HyperLinkRenderer(processor);
+    renderer.onClick(context, link);
+
+    final Intent startedIntent = Shadows.shadowOf(activity).getNextStartedActivity();
+    assertThat(startedIntent).isNull();
+  }
+
+  @Test
+  public void onClickBlocksFileUriScheme() {
+    final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
+    final AndroidContext context = new AndroidContext(activity);
+
+    final CDARichHyperLink link = new CDARichHyperLink("file:///etc/passwd");
+    link.getContent().add(new CDARichText("Click me", new ArrayList<>()));
+
+    final HyperLinkRenderer renderer = new HyperLinkRenderer(processor);
+    renderer.onClick(context, link);
+
+    final Intent startedIntent = Shadows.shadowOf(activity).getNextStartedActivity();
+    assertThat(startedIntent).isNull();
+  }
+
+  @Test
+  public void onClickAllowsHttpsUriScheme() {
+    final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
+    final AndroidContext context = new AndroidContext(activity);
+
+    final CDARichHyperLink link = new CDARichHyperLink("https://contentful.com");
+    link.getContent().add(new CDARichText("Click me", new ArrayList<>()));
+
+    final HyperLinkRenderer renderer = new HyperLinkRenderer(processor);
+    renderer.onClick(context, link);
+
+    final Intent startedIntent = Shadows.shadowOf(activity).getNextStartedActivity();
+    assertThat(startedIntent).isNotNull();
+    assertThat(startedIntent.getData().toString()).isEqualTo("https://contentful.com");
+  }
 }
+

@@ -38,6 +38,7 @@ import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
 import com.contentful.rich.android.R;
+import com.contentful.rich.android.util.UrlSafety;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -147,7 +148,7 @@ public class TableRenderer extends BlockRenderer {
                     // Enable clickable links
                     cellView.setMovementMethod(LinkMovementMethod.getInstance());
                     
-                    if (cellNode != null) {
+                    if (cellNode instanceof CDARichBlock) {
                         // Process cell content
                         boolean isFirstParagraph = true;
                         for (final CDARichNode contentNode : ((CDARichBlock) cellNode).getContent()) {
@@ -208,7 +209,10 @@ public class TableRenderer extends BlockRenderer {
                                                 ClickableSpan clickableSpan = new ClickableSpan() {
                                                     @Override
                                                     public void onClick(@NonNull View widget) {
-                                                        String url = uri.startsWith("http") ? uri : "http://" + uri;
+                                                        final String url = UrlSafety.resolveSafeUrl(uri);
+                                                        if (url == null) {
+                                                            return;
+                                                        }
                                                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                                                         context.getAndroidContext().startActivity(intent);
                                                     }

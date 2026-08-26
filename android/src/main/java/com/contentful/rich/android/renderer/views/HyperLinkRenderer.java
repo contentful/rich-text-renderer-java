@@ -23,6 +23,7 @@ import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
 import com.contentful.rich.android.R;
+import com.contentful.rich.android.util.UrlSafety;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -115,6 +116,11 @@ public class HyperLinkRenderer extends BlockRenderer {
         uri = temp.trim();
     } else {
         return; // Don't handle click if data is neither String nor Map
+    }
+
+    if (!UrlSafety.isSafeUrl(uri)) {
+        Log.w("URLSpan", "Blocked navigation to unsafe URL scheme: " + uri);
+        return;
     }
 
     final Uri parsedUri = Uri.parse(uri);

@@ -12,6 +12,8 @@ import com.contentful.java.cda.rich.CDARichUnorderedList;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
 import com.contentful.rich.android.R;
+import com.contentful.rich.android.renderer.listdecorator.Decorator;
+import com.contentful.rich.android.renderer.views.ListRenderer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +23,10 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.truth.Truth.assertThat;
+
 
 @RunWith(RobolectricTestRunner.class)
 public class ListTest {
@@ -146,4 +151,48 @@ public class ListTest {
     assertThat(views.get(0)).isInstanceOf(TextView.class);
 
   }
+
+  /**
+   * Regression test for a decoration lookup bug in {@link ListRenderer#provideDecoration}: when
+   * {@code AndroidContext#getTopListOfPath()} returns null (i.e. the list itself is the node
+   * being rendered, not yet nested under a known list on the path), the decorator lookup must be
+   * keyed consistently with how decorators are registered (by {@code toString()}), otherwise the
+   * lookup silently returns null and throws a NullPointerException when used.
+   */
+  @Test
+  public void directlyRenderingTopLevelListResolvesRegisteredDecoratorWithoutNpe() {
+    final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
+    final AndroidContext context = new AndroidContext(activity);
+
+    final CDARichListItem item = new CDARichListItem();
+    item.getContent().add(new CDARichText("first item", new ArrayList<>()));
+
+    final CDARichOrderedList list = new CDARichOrderedList();
+    list.getContent().add(item);
+
+    // Build a decorator whose symbol matches this list's actual decoration value, derived at
+    // runtime so this test does not depend on the SDK's internal decoration representation.
+    final String decorationSymbol = list.getDecoration().toString();
+    final Decorator matchingDecorator = new Decorator() {
+      @Nonnull @Override public CharSequence getSymbol() {
+        return decorationSymbol;
+      }
+
+      @Nonnull @Override public CharSequence decorate(int position) {
+        return position + ". ";
+      }
+    };
+
+    final ListRenderer renderer = new ListRenderer(processor, matchingDecorator);
+
+    // Directly render the list itself (bypassing canRender()'s ListItem-only gate), exercising
+    // the "list == null" branch inside provideDecoration().
+    final View result = renderer.render(context, list);
+
+    assertThat(result).isNotNull();
+    final TextView decoration = result.findViewById(R.id.rich_list_decoration);
+    assertThat(decoration).isNotNull();
+    assertThat(decoration.getText().toString()).isEqualTo("1. ");
+  }
 }
+

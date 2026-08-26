@@ -22,7 +22,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'com.github.contentful.rich'
             artifactId = 'core'
-            version = '2.3.0'
+            version = project.version
             from components.java
             artifact(sourcesJar)
         }

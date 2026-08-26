@@ -8,6 +8,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.util.Log;
 
 import com.contentful.java.cda.CDAAsset;
 import com.contentful.java.cda.CDAEntry;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -43,6 +45,43 @@ import static com.contentful.java.cda.image.ImageOption.widthOf;
  */
 public class EmbeddedLinkRenderer extends BlockRenderer {
 
+  private static final String TAG = "EmbeddedLinkRenderer";
+
+  /**
+   * How long, in seconds, {@link #defaultBitmapProvider} will wait for an embedded image download
+   * to complete before giving up and cancelling the request.
+   */
+  static final long DOWNLOAD_TIMEOUT_SECONDS = 8;
+
+  /**
+   * Waits on the given latch, bounded by {@code timeoutSeconds}, cancelling {@code call} and
+   * logging instead of throwing/hanging if the download does not complete in time or the waiting
+   * thread is interrupted.
+   * <p>
+   * Package-private for testability.
+   *
+   * @param latch          the latch counted down once the download callback fires.
+   * @param call           the in-flight call to cancel if the wait does not complete normally.
+   * @param timeoutSeconds maximum number of seconds to wait.
+   * @param urlForLogging  url used purely for diagnostic log messages.
+   * @return true if the latch counted down within the timeout, false otherwise.
+   */
+  static boolean awaitDownload(CountDownLatch latch, Call call, long timeoutSeconds, String urlForLogging) {
+    try {
+      final boolean completed = latch.await(timeoutSeconds, TimeUnit.SECONDS);
+      if (!completed) {
+        Log.w(TAG, "Timed out waiting for embedded image download: " + urlForLogging);
+        call.cancel();
+      }
+      return completed;
+    } catch (InterruptedException e) {
+      Log.w(TAG, "Interrupted while waiting for embedded image download: " + urlForLogging, e);
+      call.cancel();
+      Thread.currentThread().interrupt();
+      return false;
+    }
+  }
+
   /**
    * An interface to control how to generate the bitmap to be used.
    */
@@ -61,15 +100,28 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
    * Create a simple image downloader to be used with care.
    * <p>
    * This provider will be used by default, please overwrite it if possible clientside.
+   * <p>
+   * <b>Note:</b> {@link #provide(Context, CDAAsset)} performs blocking network I/O bounded by
+   * {@link #DOWNLOAD_TIMEOUT_SECONDS}. Do not trigger rendering of rich text containing embedded
+   * assets on the main/UI thread with this provider, as it may still block the caller for up to
+   * the timeout duration. Prefer rendering off the main thread, or supply a custom non-blocking
+   * {@link BitmapProvider}.
    */
   public static final BitmapProvider defaultBitmapProvider = new BitmapProvider() {
     @Override public Bitmap provide(Context context, CDAAsset asset) {
       final String url = asset.urlForImageWith(https(), widthOf(80), heightOf(80), formatOf(jpg));
       final CountDownLatch latch = new CountDownLatch(1);
       final Map<String, Bitmap> bitmaps = new HashMap<>();
-      new OkHttpClient.Builder().build().newCall(new Request.Builder().get().url(url).build()).enqueue(
+      final Call call = new OkHttpClient.Builder()
+          .connectTimeout(DOWNLOAD_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+          .readTimeout(DOWNLOAD_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+          .build()
+          .newCall(new Request.Builder().get().url(url).build());
+
+      call.enqueue(
           new Callback() {
             @Override public void onFailure(Call call, IOException e) {
+              Log.w(TAG, "Failed to download embedded image: " + url, e);
               latch.countDown();
             }
 
@@ -85,15 +137,11 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
           }
       );
 
-      try {
-        latch.await();
-
+      if (awaitDownload(latch, call, DOWNLOAD_TIMEOUT_SECONDS, url)) {
         final Bitmap bitmap = bitmaps.get(url);
         if (bitmap != null) {
           return bitmap;
         }
-      } catch (InterruptedException e) {
-        e.printStackTrace();
       }
       return BitmapFactory.decodeResource(context.getResources(), android.R.drawable.ic_dialog_alert);
     }
