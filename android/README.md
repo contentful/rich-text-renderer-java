@@ -1,14 +1,10 @@
-Rendering Rich Text Into Text in Android
-==============================================
+# Rendering Rich Text into Text in Android
 
-Rendering rich text in Android can be achieved in two ways: Either by rendering to a CharSequence of Spannables,
-or by rendering the native views. This document will describe both ways, and the dependencies for it.
+> Part of [rich-text-renderer-java](https://github.com/contentful/rich-text-renderer-java). This module renders a Contentful `CDARichDocument` on Android — either as a `CharSequence` of Spannables, or as native Android Views. This document covers both approaches and their dependencies.
 
-Adding dependencies
--------------------
+## Installation
 
-For gradle, adding this to `build.gradle` is needed, to allow base SDK snapshots and rendering SDK
-dependencies to be found:
+For Gradle, add the JitPack repository to allow base SDK and rendering SDK dependencies to be found:
 
 ```groovy
 allprojects {
@@ -22,47 +18,44 @@ allprojects {
 ```groovy
 dependencies {
   // …
-  implementation 'com.contentful.java:java-sdk:10.5.18'
-  implementation 'com.github.contentful.rich-text-renderer-java:android:2.3.4'
-  implementation 'com.github.contentful.rich-text-renderer-java:core:2.3.4'
+  implementation 'com.contentful.java:java-sdk:10.6.0'
+  implementation 'com.github.contentful.rich-text-renderer-java:android:2.4.0'
+  implementation 'com.github.contentful.rich-text-renderer-java:core:2.4.0'
 }
 ```
 
-same can be achieved by adding Maven dependencies like so:
+The same can be achieved with Maven:
 
 ```xml
-	<repositories>
-		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
-	</repositories>
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
 ```
 
 ```xml
-   <dependency>
-        <groupId>com.contentful.java</groupId>
-        <artifactId>java-sdk</artifactId>
-        <version>10.5.18</version>
-   </dependency>
-   <dependency>
-       <groupId>com.github.contentful.rich-text-renderer-java</groupId>
-       <artifactId>core</artifactId>
-       <version>2.3.4</version>
-   </dependency>
-   <dependency>
-       <groupId>com.github.contentful.rich-text-renderer-java</groupId>
-       <artifactId>android</artifactId>
-       <version>2.3.4</version>
-   </dependency>
+<dependency>
+    <groupId>com.contentful.java</groupId>
+    <artifactId>java-sdk</artifactId>
+    <version>10.6.0</version>
+</dependency>
+<dependency>
+    <groupId>com.github.contentful.rich-text-renderer-java</groupId>
+    <artifactId>core</artifactId>
+    <version>2.4.0</version>
+</dependency>
+<dependency>
+    <groupId>com.github.contentful.rich-text-renderer-java</groupId>
+    <artifactId>android</artifactId>
+    <version>2.4.0</version>
+</dependency>
 ```
 
-Calling Contentful Main SDK
----------------------------
+## Fetching content with the Contentful SDK
 
-Now that the base SDK is in place, the next step is to retrieve (_fetch_) an entry from Contentful,
-containing Rich Text Data. Following code snippet does this by using `SPACE_ID`, `TOKEN` and
-`ENTRY_ID` as placeholders for the actual content that needs fetching. Code needs to run in a background thread.
+With the base SDK in place, fetch (`fetch`) an entry from Contentful containing rich text data. The following snippet uses `SPACE_ID`, `TOKEN`, and `ENTRY_ID` as placeholders for the actual content that needs fetching. Run it on a background thread:
 
 ```java
 final CDAClient client = CDAClient.builder()
@@ -75,23 +68,24 @@ final CDAEntry entry = client
   .one(ENTRY_ID);
 ```
 
-With the `entry` at hand, getting the `CDARichDocument`, the base of all Rich Text
-nodes in the main SDK, is easy if the field id is known:
+With the `entry` at hand, retrieve the `CDARichDocument` — the base of all rich text nodes in the main SDK — if the field id is known:
 
 ```java
 final CDARichDocument node = entry.getField(FIELD_ID);
 ```
-If your data is fetched from an external tool (e.g., a JavaScript library), it is possible to create a `CDARichDocument` from plain `JSON`. This is especially useful when working with content that is not directly retrieved through the Contentful Java library. To accomplish this, the following steps can be followed using the `GSON` library for `JSON` processing:
+
+If your data is fetched from an external tool (for example a JavaScript library), you can build a `CDARichDocument` from plain JSON instead. This is especially useful when working with content that wasn't fetched directly through the Contentful Java library. Using GSON for JSON processing:
 
 ```java
 private final Gson gson = new Gson();
 Type type = new TypeToken<Map<String, Object>>(){}.getType();
 Map<String, Object> jsonMap = gson.fromJson(json, type);
-final CDARichDocument node =  RichTextFactory.resolveRichNode(jsonMap);
+final CDARichDocument node = RichTextFactory.resolveRichNode(jsonMap);
 ```
 
-The last step includes the conversion of the rich text node into wither spannables or custom views. Following code shows
-how to create renderers to create charsequences or native android views:
+## Rendering to Spannables or native Views
+
+Convert the rich text node into either spannables or custom views. The following code creates the two available processor types:
 
 ```java
 final AndroidProcessor<CharSequence> sequenceProcessor = AndroidProcessor.creatingCharSequences();
@@ -99,7 +93,7 @@ final AndroidProcessor<CharSequence> sequenceProcessor = AndroidProcessor.creati
 final AndroidProcessor<View> viewProcessor = AndroidProcessor.creatingNativeViews();
 ```
 
-With those two instances at hand, you can create a context and render the desired output:
+With those instances at hand, create a context and render the desired output:
 
 ```java
 final AndroidContext context = new AndroidContext(activity.getContext());
@@ -109,14 +103,9 @@ final CharSequence result = sequenceProcessor.process(context, node);
 final View result = viewProcessor.process(context, node);
 ```
 
-Adding Custom Renderers
------------------------
+## Adding custom renderers
 
-If a change of the output is wanted, adding of a new renderer or overriding a default one is needed.
-To do so, using the `.addRenderer(…,…)` or `.overrideRenderer(…,…)` method are needed. The
-Processor contains a list of renderers, which is iterated upon to find one matching the current
-Node encountered. For matching a renderer to a node, a `Checker` needs to be provided while adding
-a `Renderer` to the `Processor`.
+To change the output, add a new renderer or override a default one, using `.addRenderer(…, …)` or `.overrideRenderer(…, …)`. The `Processor` holds a list of renderers that it iterates to find one matching the current node. For matching a renderer to a node, provide a `Checker` when adding a `Renderer` to the `Processor`:
 
 ```java
 processor.addRenderer(
@@ -134,48 +123,24 @@ processor.addRenderer(
 );
 ```
 
-The now added renderer will be working as a fallback: Since it got added last (by not using
-`.overrideRenderer(…)`) it will get called last in the search of a renderer. It's checker is
-setup to always return true, so this being the last, the renderer will always get called. The
-renderer in the above example is simply returning the `.toString()` output of the given node.
+The renderer added above acts as a fallback: since it was added last (without using `.overrideRenderer(…)`), it's checked last. Its checker always returns `true`, so being last in line, it always gets called. The example renderer simply returns an empty string.
 
+## Overriding default renderers
 
-Overriding Default Renderers
-----------------------------
+If you want to override one of the default renderers, the approach above won't work: adding a new renderer to override an existing one won't get triggered, since the to-be-overridden renderer is checked before the newly added one. For that, use `.overrideRenderer(…)`: it moves the renderer and checker to the front of the list, so it's checked first. If the checker returns `false`, the default renderer is used instead. If the checker returns `true`, the search for a renderer stops and the new renderer is used.
 
-If overriding one of the default renderer is desired, the just presented way will not be sufficient:
-Adding a new renderer to override an existing one will not get triggered, since the to be overridden
-renderer will be checked before the just added one. For those kind of challenges, the
-`.overrideRenderer(…)` method got added: It will move the renderer and checker to the front of
-the list of renderer and will therefore be checked first. If the checker does not return true, the
-default renderer will be used. Upon returning the checker returning true, the current search for a
-renderer will be aborted and the found renderer be used.
+For inspiration on writing a custom renderer, take a look at [the source of the default renderers](src/main/java/com/contentful/rich/android/renderer).
 
-For inspiration on how custom renderer might look like,
-[a look at the source of the default renderer](src/main/java/com/contentful/rich/android/renderer)
- is recommended.
+> Overriding a renderer is required if you want to provide embedded or hyperlinked views of your content. Contentful cannot know what your content model looks like, so it never ships a default renderer for `embedded` or `hyperlink` nodes. Take a look at the companion sample Android app for a full example.
 
-> Overriding of renderers is needed, if you want to provide embedded or hyperlinked views of your content. Sadly
-> Contentful does not know what your content is like, and cannot create an embedded view on it. Look at the companion
-> sample android app is advised.
+## Android specifics for Rich Text rendering
 
+This section covers general advice for using the accompanying rich text renderer on Android.
 
-Android specifics for Rich Text rendering
------------------------------------------
+### Rendering times
 
-This section covers general advice for using the accompanying rich text renderer for Android.
+Rendering native Android views can get time-consuming, especially with deeply nested rich text documents. Use the `RemoveToDeepNesting` simplifier to remove all elements below a given nesting level before rendering.
 
-Rendering times
-===============
+### Rendering embedded content and hyperlinks
 
-Sometimes the rendering of native Android views can get very time consuming, especially if the nesting level of the rich
-text nodes is high. For this reason it is advised to take a look at `RemoveToDeepNesting`-simplifier, since this
-simplifier will remove all elements below a given nesting level.
-
-Rendering Embedded / Hyperlinks
-===============================
-
-Every custom visualization needs to be defined by the client. If a client needs a hyperlink or embedded link to an
-Entry or to an Asset, they would need to add the renderer as described above. Sadly Contentful cannot know their use
-case especially the build of an entries fields cannot be predicted (Which field to use for the description? Anything
-important to be displayed, etc.) This library does require the help of customers to render custom material.
+Every custom visualization must be defined by the client application. If you need a hyperlink or an embedded link to an Entry or an Asset, add a renderer as described above. Contentful cannot know your use case in advance — especially what an entry's fields should look like (which field to use for a description, what's important to display, etc) — so this library relies on you to render that custom material.
