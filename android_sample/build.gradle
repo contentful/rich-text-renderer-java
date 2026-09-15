@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    id "org.jetbrains.kotlin.android" version "2.4.10"
+    id "org.jetbrains.kotlin.android" version "2.4.20"
 }
 
 repositories {
@@ -54,7 +54,7 @@ dependencies {
     implementation project(path: ':android')
     implementation project(path: ':core')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.4.10"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.4.20"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0"
     implementation 'androidx.appcompat:appcompat:1.8.0'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.11.0"
