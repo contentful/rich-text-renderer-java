@@ -102,11 +102,11 @@ public class ListRenderer extends BlockRenderer {
 
       final Decorator initialDecorator = decoratorBySymbolMap.get(list.getDecoration().toString());
       final int initialDecoratorIndex = decorators.indexOf(initialDecorator);
-      int currentPosition = ((initialDecoratorIndex + nestedListCount) % decorators.size()) - 1;
-      if(currentPosition < 0) {
-        currentPosition = 0;
+      if (initialDecorator == null || decorators.isEmpty()) {
+        return;
       }
-
+      final int currentPosition =
+          Math.floorMod(initialDecoratorIndex + nestedListCount - 1, decorators.size());
       currentDecorator = decorators.get(currentPosition);
     }
 

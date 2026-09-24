@@ -32,6 +32,32 @@ import static com.google.common.truth.Truth.assertThat;
 public class ListTest {
   private Activity activity;
 
+  @Test public void nestedDecorationsUseEveryRegisteredStyleBeforeWrapping() {
+    final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
+    final AndroidContext context = new AndroidContext(activity);
+    final Decorator[] decorators = new Decorator[3];
+    for (int index = 0; index < decorators.length; index++) {
+      final String symbol = index == 0
+          ? new CDARichOrderedList().getDecoration().toString() : "style" + index;
+      final String label = "decoration" + index;
+      decorators[index] = new Decorator() {
+        @Nonnull @Override public CharSequence getSymbol() { return symbol; }
+        @Nonnull @Override public CharSequence decorate(int position) { return label; }
+      };
+    }
+    final ListRenderer renderer = new ListRenderer(processor, decorators);
+    for (int depth = 0; depth < 4; depth++) {
+      final CDARichOrderedList list = new CDARichOrderedList();
+      final CDARichListItem item = new CDARichListItem();
+      list.getContent().add(item);
+      context.getPath().add(list);
+      context.getPath().add(item);
+      final View result = renderer.render(context, item);
+      final TextView decoration = result.findViewById(R.id.rich_list_decoration);
+      assertThat(decoration.getText().toString()).isEqualTo("decoration" + depth % 3);
+    }
+  }
+
   @Before
   public void setup() {
     activity = Robolectric.setupActivity(Activity.class);
@@ -195,4 +221,3 @@ public class ListTest {
     assertThat(decoration.getText().toString()).isEqualTo("1. ");
   }
 }
-

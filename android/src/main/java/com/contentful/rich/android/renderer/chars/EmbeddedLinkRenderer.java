@@ -115,20 +115,18 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
    * <p>
    * <b>Note:</b> {@link #provide(Context, CDAAsset)} performs blocking network I/O bounded by
    * {@link #DOWNLOAD_TIMEOUT_SECONDS}. Do not trigger rendering of rich text containing embedded
-   * assets on the main/UI thread with this provider, as it may still block the caller for up to
-   * the timeout duration. Prefer rendering off the main thread, or supply a custom non-blocking
+   * assets on the main/UI thread with this provider, where a placeholder is returned instead.
+   * Prefer rendering off the main thread, or supply a custom non-blocking
    * {@link BitmapProvider}.
    */
   public static final BitmapProvider defaultBitmapProvider = new BitmapProvider() {
     @Override public Bitmap provide(Context context, CDAAsset asset) {
+      if (Looper.myLooper() == Looper.getMainLooper()) {
+        return BitmapFactory.decodeResource(context.getResources(), android.R.drawable.ic_dialog_alert);
+      }
       final String url = asset.urlForImageWith(https(), widthOf(80), heightOf(80), formatOf(jpg));
       final CountDownLatch latch = new CountDownLatch(1);
       final Map<String, Bitmap> bitmaps = new HashMap<>();
-      if (Looper.myLooper() == Looper.getMainLooper()) {
-        Log.w(TAG, "Embedded image downloaded on the main thread (blocks up to "
-            + DOWNLOAD_TIMEOUT_SECONDS + "s). Render off the main thread or provide a custom "
-            + "BitmapProvider.");
-      }
       final Call call = DefaultClientHolder.CLIENT
           .newCall(new Request.Builder().get().url(url).build());
 
@@ -140,13 +138,15 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
             }
 
             @Override public void onResponse(Call call, Response response) throws IOException {
-              final ResponseBody body = response.body();
-              if (body != null) {
-                final byte[] bytes = body.bytes();
-                final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                bitmaps.put(url, bitmap);
+              try (ResponseBody body = response.body()) {
+                if (response.isSuccessful() && body != null) {
+                  final byte[] bytes = body.bytes();
+                  final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                  bitmaps.put(url, bitmap);
+                }
+              } finally {
+                latch.countDown();
               }
-              latch.countDown();
             }
           }
       );
@@ -225,6 +225,9 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
       builder.insert(0, imageReplacement);
 
       final Bitmap bitmap = provider.provide(context.getAndroidContext(), asset);
+      if (bitmap == null) {
+        return builder;
+      }
       final ImageSpan span = new ImageSpan(context.getAndroidContext(), bitmap, ImageSpan.ALIGN_BASELINE);
 
       builder.setSpan(span, 0, imageReplacement.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

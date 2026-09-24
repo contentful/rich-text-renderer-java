@@ -111,7 +111,7 @@ dependencies {
 }
 ```
 
-> **2.4.1 notes for Android:** the minimum SDK is **23** (it was 21 up to 2.3.x). Links in rich text are opened only for `http`, `https`, `mailto`, `tel` and `sms`; other schemes such as `javascript:` or `intent:` render as plain text. Don't use 2.4.0: it has an unprotected link path and a list-rendering crash, both fixed in 2.4.1. The default embedded-image download now times out after 3 seconds (was 8), below Android's ANR threshold.
+> **2.4.1 notes for Android:** the minimum SDK is **23** (it was 21 up to 2.3.x). Links in rich text are opened only for `http`, `https`, `mailto`, `tel` and `sms`; other schemes such as `javascript:` or `intent:` cannot navigate. Don't use 2.4.0: it has an unprotected link path and a list-rendering crash, both fixed in 2.4.1. The default embedded-image provider returns a placeholder on the main thread. Render off the main thread for downloads (bounded by a 3-second timeout per image), or supply a custom `BitmapProvider` that uses cached images.
 
 > **2.4.1 notes for the HTML module:** attribute values are now HTML-escaped (for example `&` in a link becomes `&amp;`), and links with a disallowed scheme (`javascript:`, `data:`, …) are rendered as `<a>` without an `href`. Relative links (`/about`, `#top`) are unchanged.
 

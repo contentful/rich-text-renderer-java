@@ -43,6 +43,14 @@ import static com.google.common.truth.Truth.assertThat;
 public class TableTest {
   private Activity activity;
 
+  @Test public void emptyTableDoesNotDivideByZero() {
+    final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
+    final View result = processor.process(new AndroidContext(activity), new CDARichTable());
+    assertThat(result).isNotNull();
+    final TableLayout table = result.findViewById(R.id.rich_table);
+    assertThat(table.getChildCount()).isEqualTo(0);
+  }
+
   @Before
   public void setup() {
     activity = Robolectric.setupActivity(Activity.class);

@@ -40,6 +40,15 @@ public class LinkSafetyTest {
     return ((Spannable) result).getSpans(0, result.length(), URLSpan.class);
   }
 
+  @Test public void nonStringUriPreservesTextWithoutLink() {
+    final CDARichHyperLink link = new CDARichHyperLink(java.util.Collections.singletonMap("uri", 42));
+    link.getContent().add(new CDARichText("Some link text", new ArrayList<>()));
+    final CharSequence result = AndroidProcessor.creatingCharSequences()
+        .process(new AndroidContext(activity), link);
+    assertThat(result.toString()).isEqualTo("Some link text");
+    assertThat(urlSpans(result)).isEmpty();
+  }
+
   @Test
   public void javascriptLinkIsNotClickable() {
     final CharSequence result = render("javascript:alert(1)");

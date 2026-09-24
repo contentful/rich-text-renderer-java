@@ -12,6 +12,7 @@ import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
 import com.contentful.rich.core.util.UrlSafety;
+import com.contentful.rich.android.util.LinkNavigator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -69,9 +70,9 @@ public class HyperLinkRenderer extends BlockRenderer {
     if (data instanceof String) {
         uri = ((String) data).trim();
     } else if (data instanceof Map) {
-        String temp = (String) ((Map<?, ?>) data).get("uri");
-        if (temp == null) return builder;
-        uri = temp.trim();
+        Object target = ((Map<?, ?>) data).get("uri");
+        if (!(target instanceof String)) return builder;
+        uri = ((String) target).trim();
     } else {
         return builder; // Return unchanged if data is neither String nor Map
     }
@@ -97,11 +98,7 @@ public class HyperLinkRenderer extends BlockRenderer {
     }
 
     @Override public void onClick(@NonNull View widget) {
-      if (UrlSafety.resolveSafeUrl(getURL()) == null) {
-        Log.w("HyperLinkRenderer", "Blocked navigation to unsafe URL: " + getURL());
-        return;
-      }
-      super.onClick(widget);
+      LinkNavigator.open(widget.getContext(), getURL());
     }
   }
 }

@@ -28,6 +28,12 @@ import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
 public class LinkTest {
+  @Test public void nonStringUriDoesNotLaunchActivity() {
+    final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
+    final CDARichHyperLink link = new CDARichHyperLink(java.util.Collections.singletonMap("uri", 42));
+    new HyperLinkRenderer(processor).onClick(new AndroidContext(activity), link);
+    assertThat(Shadows.shadowOf(activity).getNextStartedActivity()).isNull();
+  }
   private Activity activity;
 
   @Before
@@ -168,4 +174,3 @@ public class LinkTest {
     assertThat(startedIntent.getData().toString()).isEqualTo("https://contentful.com");
   }
 }
-

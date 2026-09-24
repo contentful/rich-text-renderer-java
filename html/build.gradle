@@ -18,6 +18,9 @@ artifacts {
     archives jar
 }
 
+tasks.withType(GenerateModuleMetadata).configureEach {
+    enabled = false
+}
 
 publishing {
     publications {
@@ -27,6 +30,11 @@ publishing {
             version = project.version
             from components.java
             artifact(sourcesJar)
+            pom.withXml {
+                asNode().dependencies.dependency.findAll {
+                    it.artifactId.text() == 'core'
+                }.each { it.groupId[0].value = 'com.github.contentful.rich-text-renderer-java' }
+            }
         }
     }
 }

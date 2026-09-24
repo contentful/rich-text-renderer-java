@@ -3,6 +3,7 @@ package com.contentful.rich.android.renderer.chars;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -23,6 +24,10 @@ import static com.google.common.truth.Truth.assertThat;
  */
 @RunWith(RobolectricTestRunner.class)
 public class EmbeddedLinkRendererTest {
+
+  @Test public void mainThreadDoesNotAccessAssetOrStartDownload() {
+    EmbeddedLinkRenderer.defaultBitmapProvider.provide(RuntimeEnvironment.getApplication(), null);
+  }
 
   private static Call newUnstartedCall() {
     return new OkHttpClient.Builder().build()

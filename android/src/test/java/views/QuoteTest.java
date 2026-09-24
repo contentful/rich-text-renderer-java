@@ -2,6 +2,9 @@ package views;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.ActivityNotFoundException;
 import android.text.Spannable;
 import android.text.style.ClickableSpan;
 import android.view.View;
@@ -9,6 +12,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.contentful.java.cda.rich.CDARichHyperLink;
+import com.contentful.java.cda.rich.CDARichBlock;
+import com.contentful.java.cda.rich.CDARichParagraph;
+import com.contentful.java.cda.rich.CDARichTable;
+import com.contentful.java.cda.rich.CDARichTableCell;
+import com.contentful.java.cda.rich.CDARichTableRow;
 import com.contentful.java.cda.rich.CDARichQuote;
 import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.android.AndroidContext;
@@ -21,6 +29,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.Shadows;
+import org.robolectric.RuntimeEnvironment;
 
 import java.util.ArrayList;
 
@@ -29,6 +38,42 @@ import static com.google.common.truth.Truth.assertThat;
 @RunWith(RobolectricTestRunner.class)
 public class QuoteTest {
   private Activity activity;
+
+  @Test public void quoteAndTableLinksSupportApplicationContextsAndMissingHandlers() {
+    final Context application = RuntimeEnvironment.getApplication();
+    final Context missingHandler = new ContextWrapper(application) {
+      @Override public void startActivity(Intent intent) {
+        throw new ActivityNotFoundException("No browser installed");
+      }
+    };
+    for (Context context : new Context[]{application, missingHandler}) {
+      final CDARichHyperLink link = new CDARichHyperLink("https://contentful.com");
+      link.getContent().add(new CDARichText("Open link", new ArrayList<>()));
+      final CDARichQuote quote = new CDARichQuote();
+      quote.getContent().add(link);
+      final CDARichParagraph paragraph = new CDARichParagraph();
+      paragraph.getContent().add(link);
+      final CDARichTableCell cell = new CDARichTableCell();
+      cell.getContent().add(paragraph);
+      final CDARichTableRow row = new CDARichTableRow();
+      row.getContent().add(cell);
+      final CDARichTable table = new CDARichTable();
+      table.getContent().add(row);
+      for (CDARichBlock block : new CDARichBlock[]{quote, table}) {
+        final View result = AndroidProcessor.creatingNativeViews()
+            .process(new AndroidContext(context), block);
+        final ArrayList<View> matches = new ArrayList<>();
+        result.findViewsWithText(matches, "Open link", View.FIND_VIEWS_WITH_TEXT);
+        final TextView textView = (TextView) matches.get(0);
+        final Spannable text = (Spannable) textView.getText();
+        text.getSpans(0, text.length(), ClickableSpan.class)[0].onClick(textView);
+        if (context == application) {
+          final Intent intent = Shadows.shadowOf(RuntimeEnvironment.getApplication()).getNextStartedActivity();
+          assertThat(intent.getFlags() & Intent.FLAG_ACTIVITY_NEW_TASK).isNotEqualTo(0);
+        }
+      }
+    }
+  }
 
   @Before
   public void setup() {
