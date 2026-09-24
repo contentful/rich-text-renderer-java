@@ -103,7 +103,7 @@ No manual publish step is required — JitPack builds on demand when consumers a
 - PR title should follow Conventional Commits format (include Jira ticket `[DX-XXX]` where applicable)
 - All tests must pass
 - CodeQL workflow runs on PRs touching `.github/workflows/`
-- Code owners: `@contentful/team-developer-experience` (see `.github/CODEOWNERS`)
+- Code owners: `@contentful/group-applied-ai-solutions` (see `.github/CODEOWNERS`)
 
 ## CI/CD
 
