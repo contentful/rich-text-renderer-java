@@ -18,12 +18,14 @@ import com.contentful.java.cda.rich.CDARichUnorderedList;
 import com.contentful.rich.core.Processor;
 import com.contentful.rich.core.RenderabilityChecker;
 import com.contentful.rich.core.Renderer;
+import com.contentful.rich.core.util.UrlSafety;
 import com.contentful.rich.html.renderer.DynamicTagRenderer;
 import com.contentful.rich.html.renderer.TagRenderer;
 import com.contentful.rich.html.renderer.TagWithArgumentsRenderer;
 import com.contentful.rich.html.renderer.TextRenderer;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.Map;
 
 import static com.contentful.rich.html.renderer.TagWithArgumentsRenderer.mapifyArguments;
@@ -58,14 +60,14 @@ class HtmlRendererProvider {
         new TagWithArgumentsRenderer(
             processor,
             "a",
-            (node) -> mapifyArguments("href", (String) ((CDARichHyperLink) node).getData()))
+            (node) -> hrefArguments((String) ((CDARichHyperLink) node).getData()))
     );
     processor.addRenderer(
             (context, node) -> node instanceof CDARichHyperLink && ((CDARichHyperLink) node).getData() instanceof Map,
             new TagWithArgumentsRenderer(
                     processor,
                     "a",
-                    (node) -> mapifyArguments("href", (String) ((Map<?, ?>) ((CDARichHyperLink) node).getData()).get("uri")))
+                    (node) -> hrefArguments((String) ((Map<?, ?>) ((CDARichHyperLink) node).getData()).get("uri")))
     );
     processor.addRenderer(
         (context, node) -> node instanceof CDARichQuote,
@@ -111,5 +113,15 @@ class HtmlRendererProvider {
         (context, node) -> node instanceof CDARichParagraph,
         new TagRenderer(processor, "p")
     );
+  }
+
+  /**
+   * The {@code href} for a hyperlink from rich text. Unsafe urls ({@code javascript:},
+   * {@code data:}, …) get no {@code href}, so the text renders as a plain {@code <a>} element.
+   * The value is HTML-escaped by {@link TagWithArgumentsRenderer}.
+   */
+  static Map<String, String> hrefArguments(String rawUri) {
+    final String href = UrlSafety.safeHref(rawUri);
+    return href == null ? Collections.<String, String>emptyMap() : mapifyArguments("href", href);
   }
 }

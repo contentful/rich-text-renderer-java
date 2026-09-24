@@ -1,9 +1,7 @@
 package com.contentful.rich.android.renderer.views;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -38,6 +36,7 @@ import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
 import com.contentful.rich.android.R;
+import com.contentful.rich.android.util.LinkNavigator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -99,6 +98,9 @@ public class TableRenderer extends BlockRenderer {
             }
         }
         System.out.println("Max columns: " + maxColumns);
+        if (maxColumns == 0) {
+            return result;
+        }
 
         // Set the weightSum to match the number of columns
         tableLayout.setWeightSum(maxColumns);
@@ -147,7 +149,7 @@ public class TableRenderer extends BlockRenderer {
                     // Enable clickable links
                     cellView.setMovementMethod(LinkMovementMethod.getInstance());
                     
-                    if (cellNode != null) {
+                    if (cellNode instanceof CDARichBlock) {
                         // Process cell content
                         boolean isFirstParagraph = true;
                         for (final CDARichNode contentNode : ((CDARichBlock) cellNode).getContent()) {
@@ -208,9 +210,7 @@ public class TableRenderer extends BlockRenderer {
                                                 ClickableSpan clickableSpan = new ClickableSpan() {
                                                     @Override
                                                     public void onClick(@NonNull View widget) {
-                                                        String url = uri.startsWith("http") ? uri : "http://" + uri;
-                                                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                                        context.getAndroidContext().startActivity(intent);
+                                                        LinkNavigator.open(context.getAndroidContext(), uri);
                                                     }
                                                 };
                                                 linkText.setSpan(clickableSpan, 0, linkText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -293,4 +293,4 @@ public class TableRenderer extends BlockRenderer {
 
         return result;
     }
-} 
+}

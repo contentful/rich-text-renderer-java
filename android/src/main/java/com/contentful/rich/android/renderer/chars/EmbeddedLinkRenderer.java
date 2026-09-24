@@ -8,6 +8,8 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.os.Looper;
+import android.util.Log;
 
 import com.contentful.java.cda.CDAAsset;
 import com.contentful.java.cda.CDAEntry;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -43,6 +46,54 @@ import static com.contentful.java.cda.image.ImageOption.widthOf;
  */
 public class EmbeddedLinkRenderer extends BlockRenderer {
 
+  private static final String TAG = "EmbeddedLinkRenderer";
+
+  /**
+   * How long, in seconds, {@link #defaultBitmapProvider} will wait for an embedded image download
+   * to complete before giving up and cancelling the request.
+   */
+  static final long DOWNLOAD_TIMEOUT_SECONDS = 3;
+
+  /**
+   * One client for all embedded image downloads: each {@link OkHttpClient} owns its own
+   * connection pool and dispatcher threads, so creating one per image leaks resources.
+   * {@code callTimeout} bounds the whole request, below Android's 5 second ANR threshold.
+   */
+  private static final class DefaultClientHolder {
+    static final OkHttpClient CLIENT = new OkHttpClient.Builder()
+        .callTimeout(DOWNLOAD_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+        .build();
+  }
+
+  /**
+   * Waits on the given latch, bounded by {@code timeoutSeconds}, cancelling {@code call} and
+   * logging instead of throwing/hanging if the download does not complete in time or the waiting
+   * thread is interrupted.
+   * <p>
+   * Package-private for testability.
+   *
+   * @param latch          the latch counted down once the download callback fires.
+   * @param call           the in-flight call to cancel if the wait does not complete normally.
+   * @param timeoutSeconds maximum number of seconds to wait.
+   * @param urlForLogging  url used purely for diagnostic log messages.
+   * @return true if the latch counted down within the timeout, false otherwise.
+   */
+  static boolean awaitDownload(CountDownLatch latch, Call call, long timeoutSeconds, String urlForLogging) {
+    try {
+      final boolean completed = latch.await(timeoutSeconds, TimeUnit.SECONDS);
+      if (!completed) {
+        Log.w(TAG, "Timed out waiting for embedded image download: " + urlForLogging);
+        call.cancel();
+      }
+      return completed;
+    } catch (InterruptedException e) {
+      Log.w(TAG, "Interrupted while waiting for embedded image download: " + urlForLogging, e);
+      call.cancel();
+      Thread.currentThread().interrupt();
+      return false;
+    }
+  }
+
   /**
    * An interface to control how to generate the bitmap to be used.
    */
@@ -61,39 +112,50 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
    * Create a simple image downloader to be used with care.
    * <p>
    * This provider will be used by default, please overwrite it if possible clientside.
+   * <p>
+   * <b>Note:</b> {@link #provide(Context, CDAAsset)} performs blocking network I/O bounded by
+   * {@link #DOWNLOAD_TIMEOUT_SECONDS}. Do not trigger rendering of rich text containing embedded
+   * assets on the main/UI thread with this provider, where a placeholder is returned instead.
+   * Prefer rendering off the main thread, or supply a custom non-blocking
+   * {@link BitmapProvider}.
    */
   public static final BitmapProvider defaultBitmapProvider = new BitmapProvider() {
     @Override public Bitmap provide(Context context, CDAAsset asset) {
+      if (Looper.myLooper() == Looper.getMainLooper()) {
+        return BitmapFactory.decodeResource(context.getResources(), android.R.drawable.ic_dialog_alert);
+      }
       final String url = asset.urlForImageWith(https(), widthOf(80), heightOf(80), formatOf(jpg));
       final CountDownLatch latch = new CountDownLatch(1);
       final Map<String, Bitmap> bitmaps = new HashMap<>();
-      new OkHttpClient.Builder().build().newCall(new Request.Builder().get().url(url).build()).enqueue(
+      final Call call = DefaultClientHolder.CLIENT
+          .newCall(new Request.Builder().get().url(url).build());
+
+      call.enqueue(
           new Callback() {
             @Override public void onFailure(Call call, IOException e) {
+              Log.w(TAG, "Failed to download embedded image: " + url, e);
               latch.countDown();
             }
 
             @Override public void onResponse(Call call, Response response) throws IOException {
-              final ResponseBody body = response.body();
-              if (body != null) {
-                final byte[] bytes = body.bytes();
-                final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                bitmaps.put(url, bitmap);
+              try (ResponseBody body = response.body()) {
+                if (response.isSuccessful() && body != null) {
+                  final byte[] bytes = body.bytes();
+                  final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                  bitmaps.put(url, bitmap);
+                }
+              } finally {
+                latch.countDown();
               }
-              latch.countDown();
             }
           }
       );
 
-      try {
-        latch.await();
-
+      if (awaitDownload(latch, call, DOWNLOAD_TIMEOUT_SECONDS, url)) {
         final Bitmap bitmap = bitmaps.get(url);
         if (bitmap != null) {
           return bitmap;
         }
-      } catch (InterruptedException e) {
-        e.printStackTrace();
       }
       return BitmapFactory.decodeResource(context.getResources(), android.R.drawable.ic_dialog_alert);
     }
@@ -163,6 +225,9 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
       builder.insert(0, imageReplacement);
 
       final Bitmap bitmap = provider.provide(context.getAndroidContext(), asset);
+      if (bitmap == null) {
+        return builder;
+      }
       final ImageSpan span = new ImageSpan(context.getAndroidContext(), bitmap, ImageSpan.ALIGN_BASELINE);
 
       builder.setSpan(span, 0, imageReplacement.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

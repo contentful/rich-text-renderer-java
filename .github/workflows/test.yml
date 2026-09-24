@@ -1,0 +1,33 @@
+name: Test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Build and test (JDK 17)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      # JDK 17 matches jitpack.yml, which builds the published artifacts.
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+
+      # core + html unit tests, android Robolectric tests, and the sample app build
+      # (the sample catches dependency problems such as duplicate OkHttp classes).
+      - name: Build and test
+        run: ./gradlew --no-daemon build
+
+      - name: Check the android publication
+        run: ./gradlew --no-daemon :android:generatePomFileForReleasePublication

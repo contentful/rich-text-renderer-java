@@ -1,6 +1,7 @@
 package com.contentful.rich.android.renderer.views;
 
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -91,7 +92,7 @@ public class ListRenderer extends BlockRenderer {
     if (list == null) {
       list = (CDARichList) node;
       childIndex = 0;
-      currentDecorator = decoratorBySymbolMap.get(list.getDecoration());
+      currentDecorator = decoratorBySymbolMap.get(list.getDecoration().toString());
     } else {
       final int listIndex = path.indexOf(list);
       final int listItemIndexOnPath = listIndex + 1;
@@ -101,17 +102,22 @@ public class ListRenderer extends BlockRenderer {
 
       final Decorator initialDecorator = decoratorBySymbolMap.get(list.getDecoration().toString());
       final int initialDecoratorIndex = decorators.indexOf(initialDecorator);
-      int currentPosition = ((initialDecoratorIndex + nestedListCount) % decorators.size()) - 1;
-      if(currentPosition < 0) {
-        currentPosition = 0;
+      if (initialDecorator == null || decorators.isEmpty()) {
+        return;
       }
-
+      final int currentPosition =
+          Math.floorMod(initialDecoratorIndex + nestedListCount - 1, decorators.size());
       currentDecorator = decorators.get(currentPosition);
     }
 
+    if (currentDecorator == null) {
+      Log.w("ListRenderer", "No decorator registered for decoration: " + list.getDecoration());
+      return;
+    }
 
     decoration.setText(currentDecorator.decorate(childIndex + 1));
   }
+
 
   /**
    * Count lists on the path.

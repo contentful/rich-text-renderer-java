@@ -28,6 +28,12 @@ import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
 public class LinkTest {
+  @Test public void nonStringUriDoesNotLaunchActivity() {
+    final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
+    final CDARichHyperLink link = new CDARichHyperLink(java.util.Collections.singletonMap("uri", 42));
+    new HyperLinkRenderer(processor).onClick(new AndroidContext(activity), link);
+    assertThat(Shadows.shadowOf(activity).getNextStartedActivity()).isNull();
+  }
   private Activity activity;
 
   @Before
@@ -120,5 +126,51 @@ public class LinkTest {
     content.findViewsWithText(views, "My embedded entry", View.FIND_VIEWS_WITH_TEXT);
     assertThat(views).hasSize(1);
     assertThat(views.get(0)).isInstanceOf(TextView.class);
+  }
+
+  @Test
+  public void onClickBlocksJavascriptUriScheme() {
+    final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
+    final AndroidContext context = new AndroidContext(activity);
+
+    final CDARichHyperLink link = new CDARichHyperLink("javascript:alert(1)");
+    link.getContent().add(new CDARichText("Click me", new ArrayList<>()));
+
+    final HyperLinkRenderer renderer = new HyperLinkRenderer(processor);
+    renderer.onClick(context, link);
+
+    final Intent startedIntent = Shadows.shadowOf(activity).getNextStartedActivity();
+    assertThat(startedIntent).isNull();
+  }
+
+  @Test
+  public void onClickBlocksFileUriScheme() {
+    final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
+    final AndroidContext context = new AndroidContext(activity);
+
+    final CDARichHyperLink link = new CDARichHyperLink("file:///etc/passwd");
+    link.getContent().add(new CDARichText("Click me", new ArrayList<>()));
+
+    final HyperLinkRenderer renderer = new HyperLinkRenderer(processor);
+    renderer.onClick(context, link);
+
+    final Intent startedIntent = Shadows.shadowOf(activity).getNextStartedActivity();
+    assertThat(startedIntent).isNull();
+  }
+
+  @Test
+  public void onClickAllowsHttpsUriScheme() {
+    final AndroidProcessor<View> processor = AndroidProcessor.creatingNativeViews();
+    final AndroidContext context = new AndroidContext(activity);
+
+    final CDARichHyperLink link = new CDARichHyperLink("https://contentful.com");
+    link.getContent().add(new CDARichText("Click me", new ArrayList<>()));
+
+    final HyperLinkRenderer renderer = new HyperLinkRenderer(processor);
+    renderer.onClick(context, link);
+
+    final Intent startedIntent = Shadows.shadowOf(activity).getNextStartedActivity();
+    assertThat(startedIntent).isNotNull();
+    assertThat(startedIntent.getData().toString()).isEqualTo("https://contentful.com");
   }
 }

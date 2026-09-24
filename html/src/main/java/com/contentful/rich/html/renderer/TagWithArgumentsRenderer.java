@@ -4,6 +4,8 @@ import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.core.Processor;
 import com.contentful.rich.html.HtmlContext;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,13 +47,28 @@ public class TagWithArgumentsRenderer extends TagRenderer {
    */
   @Nonnull @Override
   protected String startTag(@Nonnull CDARichNode node) {
-    return "<" + tag + " " + stringifyArgumentMap(provider.provide(node)) + ">";
+    final Map<String, String> arguments = provider.provide(node);
+    if (arguments == null || arguments.isEmpty()) {
+      return "<" + tag + ">";
+    }
+    return "<" + tag + " " + stringifyArgumentMap(arguments) + ">";
   }
 
   String stringifyArgumentMap(Map<String, String> arguments) {
     final StringBuilder builder = new StringBuilder();
-    for (final String key : arguments.keySet()) {
-      builder.append(key).append("=").append('"').append(arguments.get(key)).append('"');
+    for (final Map.Entry<String, String> argument : arguments.entrySet()) {
+      if (argument.getValue() == null) {
+        continue;
+      }
+      if (builder.length() > 0) {
+        builder.append(' ');
+      }
+      // Values come from CMS content: escape them so a '"' can't end the attribute early and
+      // inject new attributes (for example onmouseover) into the tag.
+      builder.append(argument.getKey())
+          .append("=\"")
+          .append(StringEscapeUtils.escapeHtml4(argument.getValue()))
+          .append('"');
     }
     return builder.toString();
   }

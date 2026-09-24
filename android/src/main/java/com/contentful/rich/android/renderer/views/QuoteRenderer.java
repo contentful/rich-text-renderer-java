@@ -1,9 +1,7 @@
 package com.contentful.rich.android.renderer.views;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -33,6 +31,7 @@ import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
 import com.contentful.rich.android.R;
+import com.contentful.rich.android.util.LinkNavigator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -170,9 +169,7 @@ public class QuoteRenderer extends BlockRenderer {
           ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-              String url = uri.startsWith("http") ? uri : "http://" + uri;
-              Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-              context.getAndroidContext().startActivity(intent);
+              LinkNavigator.open(context.getAndroidContext(), uri);
             }
           };
           linkText.setSpan(clickableSpan, 0, linkText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

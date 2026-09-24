@@ -1,17 +1,12 @@
 package com.contentful.rich.android.renderer.views;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
-import android.provider.Browser;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -23,6 +18,7 @@ import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
 import com.contentful.rich.android.R;
+import com.contentful.rich.android.util.LinkNavigator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -110,21 +106,13 @@ public class HyperLinkRenderer extends BlockRenderer {
     if (data instanceof String) {
         uri = ((String) data).trim();
     } else if (data instanceof Map) {
-        String temp = (String) ((Map<?, ?>) data).get("uri");
-        if (temp == null) return;
-        uri = temp.trim();
+        Object target = ((Map<?, ?>) data).get("uri");
+        if (!(target instanceof String)) return;
+        uri = ((String) target).trim();
     } else {
         return; // Don't handle click if data is neither String nor Map
     }
 
-    final Uri parsedUri = Uri.parse(uri);
-    final Intent intent = new Intent(Intent.ACTION_VIEW, parsedUri);
-    intent.putExtra(Browser.EXTRA_APPLICATION_ID, androidContext.getPackageName());
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    try {
-        androidContext.startActivity(intent);
-    } catch (ActivityNotFoundException e) {
-        Log.w("URLSpan", "Activity was not found for intent, " + intent.toString());
-    }
+    LinkNavigator.open(androidContext, uri);
   }
 }

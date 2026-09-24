@@ -13,7 +13,7 @@ android {
     buildToolsVersion "35.0.0"
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 35
         versionCode 1
         versionName "1.0"
@@ -31,6 +31,12 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
+
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -39,17 +45,31 @@ android {
     }
 }
 
-dependencies {
-    implementation project(path: ':core')
+// java-sdk declares okhttp-jvm for plain-Maven JVM users. On Android that duplicates
+// okhttp-android (resolved from "okhttp" via Gradle metadata), so exclude it on every path.
+def excludeOkHttpJvm = { exclude group: 'com.squareup.okhttp3', module: 'okhttp-jvm' }
 
-    implementation 'androidx.appcompat:appcompat:1.8.0'
-    implementation "com.contentful.java:java-sdk:${project.contentful_version}"
+dependencies {
+    // api: core's Processor and java-sdk's CDARich* types are part of this module's public API,
+    // so apps need them on their compile classpath (published with compile scope).
+    api(project(path: ':core'), excludeOkHttpJvm)
+
+    // Only the androidx.annotation annotations are used (not needed at runtime). appcompat was
+    // never used, and publishing it forced apps onto compileSdk 34+ and AGP 8.1.1+.
+    compileOnly 'androidx.annotation:annotation:1.9.1'
+    api("com.contentful.java:java-sdk:${project.contentful_version}", excludeOkHttpJvm)
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'androidx.cardview:cardview:1.0.0'
 
     testImplementation 'org.robolectric:robolectric:4.17'
     testImplementation 'com.google.truth:truth:1.4.5'
     testImplementation 'junit:junit:4.13.2'
+}
+
+// Consumers resolve the POM (fixed up below), as before 2.4.1. Gradle module metadata would
+// reference :core by the build's group (com.github.contentful.rich), which JitPack doesn't serve.
+tasks.withType(GenerateModuleMetadata).configureEach {
+    enabled = false
 }
 
 afterEvaluate {
@@ -60,13 +80,23 @@ afterEvaluate {
                 artifactId = 'android'
                 version = project.version
                 
-                artifact bundleReleaseAar
+                // Publish the AAR with its dependencies (java-sdk, core, cardview, …). Before,
+                // only the AAR was published and apps without cardview crashed on tables.
+                from components.release
                 
                 pom {
                     name = 'Rich Text Renderer Android'
                     description = 'Android library for rendering Contentful Rich Text'
                     url = 'https://github.com/contentful/rich-text-renderer-java'
                     
+                    // JitPack serves every module as com.github.contentful.rich-text-renderer-java,
+                    // so point the :core dependency at that group.
+                    withXml {
+                        asNode().dependencies.dependency.findAll {
+                            it.artifactId.text() == 'core'
+                        }.each { it.groupId[0].value = 'com.github.contentful.rich-text-renderer-java' }
+                    }
+
                     licenses {
                         license {
                             name = 'MIT License'

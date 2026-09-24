@@ -67,7 +67,7 @@ sequenceDiagram
 
 | Dependency | Why it's here |
 |---|---|
-| `com.contentful.java:java-sdk:10.5.18` | Provides the `CDARichNode` / `CDARichBlock` / `CDARichDocument` type hierarchy that this library renders (see [ADR-0001](./docs/ADRs/0001-jitpack-distribution.md)) |
+| `com.contentful.java:java-sdk:10.6.1` (the `android` module excludes `okhttp-jvm` so apps get `okhttp-android`) | Provides the `CDARichNode` / `CDARichBlock` / `CDARichDocument` type hierarchy that this library renders (see [ADR-0001](./docs/ADRs/0001-jitpack-distribution.md)) |
 | `com.google.code.findbugs:jsr305:3.0.2` | Provides `@Nonnull` / `@Nullable` annotations used throughout the API surface |
 | `org.apache.commons:commons-text:1.10.0` | HTML entity escaping in the `html` module |
 | `androidx.appcompat:appcompat:1.7.0-alpha03` | Android UI base classes in the `android` module |
@@ -86,7 +86,7 @@ This is a library — there is no runtime configuration surface. All customizati
 | `org.gradle.parallel` | Parallel Gradle execution | `true` |
 | `org.gradle.caching` | Gradle build cache | `true` |
 | `android.compileSdk` | Android compile SDK level | `35` |
-| `android.minSdkVersion` | Minimum Android API level supported | `21` |
+| `android.minSdkVersion` | Minimum Android API level supported | `23` (since 2.4.0) |
 
 ## Integration Points
 
