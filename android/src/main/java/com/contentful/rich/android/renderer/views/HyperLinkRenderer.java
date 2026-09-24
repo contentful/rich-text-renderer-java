@@ -23,7 +23,7 @@ import com.contentful.java.cda.rich.CDARichText;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
 import com.contentful.rich.android.R;
-import com.contentful.rich.android.util.UrlSafety;
+import com.contentful.rich.core.util.UrlSafety;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -118,12 +118,13 @@ public class HyperLinkRenderer extends BlockRenderer {
         return; // Don't handle click if data is neither String nor Map
     }
 
-    if (!UrlSafety.isSafeUrl(uri)) {
-        Log.w("URLSpan", "Blocked navigation to unsafe URL scheme: " + uri);
+    final String safeUrl = UrlSafety.resolveSafeUrl(uri);
+    if (safeUrl == null) {
+        Log.w("URLSpan", "Blocked navigation to unsafe URL: " + uri);
         return;
     }
 
-    final Uri parsedUri = Uri.parse(uri);
+    final Uri parsedUri = Uri.parse(safeUrl);
     final Intent intent = new Intent(Intent.ACTION_VIEW, parsedUri);
     intent.putExtra(Browser.EXTRA_APPLICATION_ID, androidContext.getPackageName());
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

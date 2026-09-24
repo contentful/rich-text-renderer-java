@@ -18,9 +18,14 @@ allprojects {
 ```groovy
 dependencies {
   // …
-  implementation 'com.contentful.java:java-sdk:10.6.0'
-  implementation 'com.github.contentful.rich-text-renderer-java:android:2.4.0'
-  implementation 'com.github.contentful.rich-text-renderer-java:core:2.4.0'
+  // Brings core and java-sdk (without okhttp-jvm) transitively from 2.4.1.
+  implementation 'com.github.contentful.rich-text-renderer-java:android:2.4.1'
+
+  // Only if you declare java-sdk yourself: exclude okhttp-jvm, or the build fails with
+  // "Duplicate class okhttp3.…" against okhttp-android.
+  implementation('com.contentful.java:java-sdk:10.6.1') {
+    exclude group: 'com.squareup.okhttp3', module: 'okhttp-jvm'
+  }
 }
 ```
 
@@ -39,17 +44,17 @@ The same can be achieved with Maven:
 <dependency>
     <groupId>com.contentful.java</groupId>
     <artifactId>java-sdk</artifactId>
-    <version>10.6.0</version>
+    <version>10.6.1</version>
 </dependency>
 <dependency>
     <groupId>com.github.contentful.rich-text-renderer-java</groupId>
     <artifactId>core</artifactId>
-    <version>2.4.0</version>
+    <version>2.4.1</version>
 </dependency>
 <dependency>
     <groupId>com.github.contentful.rich-text-renderer-java</groupId>
     <artifactId>android</artifactId>
-    <version>2.4.0</version>
+    <version>2.4.1</version>
 </dependency>
 ```
 

@@ -116,10 +116,16 @@ public class ListRenderer extends BlockRenderer {
 
     final Decorator initialDecorator = decoratorBySymbolMap.get(list.getDecoration().toString());
     final int initialDecoratorIndex = decoratorList.indexOf(initialDecorator);
+    if (initialDecorator == null || initialDecoratorIndex < 0 || decoratorList.isEmpty()) {
+      // No decorator registered for this list type: render the item undecorated, as the
+      // views ListRenderer does, instead of indexing with -1.
+      return renderedChildren;
+    }
     // nestedListCount counts the list itself, so a top level list yields 1. Subtract
     // one so the outermost list uses the initial decorator rather than the next one.
+    // floorMod keeps the index non-negative.
     final int currentPosition =
-        (initialDecoratorIndex + nestedListCount - 1) % decoratorList.size();
+        Math.floorMod(initialDecoratorIndex + nestedListCount - 1, decoratorList.size());
     final Decorator currentDecorator = decoratorList.get(currentPosition);
 
     return renderedChildren.insert(0, currentDecorator.decorate(childIndex + 1)).append("\n");

@@ -8,6 +8,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.os.Looper;
 import android.util.Log;
 
 import com.contentful.java.cda.CDAAsset;
@@ -51,7 +52,18 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
    * How long, in seconds, {@link #defaultBitmapProvider} will wait for an embedded image download
    * to complete before giving up and cancelling the request.
    */
-  static final long DOWNLOAD_TIMEOUT_SECONDS = 8;
+  static final long DOWNLOAD_TIMEOUT_SECONDS = 3;
+
+  /**
+   * One client for all embedded image downloads: each {@link OkHttpClient} owns its own
+   * connection pool and dispatcher threads, so creating one per image leaks resources.
+   * {@code callTimeout} bounds the whole request, below Android's 5 second ANR threshold.
+   */
+  private static final class DefaultClientHolder {
+    static final OkHttpClient CLIENT = new OkHttpClient.Builder()
+        .callTimeout(DOWNLOAD_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+        .build();
+  }
 
   /**
    * Waits on the given latch, bounded by {@code timeoutSeconds}, cancelling {@code call} and
@@ -112,10 +124,12 @@ public class EmbeddedLinkRenderer extends BlockRenderer {
       final String url = asset.urlForImageWith(https(), widthOf(80), heightOf(80), formatOf(jpg));
       final CountDownLatch latch = new CountDownLatch(1);
       final Map<String, Bitmap> bitmaps = new HashMap<>();
-      final Call call = new OkHttpClient.Builder()
-          .connectTimeout(DOWNLOAD_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-          .readTimeout(DOWNLOAD_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-          .build()
+      if (Looper.myLooper() == Looper.getMainLooper()) {
+        Log.w(TAG, "Embedded image downloaded on the main thread (blocks up to "
+            + DOWNLOAD_TIMEOUT_SECONDS + "s). Render off the main thread or provide a custom "
+            + "BitmapProvider.");
+      }
+      final Call call = DefaultClientHolder.CLIENT
           .newCall(new Request.Builder().get().url(url).build());
 
       call.enqueue(

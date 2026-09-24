@@ -92,13 +92,28 @@ allprojects {
 ```groovy
 dependencies {
   // …
-  implementation 'com.contentful.java:java-sdk:10.6.0'
-  implementation 'com.github.contentful.rich-text-renderer-java:html:2.4.0'
-  // or, for Android:
-  implementation 'com.github.contentful.rich-text-renderer-java:core:2.4.0'
-  implementation 'com.github.contentful.rich-text-renderer-java:android:2.4.0'
+  // JVM / server (HTML output):
+  implementation 'com.contentful.java:java-sdk:10.6.1'
+  implementation 'com.github.contentful.rich-text-renderer-java:html:2.4.1'
 }
 ```
+
+```groovy
+dependencies {
+  // Android: from 2.4.1 the android artifact brings core and java-sdk (without okhttp-jvm).
+  implementation 'com.github.contentful.rich-text-renderer-java:android:2.4.1'
+
+  // If you also declare java-sdk yourself, exclude okhttp-jvm. Otherwise the build fails with
+  // "Duplicate class okhttp3.…" against okhttp-android:
+  implementation('com.contentful.java:java-sdk:10.6.1') {
+    exclude group: 'com.squareup.okhttp3', module: 'okhttp-jvm'
+  }
+}
+```
+
+> **2.4.1 notes for Android:** the minimum SDK is **23** (it was 21 up to 2.3.x). Links in rich text are opened only for `http`, `https`, `mailto`, `tel` and `sms`; other schemes such as `javascript:` or `intent:` render as plain text. Don't use 2.4.0: it has an unprotected link path and a list-rendering crash, both fixed in 2.4.1. The default embedded-image download now times out after 3 seconds (was 8), below Android's ANR threshold.
+
+> **2.4.1 notes for the HTML module:** attribute values are now HTML-escaped (for example `&` in a link becomes `&amp;`), and links with a disallowed scheme (`javascript:`, `data:`, …) are rendered as `<a>` without an `href`. Relative links (`/about`, `#top`) are unchanged.
 
 * _Maven_
 
@@ -115,12 +130,12 @@ dependencies {
 <dependency>
     <groupId>com.contentful.java</groupId>
     <artifactId>java-sdk</artifactId>
-    <version>10.6.0</version>
+    <version>10.6.1</version>
 </dependency>
 <dependency>
     <groupId>com.github.contentful.rich-text-renderer-java</groupId>
     <artifactId>html</artifactId>
-    <version>2.4.0</version>
+    <version>2.4.1</version>
 </dependency>
 ```
 

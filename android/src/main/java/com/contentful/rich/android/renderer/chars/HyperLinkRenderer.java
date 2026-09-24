@@ -4,11 +4,14 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.MovementMethod;
 import android.text.style.URLSpan;
+import android.util.Log;
+import android.view.View;
 import androidx.annotation.NonNull;
 import com.contentful.java.cda.rich.CDARichHyperLink;
 import com.contentful.java.cda.rich.CDARichNode;
 import com.contentful.rich.android.AndroidContext;
 import com.contentful.rich.android.AndroidProcessor;
+import com.contentful.rich.core.util.UrlSafety;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -73,8 +76,32 @@ public class HyperLinkRenderer extends BlockRenderer {
         return builder; // Return unchanged if data is neither String nor Map
     }
     
-    final URLSpan span = new URLSpan(uri);
-    builder.setSpan(span, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    final String safeUrl = UrlSafety.resolveSafeUrl(uri);
+    if (safeUrl == null) {
+      // javascript:, intent:, file:, … from CMS content: render the text, but not as a link.
+      Log.w("HyperLinkRenderer", "Not linking unsafe URL: " + uri);
+      return builder;
+    }
+
+    builder.setSpan(new SafeUrlSpan(safeUrl), 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     return builder;
+  }
+
+  /**
+   * A {@link URLSpan} that re-validates its url when clicked, so a span whose url was changed
+   * later (spans are mutable and can be copied between texts) can't open a disallowed scheme.
+   */
+  static final class SafeUrlSpan extends URLSpan {
+    SafeUrlSpan(@NonNull String url) {
+      super(url);
+    }
+
+    @Override public void onClick(@NonNull View widget) {
+      if (UrlSafety.resolveSafeUrl(getURL()) == null) {
+        Log.w("HyperLinkRenderer", "Blocked navigation to unsafe URL: " + getURL());
+        return;
+      }
+      super.onClick(widget);
+    }
   }
 }

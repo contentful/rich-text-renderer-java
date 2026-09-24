@@ -1,4 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["local>contentful/renovate-config"]
+  "extends": ["local>contentful/renovate-config"],
+  "packageRules": [
+    {
+      "description": "Gradle 9 needs AGP 9 (a separate migration). Stay on Gradle 8 / AGP 8 until then.",
+      "matchManagers": ["gradle-wrapper"],
+      "allowedVersions": "<9.0.0"
+    },
+    {
+      "description": "AGP 9 needs Gradle 9 and changes Kotlin/DSL setup; migrate deliberately.",
+      "matchPackageNames": ["com.android.tools.build:gradle"],
+      "allowedVersions": "<9.0.0"
+    }
+  ]
 }
