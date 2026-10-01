@@ -56,7 +56,9 @@ dependencies {
 
     // Only the androidx.annotation annotations are used (not needed at runtime). appcompat was
     // never used, and publishing it forced apps onto compileSdk 34+ and AGP 8.1.1+.
-    compileOnly 'androidx.annotation:annotation:1.11.0'
+    // Must not be newer than the version okhttp-android brings in at runtime (1.9.1 via java-sdk 10.6.1 ->
+    // okhttp-android 5.1.0), or Gradle's consistent resolution fails the build. Renovate leaves it alone.
+    compileOnly 'androidx.annotation:annotation:1.9.1'
     api("com.contentful.java:java-sdk:${project.contentful_version}", excludeOkHttpJvm)
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'androidx.cardview:cardview:1.0.0'
