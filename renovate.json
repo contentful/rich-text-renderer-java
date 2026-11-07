@@ -11,6 +11,11 @@
       "description": "AGP 9 needs Gradle 9 and changes Kotlin/DSL setup; migrate deliberately.",
       "matchPackageNames": ["com.android.tools.build:gradle"],
       "allowedVersions": "<9.0.0"
+    },
+    {
+      "description": "compileOnly androidx.annotation must match what okhttp-android brings at runtime (see android/build.gradle); a newer version breaks the build. Bump it together with java-sdk/OkHttp.",
+      "matchPackageNames": ["androidx.annotation:annotation"],
+      "enabled": false
     }
   ]
 }
