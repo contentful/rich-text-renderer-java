@@ -57,7 +57,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.4.21"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0"
     implementation 'androidx.appcompat:appcompat:1.8.0'
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.11.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.11.1"
 
     implementation("com.contentful.java:java-sdk:${project.contentful_version}") {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp-jvm' // see android/build.gradle
